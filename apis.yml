@@ -1,0 +1,32 @@
+aid: weatherapi
+name: WeatherAPI
+description: "Weather API with other stuff like Astronomy and Geolocation API"
+url: https://www.weatherapi.com/
+specificationVersion: '0.20'
+created: '2026-05-28'
+modified: '2026-05-28'
+x-source: public-apis/public-apis
+x-category: "Weather"
+x-tier: 3
+x-tier-reason: bulk-registered-from-public-apis
+tags:
+  - Weather
+  - Public APIs
+apis:
+  - name: WeatherAPI
+    description: "Weather API with other stuff like Astronomy and Geolocation API"
+    humanURL: https://www.weatherapi.com/
+    baseURL: https://www.weatherapi.com/
+    tags:
+      - Weather
+    properties:
+      - type: Documentation
+        url: https://www.weatherapi.com/
+common:
+  - type: Website
+    url: https://www.weatherapi.com/
+  - type: PublicAPIsListing
+    url: https://github.com/public-apis/public-apis
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
