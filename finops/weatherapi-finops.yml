@@ -1,0 +1,121 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+
+provider: WeatherAPI.com
+providerId: weatherapi
+created: '2026-05-28'
+modified: '2026-05-28'
+reconciled: true
+
+tags:
+  - FinOps
+  - FOCUS
+  - Weather
+  - Geolocation
+  - Subscription
+
+description: >-
+  FOCUS-aligned FinOps for WeatherAPI.com: a tiered monthly subscription billed in USD with
+  call-volume quotas, plus an enterprise custom-pricing tier. Spend is fixed-per-month at each
+  tier; the FinOps signal is mostly call-volume velocity against the monthly quota rather than
+  per-call billing.
+
+sources:
+  - https://www.weatherapi.com/pricing.aspx
+  - https://www.weatherapi.com/docs/
+  - https://focus.finops.org/focus-specification/v1-3/
+
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+
+publisherName: WeatherAPI.com Limited
+serviceCategory: Weather Data & Geolocation
+
+billingModel:
+  pricingCategory: Tiered Subscription
+  billingFrequency: Monthly or Annual
+  billingCurrency: USD
+  chargeCategories:
+    - Usage
+    - Purchase
+    - Adjustment
+    - Refund
+    - Credit
+
+focusColumns:
+  ServiceName: WeatherAPI.com
+  ServiceCategory: Weather Data & Geolocation
+  ServiceSubcategory: Weather Forecast and Real-time Data API
+  ProviderName: WeatherAPI.com
+  PublisherName: WeatherAPI.com Limited
+  InvoiceIssuerName: WeatherAPI.com Limited
+  BillingCurrency: USD
+  ChargeCategory: Purchase
+  PricingCategory: Subscription
+  CommitmentDiscountCategory: None
+  RegionId: global
+
+meters:
+
+  - name: monthly_subscription
+    unit: month
+    aggregation: sum
+    dimensions:
+      - plan_tier
+      - billing_cycle
+  - name: api_calls
+    unit: request
+    aggregation: sum
+    dimensions:
+      - api_key
+      - endpoint
+      - tag
+      - plan_tier
+  - name: quota_consumed_percent
+    unit: percent
+    aggregation: max
+    dimensions:
+      - api_key
+      - plan_tier
+  - name: forecast_days_requested
+    unit: day
+    aggregation: sum
+    dimensions:
+      - endpoint
+      - api_key
+  - name: bulk_requests
+    unit: request
+    aggregation: sum
+    dimensions:
+      - api_key
+  - name: marine_requests
+    unit: request
+    aggregation: sum
+    dimensions:
+      - api_key
+  - name: history_requests
+    unit: request
+    aggregation: sum
+    dimensions:
+      - api_key
+      - days_back
+
+principles:
+  - name: Visibility
+    description: WeatherAPI.com exposes a usage dashboard in the customer portal that reports current-month call counts per key, with daily and per-endpoint breakdowns. Programmatic usage retrieval is available to Business and Enterprise customers; everyone else uses the dashboard.
+  - name: Allocation
+    description: Tag spend by issuing one API key per application or environment (dev / staging / production). The single account can host multiple keys, and each key's call count is reported separately, making allocation straightforward without a usage-export API.
+  - name: Optimization
+    description: |
+      - Cache 10-minute current-weather responses at the edge — refresh rate is documented as 10–15 minutes.
+      - Use Bulk Requests (Pro+) to amortise per-call overhead across up to 50 locations.
+      - Use `current_fields` to project only the fields you need (reduces bandwidth, not call count).
+      - For dashboards, prefer one /forecast.json call with `days=7` over seven separate /current.json calls.
+      - Move to annual billing for ~10% savings versus monthly.
+  - name: Accountability
+    description: API key ownership maps 1:1 to an application; the WeatherAPI portal lets the account owner set monthly call-volume thresholds and disable keys that approach the quota. Single point of accountability is the account owner; per-key budget alerts should be wired into the customer's internal monitoring.

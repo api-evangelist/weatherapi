@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/weatherapi/refs/heads/main/json-schema/weatherapi-tide-schema.json",
+  "title": "Tide",
+  "description": "Tide schema from WeatherAPI.com",
+  "type": "object",
+  "properties": {
+    "tide_time": {
+      "type": "string",
+      "example": "2026-05-28 04:30"
+    },
+    "tide_height_mt": {
+      "type": "number",
+      "example": 1.0
+    },
+    "tide_type": {
+      "type": "string",
+      "enum": [
+        "High",
+        "Low"
+      ],
+      "example": "High"
+    }
+  }
+}

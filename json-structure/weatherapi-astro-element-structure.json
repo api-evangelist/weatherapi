@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/weatherapi/refs/heads/main/json-structure/weatherapi-astro-element-structure.json",
+  "name": "AstroElement",
+  "description": "AstroElement schema from WeatherAPI.com",
+  "type": "object",
+  "properties": {
+    "sunrise": {
+      "type": "string",
+      "example": "05:30 AM"
+    },
+    "sunset": {
+      "type": "string",
+      "example": "08:45 PM"
+    },
+    "moonrise": {
+      "type": "string",
+      "example": "10:15 PM"
+    },
+    "moonset": {
+      "type": "string",
+      "example": "06:42 AM"
+    },
+    "moon_phase": {
+      "type": "string",
+      "example": "Waxing Crescent"
+    },
+    "moon_illumination": {
+      "type": "double",
+      "example": 35.0
+    },
+    "is_moon_up": {
+      "type": "int32",
+      "example": 1
+    },
+    "is_sun_up": {
+      "type": "int32",
+      "example": 1
+    }
+  }
+}

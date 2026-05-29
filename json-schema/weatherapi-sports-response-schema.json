@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/weatherapi/refs/heads/main/json-schema/weatherapi-sports-response-schema.json",
+  "title": "SportsResponse",
+  "description": "SportsResponse schema from WeatherAPI.com",
+  "type": "object",
+  "properties": {
+    "football": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "stadium": {
+            "type": "string",
+            "example": "Wembley Stadium"
+          },
+          "country": {
+            "type": "string",
+            "example": "United Kingdom"
+          },
+          "region": {
+            "type": "string",
+            "example": "City of London, Greater London"
+          },
+          "tournament": {
+            "type": "string",
+            "example": "Premier League"
+          },
+          "start": {
+            "type": "string",
+            "description": "Local start datetime yyyy-MM-dd HH:mm",
+            "example": "sample value"
+          },
+          "match": {
+            "type": "string",
+            "example": "Manchester United vs Liverpool"
+          }
+        }
+      }
+    },
+    "cricket": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "stadium": {
+            "type": "string",
+            "example": "Wembley Stadium"
+          },
+          "country": {
+            "type": "string",
+            "example": "United Kingdom"
+          },
+          "region": {
+            "type": "string",
+            "example": "City of London, Greater London"
+          },
+          "tournament": {
+            "type": "string",
+            "example": "Premier League"
+          },
+          "start": {
+            "type": "string",
+            "description": "Local start datetime yyyy-MM-dd HH:mm",
+            "example": "sample value"
+          },
+          "match": {
+            "type": "string",
+            "example": "Manchester United vs Liverpool"
+          }
+        }
+      }
+    },
+    "golf": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "stadium": {
+            "type": "string",
+            "example": "Wembley Stadium"
+          },
+          "country": {
+            "type": "string",
+            "example": "United Kingdom"
+          },
+          "region": {
+            "type": "string",
+            "example": "City of London, Greater London"
+          },
+          "tournament": {
+            "type": "string",
+            "example": "Premier League"
+          },
+          "start": {
+            "type": "string",
+            "description": "Local start datetime yyyy-MM-dd HH:mm",
+            "example": "sample value"
+          },
+          "match": {
+            "type": "string",
+            "example": "Manchester United vs Liverpool"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,1768 @@
+openapi: 3.1.0
+info:
+  title: WeatherAPI.com
+  description: 'WeatherAPI.com provides real-time, forecast, historical, marine, future, astronomy, air quality, pollen, sports, IP lookup, timezone, and geolocation data via a JSON/XML REST API. Trusted
+    by 850,000+ developers worldwide. Average response time ~200ms.
+
+
+    ## Authentication
+
+    All endpoints require an API key passed as the `key` query parameter.
+
+
+    ## Base URL
+
+    `https://api.weatherapi.com/v1`
+
+
+    ## Location Query (`q` parameter)
+
+    Accepts: city name, lat/lon decimal, US zip, UK postcode, Canada postal code, METAR code (`metar:EGLL`), IATA airport code (`iata:DXB`), IP lookup (`auto:ip`), IPv4/IPv6 address, or location ID (`id:2801268`).
+
+
+    ## Plans
+
+    - **Free**: 100K calls/month, 3-day forecast, 1-day history
+
+    - **Starter**: $7/mo — 3M calls, 7-day forecast, 7-day history
+
+    - **Pro+**: $25/mo — 5M calls, 300-day future, 365-day history
+
+    - **Business**: $65/mo — 10M calls, evapotranspiration
+
+    - **Enterprise**: Custom — 15-min interval, pollen history, wind@100m, SLA'
+  version: 1.0.2
+  contact:
+    name: WeatherAPI.com Support
+    url: https://www.weatherapi.com/contact.aspx
+  license:
+    name: Commercial / Non-Commercial
+    url: https://www.weatherapi.com/terms.aspx
+  x-logo:
+    url: https://cdn.weatherapi.com/v4/images/weatherapi_logo.png
+  x-last-validated: '2026-05-28'
+  x-generated-from: provider-openapi
+servers:
+- url: https://api.weatherapi.com/v1
+  description: Production (HTTPS)
+- url: http://api.weatherapi.com/v1
+  description: Production (HTTP)
+security:
+- ApiKeyAuth: []
+tags:
+- name: Weather
+  description: Real-time and forecast weather endpoints
+- name: History
+  description: Historical weather data
+- name: Marine
+  description: Marine and sailing weather
+- name: Future
+  description: Long-range future weather (14–300 days)
+- name: Geo
+  description: Location, IP lookup, timezone, astronomy
+- name: Sports
+  description: Upcoming sports events
+- name: Alerts
+  description: Government weather alerts
+paths:
+  /current.json:
+    get:
+      tags:
+      - Weather
+      summary: WeatherAPI Current / Real-time Weather
+      description: Returns up-to-date current weather for a given location. Data is refreshed every 10–15 minutes. Optionally includes air quality (AQI) and pollen data.
+      operationId: getCurrentWeather
+      parameters:
+      - $ref: '#/components/parameters/key'
+      - $ref: '#/components/parameters/q'
+      - $ref: '#/components/parameters/aqi'
+      - $ref: '#/components/parameters/pollen'
+      - $ref: '#/components/parameters/lang'
+      - $ref: '#/components/parameters/current_fields'
+      responses:
+        '200':
+          description: Current weather data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentWeatherResponse'
+              example:
+                location:
+                  name: London
+                  region: City of London, Greater London
+                  country: United Kingdom
+                  lat: 51.52
+                  lon: -0.11
+                  tz_id: Europe/London
+                  localtime_epoch: 1613896955
+                  localtime: 2021-02-21 8:42
+                current:
+                  last_updated: 2021-02-21 08:30
+                  temp_c: 11.0
+                  temp_f: 51.8
+                  is_day: 1
+                  condition:
+                    text: Partly cloudy
+                    icon: //cdn.weatherapi.com/weather/64x64/day/116.png
+                    code: 1003
+                  wind_mph: 3.8
+                  wind_kph: 6.1
+                  humidity: 82
+                  uv: 1.0
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /forecast.json:
+    get:
+      tags:
+      - Weather
+      summary: WeatherAPI Forecast Weather
+      description: Returns weather forecast for up to 14 days (plan dependent). Includes hourly intervals, astronomy, air quality, pollen, and weather alerts.
+      operationId: getForecast
+      parameters:
+      - $ref: '#/components/parameters/key'
+      - $ref: '#/components/parameters/q'
+      - name: days
+        in: query
+        required: true
+        description: Number of forecast days (1–14).
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 14
+          example: 3
+        example: 3
+      - $ref: '#/components/parameters/dt'
+      - $ref: '#/components/parameters/unixdt'
+      - $ref: '#/components/parameters/hour'
+      - $ref: '#/components/parameters/alerts'
+      - $ref: '#/components/parameters/aqi'
+      - $ref: '#/components/parameters/pollen'
+      - $ref: '#/components/parameters/tp'
+      - $ref: '#/components/parameters/lang'
+      - $ref: '#/components/parameters/day_fields'
+      - $ref: '#/components/parameters/hour_fields'
+      - $ref: '#/components/parameters/et0'
+      responses:
+        '200':
+          description: Forecast weather data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForecastWeatherResponse'
+              examples:
+                GetForecast200Example:
+                  summary: Default getForecast 200 response
+                  x-microcks-default: true
+                  value: &id001
+                    location:
+                      name: London
+                      region: City of London, Greater London
+                      country: United Kingdom
+                      lat: 51.5074
+                      lon: -0.1278
+                      tz_id: Europe/London
+                      localtime_epoch: 1748441400
+                      localtime: 2026-05-28 15:30
+                    current:
+                      last_updated_epoch: 1748441400
+                      last_updated: 2026-05-28 15:30
+                      temp_c: 18.5
+                      temp_f: 65.3
+                      is_day: 1
+                      condition:
+                        text: Partly Cloudy
+                        icon: //cdn.weatherapi.com/weather/64x64/day/116.png
+                        code: 1003
+                      wind_mph: 12.4
+                      wind_kph: 12.4
+                      wind_degree: 1
+                      wind_dir: WSW
+                      pressure_mb: 1013.0
+                      pressure_in: 1013.0
+                      precip_mm: 0.5
+                      precip_in: 0.5
+                      humidity: 65
+                      cloud: 40
+                      feelslike_c: 17.8
+                      feelslike_f: 17.8
+                      windchill_c: 12.4
+                      windchill_f: 12.4
+                      heatindex_c: 1.0
+                      heatindex_f: 1.0
+                      dewpoint_c: 1.0
+                      dewpoint_f: 1.0
+                      vis_km: 10.0
+                      vis_miles: 10.0
+                      uv: 4.0
+                      gust_mph: 22.1
+                      gust_kph: 22.1
+                      short_rad: 1.0
+                      diff_rad: 1.0
+                      air_quality:
+                        co: 1.0
+                        o3: 1.0
+                        no2: 1.0
+                        so2: 1.0
+                        pm2_5: 1.0
+                        pm10: 1.0
+                        us-epa-index: 1
+                        gb-defra-index: 1
+                      pollen:
+                        Hazel: 1.0
+                        Alder: 1.0
+                        Birch: 1.0
+                        Oak: 1.0
+                        Grass: 1.0
+                        Mugwort: 1.0
+                        Ragweed: 1.0
+                    forecast:
+                      forecastday:
+                      - date: '2026-05-28'
+                        date_epoch: 1748441400
+                        hour: []
+                    alerts:
+                      alert:
+                      - headline: sample value
+                        msgtype: sample value
+                        severity: sample value
+                        urgency: sample value
+                        areas: sample value
+                        category: sample value
+                        certainty: sample value
+                        event: Severe Thunderstorm Warning
+                        note: sample value
+                        effective: '2026-05-28T13:00:00Z'
+                        expires: '2026-05-28T13:00:00Z'
+                        desc: Severe thunderstorms with damaging winds expected in the warning area.
+                        instruction: sample value
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /history.json:
+    get:
+      tags:
+      - History
+      summary: WeatherAPI Historical Weather
+      description: Returns historical weather data for a given date on or after 1 January 2010. Includes hourly breakdown. Enterprise plan unlocks solar irradiance, wind@100m, pollen history, and 
+        evapotranspiration.
+      operationId: getHistory
+      parameters:
+      - $ref: '#/components/parameters/key'
+      - $ref: '#/components/parameters/q'
+      - name: dt
+        in: query
+        required: true
+        description: Date on or after 2010-01-01 in yyyy-MM-dd format.
+        schema:
+          type: string
+          format: date
+          example: '2023-01-01'
+        example: '2023-01-01'
+      - $ref: '#/components/parameters/unixdt'
+      - name: end_dt
+        in: query
+        required: false
+        description: End date for range (Pro+ and above). Max 30 days range. yyyy-MM-dd.
+        schema:
+          type: string
+          format: date
+        example: '2026-05-28'
+      - $ref: '#/components/parameters/unixend_dt'
+      - $ref: '#/components/parameters/hour'
+      - $ref: '#/components/parameters/aqi'
+      - $ref: '#/components/parameters/pollen'
+      - $ref: '#/components/parameters/tp'
+      - $ref: '#/components/parameters/lang'
+      - $ref: '#/components/parameters/solar'
+      - $ref: '#/components/parameters/et0'
+      - $ref: '#/components/parameters/wind100mph'
+      - $ref: '#/components/parameters/wind100kph'
+      responses:
+        '200':
+          description: Historical weather data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForecastWeatherResponse'
+              examples:
+                GetHistory200Example:
+                  summary: Default getHistory 200 response
+                  x-microcks-default: true
+                  value: *id001
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /alerts.json:
+    get:
+      tags:
+      - Alerts
+      summary: WeatherAPI Weather Alerts
+      description: Returns government weather alerts and warnings (USA, UK, Europe, rest of world) for a given location, if available.
+      operationId: getAlerts
+      parameters:
+      - $ref: '#/components/parameters/key'
+      - $ref: '#/components/parameters/q'
+      responses:
+        '200':
+          description: Weather alerts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertsResponse'
+              examples:
+                GetAlerts200Example:
+                  summary: Default getAlerts 200 response
+                  x-microcks-default: true
+                  value:
+                    location:
+                      name: London
+                      region: City of London, Greater London
+                      country: United Kingdom
+                      lat: 51.5074
+                      lon: -0.1278
+                      tz_id: Europe/London
+                      localtime_epoch: 1748441400
+                      localtime: 2026-05-28 15:30
+                    alerts:
+                      alert:
+                      - headline: sample value
+                        msgtype: sample value
+                        severity: sample value
+                        urgency: sample value
+                        areas: sample value
+                        category: sample value
+                        certainty: sample value
+                        event: Severe Thunderstorm Warning
+                        note: sample value
+                        effective: '2026-05-28T13:00:00Z'
+                        expires: '2026-05-28T13:00:00Z'
+                        desc: Severe thunderstorms with damaging winds expected in the warning area.
+                        instruction: sample value
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /marine.json:
+    get:
+      tags:
+      - Marine
+      summary: WeatherAPI Marine Weather
+      description: Returns marine and sailing weather forecast (up to 7 days depending on plan) including tide data (Pro+ and above), wave height, swell, and water temperature.
+      operationId: getMarine
+      parameters:
+      - $ref: '#/components/parameters/key'
+      - $ref: '#/components/parameters/q'
+      - name: days
+        in: query
+        required: true
+        description: Number of forecast days (1–7 depending on plan).
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 7
+        example: 1
+      - $ref: '#/components/parameters/dt'
+      - $ref: '#/components/parameters/hour'
+      - name: tides
+        in: query
+        required: false
+        description: Enable/disable tide data (Pro+ and above).
+        schema:
+          type: string
+          enum:
+          - 'yes'
+          - 'no'
+        example: 'yes'
+      responses:
+        '200':
+          description: Marine weather data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MarineWeatherResponse'
+              examples:
+                GetMarine200Example:
+                  summary: Default getMarine 200 response
+                  x-microcks-default: true
+                  value:
+                    location:
+                      name: London
+                      region: City of London, Greater London
+                      country: United Kingdom
+                      lat: 51.5074
+                      lon: -0.1278
+                      tz_id: Europe/London
+                      localtime_epoch: 1748441400
+                      localtime: 2026-05-28 15:30
+                    forecast:
+                      forecastday:
+                      - date: '2026-05-28'
+                        date_epoch: 1748441400
+                        tides: []
+                        hour: []
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /future.json:
+    get:
+      tags:
+      - Future
+      summary: WeatherAPI Future Weather (14–300 Days Ahead)
+      description: Returns 3-hourly weather forecast for a date between 14 days and 300 days in the future. Available on Pro+ plan and above.
+      operationId: getFutureWeather
+      parameters:
+      - $ref: '#/components/parameters/key'
+      - $ref: '#/components/parameters/q'
+      - name: dt
+        in: query
+        required: true
+        description: Date between 14 and 300 days from today in yyyy-MM-dd format.
+        schema:
+          type: string
+          format: date
+          example: '2026-06-01'
+        example: '2026-06-01'
+      - $ref: '#/components/parameters/lang'
+      responses:
+        '200':
+          description: Future weather data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForecastWeatherResponse'
+              examples:
+                GetFutureWeather200Example:
+                  summary: Default getFutureWeather 200 response
+                  x-microcks-default: true
+                  value: *id001
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /search.json:
+    get:
+      tags:
+      - Geo
+      summary: WeatherAPI Search / Autocomplete Locations
+      description: Returns matching cities and towns as an array of Location objects. Useful for building autocomplete location pickers.
+      operationId: searchLocations
+      parameters:
+      - $ref: '#/components/parameters/key'
+      - name: q
+        in: query
+        required: true
+        description: Partial city name, postcode, or coordinates to search.
+        schema:
+          type: string
+          example: lond
+        example: lond
+      responses:
+        '200':
+          description: List of matching locations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SearchLocation'
+              examples:
+                SearchLocations200Example:
+                  summary: Default searchLocations 200 response
+                  x-microcks-default: true
+                  value:
+                  - id: 2643743
+                    name: London
+                    region: City of London, Greater London
+                    country: United Kingdom
+                    lat: 51.5074
+                    lon: -0.1278
+                    url: sample value
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /ip.json:
+    get:
+      tags:
+      - Geo
+      summary: WeatherAPI IP Lookup
+      description: Returns geolocation and timezone data for a given IPv4 or IPv6 address. Pass `auto:ip` to auto-detect the caller's IP.
+      operationId: ipLookup
+      parameters:
+      - $ref: '#/components/parameters/key'
+      - name: q
+        in: query
+        required: true
+        description: IPv4, IPv6 address, or `auto:ip` for caller's IP.
+        schema:
+          type: string
+          example: auto:ip
+        example: auto:ip
+      responses:
+        '200':
+          description: IP geolocation data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IpLookupResponse'
+              examples:
+                IpLookup200Example:
+                  summary: Default ipLookup 200 response
+                  x-microcks-default: true
+                  value:
+                    ip: sample value
+                    type: ipv4
+                    continent_code: EGLL
+                    continent_name: EU
+                    country_code: United Kingdom
+                    country_name: United Kingdom
+                    is_eu: false
+                    geoname_id: sample value
+                    city: sample value
+                    region: City of London, Greater London
+                    lat: 51.5074
+                    lon: -0.1278
+                    tz_id: Europe/London
+                    localtime_epoch: 1748441400
+                    localtime: 2026-05-28 15:30
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /timezone.json:
+    get:
+      tags:
+      - Geo
+      summary: WeatherAPI Time Zone
+      description: Returns the local time and timezone information for a given location.
+      operationId: getTimezone
+      parameters:
+      - $ref: '#/components/parameters/key'
+      - $ref: '#/components/parameters/q'
+      responses:
+        '200':
+          description: Timezone data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimezoneResponse'
+              examples:
+                GetTimezone200Example:
+                  summary: Default getTimezone 200 response
+                  x-microcks-default: true
+                  value:
+                    location:
+                      name: London
+                      region: City of London, Greater London
+                      country: United Kingdom
+                      lat: 51.5074
+                      lon: -0.1278
+                      tz_id: Europe/London
+                      localtime_epoch: 1748441400
+                      localtime: 2026-05-28 15:30
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /astronomy.json:
+    get:
+      tags:
+      - Geo
+      summary: WeatherAPI Astronomy
+      description: Returns sunrise, sunset, moonrise, moonset, moon phase, and moon illumination for a given location and date.
+      operationId: getAstronomy
+      parameters:
+      - $ref: '#/components/parameters/key'
+      - $ref: '#/components/parameters/q'
+      - name: dt
+        in: query
+        required: true
+        description: Date in yyyy-MM-dd format.
+        schema:
+          type: string
+          format: date
+          example: '2026-03-20'
+        example: '2026-03-20'
+      responses:
+        '200':
+          description: Astronomy data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AstronomyResponse'
+              examples:
+                GetAstronomy200Example:
+                  summary: Default getAstronomy 200 response
+                  x-microcks-default: true
+                  value:
+                    location:
+                      name: London
+                      region: City of London, Greater London
+                      country: United Kingdom
+                      lat: 51.5074
+                      lon: -0.1278
+                      tz_id: Europe/London
+                      localtime_epoch: 1748441400
+                      localtime: 2026-05-28 15:30
+                    astronomy:
+                      astro:
+                        sunrise: 05:30 AM
+                        sunset: 08:45 PM
+                        moonrise: 10:15 PM
+                        moonset: 06:42 AM
+                        moon_phase: Waxing Crescent
+                        moon_illumination: 35.0
+                        is_moon_up: 1
+                        is_sun_up: 1
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /sports.json:
+    get:
+      tags:
+      - Sports
+      summary: WeatherAPI Sports Events
+      description: Returns upcoming sports events for football (soccer), cricket, and golf. Historical sports data available on Enterprise plan.
+      operationId: getSports
+      parameters:
+      - $ref: '#/components/parameters/key'
+      - $ref: '#/components/parameters/q'
+      responses:
+        '200':
+          description: Sports events
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SportsResponse'
+              examples:
+                GetSports200Example:
+                  summary: Default getSports 200 response
+                  x-microcks-default: true
+                  value:
+                    football:
+                    - stadium: Wembley Stadium
+                      country: United Kingdom
+                      region: City of London, Greater London
+                      tournament: Premier League
+                      start: sample value
+                      match: Manchester United vs Liverpool
+                    cricket:
+                    - stadium: Wembley Stadium
+                      country: United Kingdom
+                      region: City of London, Greater London
+                      tournament: Premier League
+                      start: sample value
+                      match: Manchester United vs Liverpool
+                    golf:
+                    - stadium: Wembley Stadium
+                      country: United Kingdom
+                      region: City of London, Greater London
+                      tournament: Premier League
+                      start: sample value
+                      match: Manchester United vs Liverpool
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /current.json#bulk:
+    post:
+      tags:
+      - Weather
+      summary: WeatherAPI Bulk Current Weather
+      description: Retrieve current weather for multiple locations in a single request. Pass `q=bulk` in the query string with a JSON body containing up to 50 locations. Each location counts as 1 
+        call. Available on Pro+, Business, and Enterprise plans.
+      operationId: getBulkCurrentWeather
+      parameters:
+      - $ref: '#/components/parameters/key'
+      - name: q
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - bulk
+        example: bulk
+      - $ref: '#/components/parameters/aqi'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkRequest'
+            example:
+              locations:
+              - q: London
+                custom_id: loc-1
+              - q: 48.8567,2.3508
+                custom_id: paris
+              - q: '90210'
+                custom_id: beverly-hills
+      responses:
+        '200':
+          description: Bulk weather results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkResponse'
+              examples:
+                GetBulkCurrentWeather200Example:
+                  summary: Default getBulkCurrentWeather 200 response
+                  x-microcks-default: true
+                  value:
+                    bulk:
+                    - query:
+                        custom_id: sample value
+                        q: sample value
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: key
+      description: API key obtained from https://www.weatherapi.com/my/. Pass as `?key=YOUR_API_KEY` query parameter.
+  parameters:
+    key:
+      name: key
+      in: query
+      required: true
+      description: Your WeatherAPI.com API key.
+      schema:
+        type: string
+        example: YOUR_API_KEY
+    q:
+      name: q
+      in: query
+      required: true
+      description: 'Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268).'
+      schema:
+        type: string
+        example: London
+    dt:
+      name: dt
+      in: query
+      required: false
+      description: Restrict date output in yyyy-MM-dd format.
+      schema:
+        type: string
+        format: date
+    unixdt:
+      name: unixdt
+      in: query
+      required: false
+      description: Unix timestamp equivalent of `dt`. Do not pass both.
+      schema:
+        type: integer
+        example: 1490227200
+    unixend_dt:
+      name: unixend_dt
+      in: query
+      required: false
+      description: Unix timestamp equivalent of `end_dt`. Do not pass both.
+      schema:
+        type: integer
+    hour:
+      name: hour
+      in: query
+      required: false
+      description: Restrict output to a specific hour (0–23) in 24-hour format.
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 23
+    alerts:
+      name: alerts
+      in: query
+      required: false
+      description: Include weather alerts in Forecast API response.
+      schema:
+        type: string
+        enum:
+        - 'yes'
+        - 'no'
+        default: 'no'
+    aqi:
+      name: aqi
+      in: query
+      required: false
+      description: Include Air Quality Index (AQI) data in response.
+      schema:
+        type: string
+        enum:
+        - 'yes'
+        - 'no'
+        default: 'no'
+    pollen:
+      name: pollen
+      in: query
+      required: false
+      description: Include pollen data. Available on Pro+ and above.
+      schema:
+        type: string
+        enum:
+        - 'yes'
+        - 'no'
+        default: 'no'
+    tp:
+      name: tp
+      in: query
+      required: false
+      description: Interval for data. Use tp=15 for 15-minute intervals (Enterprise only).
+      schema:
+        type: integer
+        enum:
+        - 15
+    lang:
+      name: lang
+      in: query
+      required: false
+      description: 'Language code for condition text. E.g.: fr, de, es, zh, ar. See full list in docs.'
+      schema:
+        type: string
+        example: fr
+    current_fields:
+      name: current_fields
+      in: query
+      required: false
+      description: Comma-separated list of fields to return in the current element, e.g. temp_c,wind_mph.
+      schema:
+        type: string
+    day_fields:
+      name: day_fields
+      in: query
+      required: false
+      description: Comma-separated fields to return in forecast/history day element.
+      schema:
+        type: string
+    hour_fields:
+      name: hour_fields
+      in: query
+      required: false
+      description: Comma-separated fields to return in forecast/history hour element.
+      schema:
+        type: string
+    solar:
+      name: solar
+      in: query
+      required: false
+      description: Include solar irradiance data in History API. Enterprise only.
+      schema:
+        type: string
+        enum:
+        - 'yes'
+        - 'no'
+    et0:
+      name: et0
+      in: query
+      required: false
+      description: Include evapotranspiration data. Business and Enterprise only.
+      schema:
+        type: string
+        enum:
+        - 'yes'
+        - 'no'
+    wind100mph:
+      name: wind100mph
+      in: query
+      required: false
+      description: Include wind speed at 100m height in mph. Enterprise only.
+      schema:
+        type: string
+        enum:
+        - 'yes'
+        - 'no'
+    wind100kph:
+      name: wind100kph
+      in: query
+      required: false
+      description: Include wind speed at 100m height in kph. Enterprise only.
+      schema:
+        type: string
+        enum:
+        - 'yes'
+        - 'no'
+  schemas:
+    Location:
+      type: object
+      description: Location metadata returned with every weather response.
+      properties:
+        name:
+          type: string
+          description: Location name
+          example: London
+        region:
+          type: string
+          description: Region or state
+          example: City of London, Greater London
+        country:
+          type: string
+          description: Country name
+          example: United Kingdom
+        lat:
+          type: number
+          format: float
+          description: Latitude
+          example: 51.5074
+        lon:
+          type: number
+          format: float
+          description: Longitude
+          example: -0.1278
+        tz_id:
+          type: string
+          description: IANA timezone ID, e.g. Europe/London
+          example: Europe/London
+        localtime_epoch:
+          type: integer
+          description: Local time as Unix epoch
+          example: 1748441400
+        localtime:
+          type: string
+          description: Local date and time string
+          example: 2026-05-28 15:30
+    Condition:
+      type: object
+      properties:
+        text:
+          type: string
+          description: Weather condition description
+          example: Partly Cloudy
+        icon:
+          type: string
+          description: URL to condition icon
+          example: //cdn.weatherapi.com/weather/64x64/day/116.png
+        code:
+          type: integer
+          description: Condition code (see conditions.json)
+          example: 1003
+    AirQuality:
+      type: object
+      description: Air quality data. Returned when aqi=yes.
+      properties:
+        co:
+          type: number
+          description: Carbon monoxide µg/m³
+          example: 1.0
+        o3:
+          type: number
+          description: Ozone µg/m³
+          example: 1.0
+        no2:
+          type: number
+          description: Nitrogen dioxide µg/m³
+          example: 1.0
+        so2:
+          type: number
+          description: Sulphur dioxide µg/m³
+          example: 1.0
+        pm2_5:
+          type: number
+          description: PM2.5 µg/m³
+          example: 1.0
+        pm10:
+          type: number
+          description: PM10 µg/m³
+          example: 1.0
+        us-epa-index:
+          type: integer
+          description: US EPA index 1–6 (1=Good, 6=Hazardous)
+          example: 1
+        gb-defra-index:
+          type: integer
+          description: UK DEFRA index 1–10
+          example: 1
+    Pollen:
+      type: object
+      description: Pollen data in grains/m³. Returned when pollen=yes (Pro+ and above).
+      properties:
+        Hazel:
+          type: number
+          example: 1.0
+        Alder:
+          type: number
+          example: 1.0
+        Birch:
+          type: number
+          example: 1.0
+        Oak:
+          type: number
+          example: 1.0
+        Grass:
+          type: number
+          example: 1.0
+        Mugwort:
+          type: number
+          example: 1.0
+        Ragweed:
+          type: number
+          example: 1.0
+    CurrentWeather:
+      type: object
+      properties:
+        last_updated_epoch:
+          type: integer
+          example: 1748441400
+        last_updated:
+          type: string
+          example: 2026-05-28 15:30
+        temp_c:
+          type: number
+          description: Temperature °C
+          example: 18.5
+        temp_f:
+          type: number
+          description: Temperature °F
+          example: 65.3
+        is_day:
+          type: integer
+          description: 1=day, 0=night
+          example: 1
+        condition:
+          $ref: '#/components/schemas/Condition'
+        wind_mph:
+          type: number
+          example: 12.4
+        wind_kph:
+          type: number
+          example: 12.4
+        wind_degree:
+          type: integer
+          example: 1
+        wind_dir:
+          type: string
+          description: 16-point compass direction
+          example: WSW
+        pressure_mb:
+          type: number
+          example: 1013.0
+        pressure_in:
+          type: number
+          example: 1013.0
+        precip_mm:
+          type: number
+          example: 0.5
+        precip_in:
+          type: number
+          example: 0.5
+        humidity:
+          type: integer
+          description: Humidity %
+          example: 65
+        cloud:
+          type: integer
+          description: Cloud cover %
+          example: 40
+        feelslike_c:
+          type: number
+          example: 17.8
+        feelslike_f:
+          type: number
+          example: 17.8
+        windchill_c:
+          type: number
+          example: 12.4
+        windchill_f:
+          type: number
+          example: 12.4
+        heatindex_c:
+          type: number
+          example: 1.0
+        heatindex_f:
+          type: number
+          example: 1.0
+        dewpoint_c:
+          type: number
+          example: 1.0
+        dewpoint_f:
+          type: number
+          example: 1.0
+        vis_km:
+          type: number
+          example: 10.0
+        vis_miles:
+          type: number
+          example: 10.0
+        uv:
+          type: number
+          description: UV Index
+          example: 4.0
+        gust_mph:
+          type: number
+          example: 22.1
+        gust_kph:
+          type: number
+          example: 22.1
+        short_rad:
+          type: number
+          description: GHI W/m² (paid plans)
+          example: 1.0
+        diff_rad:
+          type: number
+          description: DHI W/m² (paid plans)
+          example: 1.0
+        air_quality:
+          $ref: '#/components/schemas/AirQuality'
+        pollen:
+          $ref: '#/components/schemas/Pollen'
+    CurrentWeatherResponse:
+      type: object
+      properties:
+        location:
+          $ref: '#/components/schemas/Location'
+        current:
+          $ref: '#/components/schemas/CurrentWeather'
+    AstroElement:
+      type: object
+      properties:
+        sunrise:
+          type: string
+          example: 05:30 AM
+        sunset:
+          type: string
+          example: 08:45 PM
+        moonrise:
+          type: string
+          example: 10:15 PM
+        moonset:
+          type: string
+          example: 06:42 AM
+        moon_phase:
+          type: string
+          example: Waxing Crescent
+        moon_illumination:
+          type: number
+          example: 35.0
+        is_moon_up:
+          type: integer
+          example: 1
+        is_sun_up:
+          type: integer
+          example: 1
+    ForecastDay:
+      type: object
+      properties:
+        maxtemp_c:
+          type: number
+          example: 18.5
+        maxtemp_f:
+          type: number
+          example: 65.3
+        mintemp_c:
+          type: number
+          example: 18.5
+        mintemp_f:
+          type: number
+          example: 65.3
+        avgtemp_c:
+          type: number
+          example: 18.5
+        avgtemp_f:
+          type: number
+          example: 65.3
+        maxwind_mph:
+          type: number
+          example: 12.4
+        maxwind_kph:
+          type: number
+          example: 12.4
+        totalprecip_mm:
+          type: number
+          example: 0.5
+        totalprecip_in:
+          type: number
+          example: 0.5
+        totalsnow_cm:
+          type: number
+          example: 1.0
+        avgvis_km:
+          type: number
+          example: 10.0
+        avgvis_miles:
+          type: number
+          example: 10.0
+        avghumidity:
+          type: integer
+          example: 65
+        daily_will_it_rain:
+          type: integer
+          example: 1
+        daily_chance_of_rain:
+          type: integer
+          example: 1
+        daily_will_it_snow:
+          type: integer
+          example: 1
+        daily_chance_of_snow:
+          type: integer
+          example: 1
+        condition:
+          $ref: '#/components/schemas/Condition'
+        uv:
+          type: number
+          example: 4.0
+        air_quality:
+          $ref: '#/components/schemas/AirQuality'
+    HourForecast:
+      type: object
+      properties:
+        time_epoch:
+          type: integer
+          example: 1748441400
+        time:
+          type: string
+          example: sample value
+        temp_c:
+          type: number
+          example: 18.5
+        temp_f:
+          type: number
+          example: 65.3
+        is_day:
+          type: integer
+          example: 1
+        condition:
+          $ref: '#/components/schemas/Condition'
+        wind_mph:
+          type: number
+          example: 12.4
+        wind_kph:
+          type: number
+          example: 12.4
+        wind_degree:
+          type: integer
+          example: 1
+        wind_dir:
+          type: string
+          example: WSW
+        pressure_mb:
+          type: number
+          example: 1013.0
+        pressure_in:
+          type: number
+          example: 1013.0
+        precip_mm:
+          type: number
+          example: 0.5
+        precip_in:
+          type: number
+          example: 0.5
+        snow_cm:
+          type: number
+          example: 1.0
+        humidity:
+          type: integer
+          example: 65
+        cloud:
+          type: integer
+          example: 40
+        feelslike_c:
+          type: number
+          example: 17.8
+        feelslike_f:
+          type: number
+          example: 17.8
+        windchill_c:
+          type: number
+          example: 12.4
+        windchill_f:
+          type: number
+          example: 12.4
+        heatindex_c:
+          type: number
+          example: 1.0
+        heatindex_f:
+          type: number
+          example: 1.0
+        dewpoint_c:
+          type: number
+          example: 1.0
+        dewpoint_f:
+          type: number
+          example: 1.0
+        will_it_rain:
+          type: integer
+          example: 1
+        chance_of_rain:
+          type: integer
+          example: 1
+        will_it_snow:
+          type: integer
+          example: 1
+        chance_of_snow:
+          type: integer
+          example: 1
+        vis_km:
+          type: number
+          example: 10.0
+        vis_miles:
+          type: number
+          example: 10.0
+        gust_mph:
+          type: number
+          example: 22.1
+        gust_kph:
+          type: number
+          example: 22.1
+        uv:
+          type: number
+          example: 4.0
+        short_rad:
+          type: number
+          example: 1.0
+        diff_rad:
+          type: number
+          example: 1.0
+        et0:
+          type: number
+          description: Evapotranspiration (Business+)
+          example: 1.0
+        air_quality:
+          $ref: '#/components/schemas/AirQuality'
+        pollen:
+          $ref: '#/components/schemas/Pollen'
+    ForecastDayEntry:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+          example: '2026-05-28'
+        date_epoch:
+          type: integer
+          example: 1748441400
+        day:
+          $ref: '#/components/schemas/ForecastDay'
+        astro:
+          $ref: '#/components/schemas/AstroElement'
+        hour:
+          type: array
+          items:
+            $ref: '#/components/schemas/HourForecast'
+    Alert:
+      type: object
+      properties:
+        headline:
+          type: string
+          example: sample value
+        msgtype:
+          type: string
+          example: sample value
+        severity:
+          type: string
+          example: sample value
+        urgency:
+          type: string
+          example: sample value
+        areas:
+          type: string
+          example: sample value
+        category:
+          type: string
+          example: sample value
+        certainty:
+          type: string
+          example: sample value
+        event:
+          type: string
+          example: Severe Thunderstorm Warning
+        note:
+          type: string
+          example: sample value
+        effective:
+          type: string
+          example: '2026-05-28T13:00:00Z'
+        expires:
+          type: string
+          example: '2026-05-28T13:00:00Z'
+        desc:
+          type: string
+          example: Severe thunderstorms with damaging winds expected in the warning area.
+        instruction:
+          type: string
+          example: sample value
+    ForecastWeatherResponse:
+      type: object
+      properties:
+        location:
+          $ref: '#/components/schemas/Location'
+        current:
+          $ref: '#/components/schemas/CurrentWeather'
+        forecast:
+          type: object
+          properties:
+            forecastday:
+              type: array
+              items:
+                $ref: '#/components/schemas/ForecastDayEntry'
+        alerts:
+          type: object
+          properties:
+            alert:
+              type: array
+              items:
+                $ref: '#/components/schemas/Alert'
+    AlertsResponse:
+      type: object
+      properties:
+        location:
+          $ref: '#/components/schemas/Location'
+        alerts:
+          type: object
+          properties:
+            alert:
+              type: array
+              items:
+                $ref: '#/components/schemas/Alert'
+    MarineHour:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/HourForecast'
+      properties:
+        sig_ht_mt:
+          type: number
+          description: Significant wave height in metres
+          example: 1.0
+        swell_ht_mt:
+          type: number
+          example: 0.8
+        swell_ht_ft:
+          type: number
+          example: 0.8
+        swell_dir:
+          type: number
+          example: 0.8
+        swell_dir_16_point:
+          type: string
+          example: sample value
+        swell_period_secs:
+          type: number
+          example: 0.8
+        water_temp_c:
+          type: number
+          description: Water temp °C (Pro+ and above)
+          example: 18.5
+        water_temp_f:
+          type: number
+          example: 65.3
+    Tide:
+      type: object
+      properties:
+        tide_time:
+          type: string
+          example: 2026-05-28 04:30
+        tide_height_mt:
+          type: number
+          example: 1.0
+        tide_type:
+          type: string
+          enum:
+          - High
+          - Low
+          example: High
+    MarineForecastDay:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+          example: '2026-05-28'
+        date_epoch:
+          type: integer
+          example: 1748441400
+        day:
+          $ref: '#/components/schemas/ForecastDay'
+        astro:
+          $ref: '#/components/schemas/AstroElement'
+        tides:
+          type: array
+          items:
+            type: object
+            properties:
+              tide:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tide'
+        hour:
+          type: array
+          items:
+            $ref: '#/components/schemas/MarineHour'
+    MarineWeatherResponse:
+      type: object
+      properties:
+        location:
+          $ref: '#/components/schemas/Location'
+        forecast:
+          type: object
+          properties:
+            forecastday:
+              type: array
+              items:
+                $ref: '#/components/schemas/MarineForecastDay'
+    SearchLocation:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2643743
+        name:
+          type: string
+          example: London
+        region:
+          type: string
+          example: City of London, Greater London
+        country:
+          type: string
+          example: United Kingdom
+        lat:
+          type: number
+          example: 51.5074
+        lon:
+          type: number
+          example: -0.1278
+        url:
+          type: string
+          description: URL-safe location slug
+          example: sample value
+    IpLookupResponse:
+      type: object
+      properties:
+        ip:
+          type: string
+          example: sample value
+        type:
+          type: string
+          enum:
+          - ipv4
+          - ipv6
+          example: ipv4
+        continent_code:
+          type: string
+          example: EGLL
+        continent_name:
+          type: string
+          example: EU
+        country_code:
+          type: string
+          example: United Kingdom
+        country_name:
+          type: string
+          example: United Kingdom
+        is_eu:
+          type: boolean
+          example: false
+        geoname_id:
+          type: string
+          example: sample value
+        city:
+          type: string
+          example: sample value
+        region:
+          type: string
+          example: City of London, Greater London
+        lat:
+          type: number
+          example: 51.5074
+        lon:
+          type: number
+          example: -0.1278
+        tz_id:
+          type: string
+          example: Europe/London
+        localtime_epoch:
+          type: integer
+          example: 1748441400
+        localtime:
+          type: string
+          example: 2026-05-28 15:30
+    TimezoneResponse:
+      type: object
+      properties:
+        location:
+          $ref: '#/components/schemas/Location'
+    AstronomyResponse:
+      type: object
+      properties:
+        location:
+          $ref: '#/components/schemas/Location'
+        astronomy:
+          type: object
+          properties:
+            astro:
+              $ref: '#/components/schemas/AstroElement'
+    SportEvent:
+      type: object
+      properties:
+        stadium:
+          type: string
+          example: Wembley Stadium
+        country:
+          type: string
+          example: United Kingdom
+        region:
+          type: string
+          example: City of London, Greater London
+        tournament:
+          type: string
+          example: Premier League
+        start:
+          type: string
+          description: Local start datetime yyyy-MM-dd HH:mm
+          example: sample value
+        match:
+          type: string
+          example: Manchester United vs Liverpool
+    SportsResponse:
+      type: object
+      properties:
+        football:
+          type: array
+          items:
+            $ref: '#/components/schemas/SportEvent'
+        cricket:
+          type: array
+          items:
+            $ref: '#/components/schemas/SportEvent'
+        golf:
+          type: array
+          items:
+            $ref: '#/components/schemas/SportEvent'
+    BulkLocation:
+      type: object
+      required:
+      - q
+      properties:
+        q:
+          type: string
+          description: Location query (same formats as q parameter)
+          example: sample value
+        custom_id:
+          type: string
+          description: Optional identifier echoed back in response
+          example: sample value
+    BulkRequest:
+      type: object
+      required:
+      - locations
+      properties:
+        locations:
+          type: array
+          maxItems: 50
+          items:
+            $ref: '#/components/schemas/BulkLocation'
+    BulkResponse:
+      type: object
+      properties:
+        bulk:
+          type: array
+          items:
+            type: object
+            properties:
+              query:
+                type: object
+                properties:
+                  custom_id:
+                    type: string
+                  q:
+                    type: string
+                  location:
+                    $ref: '#/components/schemas/Location'
+                  current:
+                    $ref: '#/components/schemas/CurrentWeather'
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              description: WeatherAPI error code
+            message:
+              type: string
+      example:
+        error:
+          code: 1006
+          message: No location found matching parameter 'q'
+  responses:
+    BadRequest:
+      description: Bad request — invalid parameter or location not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Unauthorized — API key missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: Forbidden — API key quota exceeded, disabled, or plan does not include this resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+externalDocs:
+  description: Official WeatherAPI.com Documentation
+  url: https://www.weatherapi.com/docs/

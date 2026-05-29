@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/weatherapi/refs/heads/main/json-schema/weatherapi-bulk-location-schema.json",
+  "title": "BulkLocation",
+  "description": "BulkLocation schema from WeatherAPI.com",
+  "type": "object",
+  "properties": {
+    "q": {
+      "type": "string",
+      "description": "Location query (same formats as q parameter)",
+      "example": "sample value"
+    },
+    "custom_id": {
+      "type": "string",
+      "description": "Optional identifier echoed back in response",
+      "example": "sample value"
+    }
+  },
+  "required": [
+    "q"
+  ]
+}

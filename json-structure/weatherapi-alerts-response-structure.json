@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/weatherapi/refs/heads/main/json-structure/weatherapi-alerts-response-structure.json",
+  "name": "AlertsResponse",
+  "description": "AlertsResponse schema from WeatherAPI.com",
+  "type": "object",
+  "properties": {
+    "location": {
+      "type": "object",
+      "description": "Location metadata returned with every weather response.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Location name",
+          "example": "London"
+        },
+        "region": {
+          "type": "string",
+          "description": "Region or state",
+          "example": "City of London, Greater London"
+        },
+        "country": {
+          "type": "string",
+          "description": "Country name",
+          "example": "United Kingdom"
+        },
+        "lat": {
+          "type": "float",
+          "description": "Latitude",
+          "example": 51.5074
+        },
+        "lon": {
+          "type": "float",
+          "description": "Longitude",
+          "example": -0.1278
+        },
+        "tz_id": {
+          "type": "string",
+          "description": "IANA timezone ID, e.g. Europe/London",
+          "example": "Europe/London"
+        },
+        "localtime_epoch": {
+          "type": "int32",
+          "description": "Local time as Unix epoch",
+          "example": 1748441400
+        },
+        "localtime": {
+          "type": "string",
+          "description": "Local date and time string",
+          "example": "2026-05-28 15:30"
+        }
+      }
+    },
+    "alerts": {
+      "type": "object",
+      "properties": {
+        "alert": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "headline": {
+                "type": "string",
+                "example": "sample value"
+              },
+              "msgtype": {
+                "type": "string",
+                "example": "sample value"
+              },
+              "severity": {
+                "type": "string",
+                "example": "sample value"
+              },
+              "urgency": {
+                "type": "string",
+                "example": "sample value"
+              },
+              "areas": {
+                "type": "string",
+                "example": "sample value"
+              },
+              "category": {
+                "type": "string",
+                "example": "sample value"
+              },
+              "certainty": {
+                "type": "string",
+                "example": "sample value"
+              },
+              "event": {
+                "type": "string",
+                "example": "Severe Thunderstorm Warning"
+              },
+              "note": {
+                "type": "string",
+                "example": "sample value"
+              },
+              "effective": {
+                "type": "string",
+                "example": "2026-05-28T13:00:00Z"
+              },
+              "expires": {
+                "type": "string",
+                "example": "2026-05-28T13:00:00Z"
+              },
+              "desc": {
+                "type": "string",
+                "example": "Severe thunderstorms with damaging winds expected in the warning area."
+              },
+              "instruction": {
+                "type": "string",
+                "example": "sample value"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

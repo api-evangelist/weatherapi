@@ -1,0 +1,17 @@
+{
+  "ip": "sample value",
+  "type": "ipv4",
+  "continent_code": "EGLL",
+  "continent_name": "EU",
+  "country_code": "United Kingdom",
+  "country_name": "United Kingdom",
+  "is_eu": false,
+  "geoname_id": "sample value",
+  "city": "sample value",
+  "region": "City of London, Greater London",
+  "lat": 51.5074,
+  "lon": -0.1278,
+  "tz_id": "Europe/London",
+  "localtime_epoch": 1748441400,
+  "localtime": "2026-05-28 15:30"
+}

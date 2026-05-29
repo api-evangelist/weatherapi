@@ -1,0 +1,223 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/weatherapi/refs/heads/main/json-schema/weatherapi-marine-weather-response-schema.json",
+  "title": "MarineWeatherResponse",
+  "description": "MarineWeatherResponse schema from WeatherAPI.com",
+  "type": "object",
+  "properties": {
+    "location": {
+      "type": "object",
+      "description": "Location metadata returned with every weather response.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Location name",
+          "example": "London"
+        },
+        "region": {
+          "type": "string",
+          "description": "Region or state",
+          "example": "City of London, Greater London"
+        },
+        "country": {
+          "type": "string",
+          "description": "Country name",
+          "example": "United Kingdom"
+        },
+        "lat": {
+          "type": "number",
+          "format": "float",
+          "description": "Latitude",
+          "example": 51.5074
+        },
+        "lon": {
+          "type": "number",
+          "format": "float",
+          "description": "Longitude",
+          "example": -0.1278
+        },
+        "tz_id": {
+          "type": "string",
+          "description": "IANA timezone ID, e.g. Europe/London",
+          "example": "Europe/London"
+        },
+        "localtime_epoch": {
+          "type": "integer",
+          "description": "Local time as Unix epoch",
+          "example": 1748441400
+        },
+        "localtime": {
+          "type": "string",
+          "description": "Local date and time string",
+          "example": "2026-05-28 15:30"
+        }
+      }
+    },
+    "forecast": {
+      "type": "object",
+      "properties": {
+        "forecastday": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "date": {
+                "type": "string",
+                "format": "date",
+                "example": "2026-05-28"
+              },
+              "date_epoch": {
+                "type": "integer",
+                "example": 1748441400
+              },
+              "day": {
+                "type": "object",
+                "properties": {
+                  "maxtemp_c": {
+                    "type": "number",
+                    "example": 18.5
+                  },
+                  "maxtemp_f": {
+                    "type": "number",
+                    "example": 65.3
+                  },
+                  "mintemp_c": {
+                    "type": "number",
+                    "example": 18.5
+                  },
+                  "mintemp_f": {
+                    "type": "number",
+                    "example": 65.3
+                  },
+                  "avgtemp_c": {
+                    "type": "number",
+                    "example": 18.5
+                  },
+                  "avgtemp_f": {
+                    "type": "number",
+                    "example": 65.3
+                  },
+                  "maxwind_mph": {
+                    "type": "number",
+                    "example": 12.4
+                  },
+                  "maxwind_kph": {
+                    "type": "number",
+                    "example": 12.4
+                  },
+                  "totalprecip_mm": {
+                    "type": "number",
+                    "example": 0.5
+                  },
+                  "totalprecip_in": {
+                    "type": "number",
+                    "example": 0.5
+                  },
+                  "totalsnow_cm": {
+                    "type": "number",
+                    "example": 1.0
+                  },
+                  "avgvis_km": {
+                    "type": "number",
+                    "example": 10.0
+                  },
+                  "avgvis_miles": {
+                    "type": "number",
+                    "example": 10.0
+                  },
+                  "avghumidity": {
+                    "type": "integer",
+                    "example": 65
+                  },
+                  "daily_will_it_rain": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "daily_chance_of_rain": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "daily_will_it_snow": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "daily_chance_of_snow": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "condition": {
+                    "$ref": "#/components/schemas/Condition"
+                  },
+                  "uv": {
+                    "type": "number",
+                    "example": 4.0
+                  },
+                  "air_quality": {
+                    "$ref": "#/components/schemas/AirQuality"
+                  }
+                }
+              },
+              "astro": {
+                "type": "object",
+                "properties": {
+                  "sunrise": {
+                    "type": "string",
+                    "example": "05:30 AM"
+                  },
+                  "sunset": {
+                    "type": "string",
+                    "example": "08:45 PM"
+                  },
+                  "moonrise": {
+                    "type": "string",
+                    "example": "10:15 PM"
+                  },
+                  "moonset": {
+                    "type": "string",
+                    "example": "06:42 AM"
+                  },
+                  "moon_phase": {
+                    "type": "string",
+                    "example": "Waxing Crescent"
+                  },
+                  "moon_illumination": {
+                    "type": "number",
+                    "example": 35.0
+                  },
+                  "is_moon_up": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "is_sun_up": {
+                    "type": "integer",
+                    "example": 1
+                  }
+                }
+              },
+              "tides": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "tide": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Tide"
+                      }
+                    }
+                  }
+                }
+              },
+              "hour": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/MarineHour"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

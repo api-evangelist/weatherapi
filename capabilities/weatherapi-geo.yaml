@@ -1,0 +1,242 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: WeatherAPI.com — Geo
+  description: |-
+    Geo — Geo. 4 operations. Lead operation: WeatherAPI Search / Autocomplete Locations. Self-contained Naftiko capability covering one WeatherAPI business surface.
+  tags:
+  - WeatherAPI
+  - Weather
+  - Geo
+  created: '2026-05-28'
+  modified: '2026-05-28'
+binds:
+- namespace: env
+  keys:
+    WEATHERAPI_KEY: WEATHERAPI_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: weatherapi-geo
+    baseUri: https://api.weatherapi.com/v1
+    description: WeatherAPI.com — Geo business capability. Self-contained, no shared references.
+    authentication:
+      type: apikey
+      key: key
+      value: '{{env.WEATHERAPI_KEY}}'
+      placement: query
+    resources:
+    - name: search-json
+      path: /search.json
+      operations:
+      - name: searchLocations
+        method: GET
+        description: WeatherAPI Search / Autocomplete Locations
+        inputParameters:
+        - name: key
+          in: query
+          type: string
+          required: true
+          description: Your WeatherAPI.com API key.
+        - name: q
+          in: query
+          type: string
+          required: true
+          description: Partial city name, postcode, or coordinates to search.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: ip-json
+      path: /ip.json
+      operations:
+      - name: ipLookup
+        method: GET
+        description: WeatherAPI IP Lookup
+        inputParameters:
+        - name: key
+          in: query
+          type: string
+          required: true
+          description: Your WeatherAPI.com API key.
+        - name: q
+          in: query
+          type: string
+          required: true
+          description: IPv4, IPv6 address, or `auto:ip` for caller's IP.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: timezone-json
+      path: /timezone.json
+      operations:
+      - name: getTimezone
+        method: GET
+        description: WeatherAPI Time Zone
+        inputParameters:
+        - name: key
+          in: query
+          type: string
+          required: true
+          description: Your WeatherAPI.com API key.
+        - name: q
+          in: query
+          type: string
+          required: true
+          description: 'Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268).'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: astronomy-json
+      path: /astronomy.json
+      operations:
+      - name: getAstronomy
+        method: GET
+        description: WeatherAPI Astronomy
+        inputParameters:
+        - name: key
+          in: query
+          type: string
+          required: true
+          description: Your WeatherAPI.com API key.
+        - name: q
+          in: query
+          type: string
+          required: true
+          description: 'Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268).'
+        - name: dt
+          in: query
+          type: string
+          required: true
+          description: Date in yyyy-MM-dd format.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    namespace: weatherapi-geo-rest
+    port: 8080
+    description: REST adapter for WeatherAPI.com — Geo. One Spectral-compliant resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/search
+      name: search
+      description: REST surface for /search.
+      operations:
+      - method: GET
+        name: searchLocations
+        description: WeatherAPI Search / Autocomplete Locations
+        call: weatherapi-geo.searchLocations
+        with:
+          key: rest.key
+          q: rest.q
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/ip
+      name: ip
+      description: REST surface for /ip.
+      operations:
+      - method: GET
+        name: ipLookup
+        description: WeatherAPI IP Lookup
+        call: weatherapi-geo.ipLookup
+        with:
+          key: rest.key
+          q: rest.q
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/timezone
+      name: timezone
+      description: REST surface for /timezone.
+      operations:
+      - method: GET
+        name: getTimezone
+        description: WeatherAPI Time Zone
+        call: weatherapi-geo.getTimezone
+        with:
+          key: rest.key
+          q: rest.q
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/astronomy
+      name: astronomy
+      description: REST surface for /astronomy.
+      operations:
+      - method: GET
+        name: getAstronomy
+        description: WeatherAPI Astronomy
+        call: weatherapi-geo.getAstronomy
+        with:
+          key: rest.key
+          q: rest.q
+          dt: rest.dt
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: weatherapi-geo-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for WeatherAPI.com — Geo. One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: search-locations
+      description: WeatherAPI Search / Autocomplete Locations
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: weatherapi-geo.searchLocations
+      with:
+        key: tools.key
+        q: tools.q
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: ip-lookup
+      description: WeatherAPI IP Lookup
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: weatherapi-geo.ipLookup
+      with:
+        key: tools.key
+        q: tools.q
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-timezone
+      description: WeatherAPI Time Zone
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: weatherapi-geo.getTimezone
+      with:
+        key: tools.key
+        q: tools.q
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-astronomy
+      description: WeatherAPI Astronomy
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: weatherapi-geo.getAstronomy
+      with:
+        key: tools.key
+        q: tools.q
+        dt: tools.dt
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,238 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/weatherapi/refs/heads/main/json-schema/weatherapi-current-weather-schema.json",
+  "title": "CurrentWeather",
+  "description": "CurrentWeather schema from WeatherAPI.com",
+  "type": "object",
+  "properties": {
+    "last_updated_epoch": {
+      "type": "integer",
+      "example": 1748441400
+    },
+    "last_updated": {
+      "type": "string",
+      "example": "2026-05-28 15:30"
+    },
+    "temp_c": {
+      "type": "number",
+      "description": "Temperature °C",
+      "example": 18.5
+    },
+    "temp_f": {
+      "type": "number",
+      "description": "Temperature °F",
+      "example": 65.3
+    },
+    "is_day": {
+      "type": "integer",
+      "description": "1=day, 0=night",
+      "example": 1
+    },
+    "condition": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "Weather condition description",
+          "example": "Partly Cloudy"
+        },
+        "icon": {
+          "type": "string",
+          "description": "URL to condition icon",
+          "example": "//cdn.weatherapi.com/weather/64x64/day/116.png"
+        },
+        "code": {
+          "type": "integer",
+          "description": "Condition code (see conditions.json)",
+          "example": 1003
+        }
+      }
+    },
+    "wind_mph": {
+      "type": "number",
+      "example": 12.4
+    },
+    "wind_kph": {
+      "type": "number",
+      "example": 12.4
+    },
+    "wind_degree": {
+      "type": "integer",
+      "example": 1
+    },
+    "wind_dir": {
+      "type": "string",
+      "description": "16-point compass direction",
+      "example": "WSW"
+    },
+    "pressure_mb": {
+      "type": "number",
+      "example": 1013.0
+    },
+    "pressure_in": {
+      "type": "number",
+      "example": 1013.0
+    },
+    "precip_mm": {
+      "type": "number",
+      "example": 0.5
+    },
+    "precip_in": {
+      "type": "number",
+      "example": 0.5
+    },
+    "humidity": {
+      "type": "integer",
+      "description": "Humidity %",
+      "example": 65
+    },
+    "cloud": {
+      "type": "integer",
+      "description": "Cloud cover %",
+      "example": 40
+    },
+    "feelslike_c": {
+      "type": "number",
+      "example": 17.8
+    },
+    "feelslike_f": {
+      "type": "number",
+      "example": 17.8
+    },
+    "windchill_c": {
+      "type": "number",
+      "example": 12.4
+    },
+    "windchill_f": {
+      "type": "number",
+      "example": 12.4
+    },
+    "heatindex_c": {
+      "type": "number",
+      "example": 1.0
+    },
+    "heatindex_f": {
+      "type": "number",
+      "example": 1.0
+    },
+    "dewpoint_c": {
+      "type": "number",
+      "example": 1.0
+    },
+    "dewpoint_f": {
+      "type": "number",
+      "example": 1.0
+    },
+    "vis_km": {
+      "type": "number",
+      "example": 10.0
+    },
+    "vis_miles": {
+      "type": "number",
+      "example": 10.0
+    },
+    "uv": {
+      "type": "number",
+      "description": "UV Index",
+      "example": 4.0
+    },
+    "gust_mph": {
+      "type": "number",
+      "example": 22.1
+    },
+    "gust_kph": {
+      "type": "number",
+      "example": 22.1
+    },
+    "short_rad": {
+      "type": "number",
+      "description": "GHI W/m² (paid plans)",
+      "example": 1.0
+    },
+    "diff_rad": {
+      "type": "number",
+      "description": "DHI W/m² (paid plans)",
+      "example": 1.0
+    },
+    "air_quality": {
+      "type": "object",
+      "description": "Air quality data. Returned when aqi=yes.",
+      "properties": {
+        "co": {
+          "type": "number",
+          "description": "Carbon monoxide µg/m³",
+          "example": 1.0
+        },
+        "o3": {
+          "type": "number",
+          "description": "Ozone µg/m³",
+          "example": 1.0
+        },
+        "no2": {
+          "type": "number",
+          "description": "Nitrogen dioxide µg/m³",
+          "example": 1.0
+        },
+        "so2": {
+          "type": "number",
+          "description": "Sulphur dioxide µg/m³",
+          "example": 1.0
+        },
+        "pm2_5": {
+          "type": "number",
+          "description": "PM2.5 µg/m³",
+          "example": 1.0
+        },
+        "pm10": {
+          "type": "number",
+          "description": "PM10 µg/m³",
+          "example": 1.0
+        },
+        "us-epa-index": {
+          "type": "integer",
+          "description": "US EPA index 1–6 (1=Good, 6=Hazardous)",
+          "example": 1
+        },
+        "gb-defra-index": {
+          "type": "integer",
+          "description": "UK DEFRA index 1–10",
+          "example": 1
+        }
+      }
+    },
+    "pollen": {
+      "type": "object",
+      "description": "Pollen data in grains/m³. Returned when pollen=yes (Pro+ and above).",
+      "properties": {
+        "Hazel": {
+          "type": "number",
+          "example": 1.0
+        },
+        "Alder": {
+          "type": "number",
+          "example": 1.0
+        },
+        "Birch": {
+          "type": "number",
+          "example": 1.0
+        },
+        "Oak": {
+          "type": "number",
+          "example": 1.0
+        },
+        "Grass": {
+          "type": "number",
+          "example": 1.0
+        },
+        "Mugwort": {
+          "type": "number",
+          "example": 1.0
+        },
+        "Ragweed": {
+          "type": "number",
+          "example": 1.0
+        }
+      }
+    }
+  }
+}

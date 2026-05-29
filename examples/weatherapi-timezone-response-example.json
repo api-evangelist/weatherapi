@@ -1,0 +1,12 @@
+{
+  "location": {
+    "name": "London",
+    "region": "City of London, Greater London",
+    "country": "United Kingdom",
+    "lat": 51.5074,
+    "lon": -0.1278,
+    "tz_id": "Europe/London",
+    "localtime_epoch": 1748441400,
+    "localtime": "2026-05-28 15:30"
+  }
+}

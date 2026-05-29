@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/weatherapi/refs/heads/main/json-schema/weatherapi-forecast-day-schema.json",
+  "title": "ForecastDay",
+  "description": "ForecastDay schema from WeatherAPI.com",
+  "type": "object",
+  "properties": {
+    "maxtemp_c": {
+      "type": "number",
+      "example": 18.5
+    },
+    "maxtemp_f": {
+      "type": "number",
+      "example": 65.3
+    },
+    "mintemp_c": {
+      "type": "number",
+      "example": 18.5
+    },
+    "mintemp_f": {
+      "type": "number",
+      "example": 65.3
+    },
+    "avgtemp_c": {
+      "type": "number",
+      "example": 18.5
+    },
+    "avgtemp_f": {
+      "type": "number",
+      "example": 65.3
+    },
+    "maxwind_mph": {
+      "type": "number",
+      "example": 12.4
+    },
+    "maxwind_kph": {
+      "type": "number",
+      "example": 12.4
+    },
+    "totalprecip_mm": {
+      "type": "number",
+      "example": 0.5
+    },
+    "totalprecip_in": {
+      "type": "number",
+      "example": 0.5
+    },
+    "totalsnow_cm": {
+      "type": "number",
+      "example": 1.0
+    },
+    "avgvis_km": {
+      "type": "number",
+      "example": 10.0
+    },
+    "avgvis_miles": {
+      "type": "number",
+      "example": 10.0
+    },
+    "avghumidity": {
+      "type": "integer",
+      "example": 65
+    },
+    "daily_will_it_rain": {
+      "type": "integer",
+      "example": 1
+    },
+    "daily_chance_of_rain": {
+      "type": "integer",
+      "example": 1
+    },
+    "daily_will_it_snow": {
+      "type": "integer",
+      "example": 1
+    },
+    "daily_chance_of_snow": {
+      "type": "integer",
+      "example": 1
+    },
+    "condition": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "Weather condition description",
+          "example": "Partly Cloudy"
+        },
+        "icon": {
+          "type": "string",
+          "description": "URL to condition icon",
+          "example": "//cdn.weatherapi.com/weather/64x64/day/116.png"
+        },
+        "code": {
+          "type": "integer",
+          "description": "Condition code (see conditions.json)",
+          "example": 1003
+        }
+      }
+    },
+    "uv": {
+      "type": "number",
+      "example": 4.0
+    },
+    "air_quality": {
+      "type": "object",
+      "description": "Air quality data. Returned when aqi=yes.",
+      "properties": {
+        "co": {
+          "type": "number",
+          "description": "Carbon monoxide µg/m³",
+          "example": 1.0
+        },
+        "o3": {
+          "type": "number",
+          "description": "Ozone µg/m³",
+          "example": 1.0
+        },
+        "no2": {
+          "type": "number",
+          "description": "Nitrogen dioxide µg/m³",
+          "example": 1.0
+        },
+        "so2": {
+          "type": "number",
+          "description": "Sulphur dioxide µg/m³",
+          "example": 1.0
+        },
+        "pm2_5": {
+          "type": "number",
+          "description": "PM2.5 µg/m³",
+          "example": 1.0
+        },
+        "pm10": {
+          "type": "number",
+          "description": "PM10 µg/m³",
+          "example": 1.0
+        },
+        "us-epa-index": {
+          "type": "integer",
+          "description": "US EPA index 1–6 (1=Good, 6=Hazardous)",
+          "example": 1
+        },
+        "gb-defra-index": {
+          "type": "integer",
+          "description": "UK DEFRA index 1–10",
+          "example": 1
+        }
+      }
+    }
+  }
+}

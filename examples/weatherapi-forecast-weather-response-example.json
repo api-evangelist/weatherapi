@@ -1,0 +1,131 @@
+{
+  "location": {
+    "name": "London",
+    "region": "City of London, Greater London",
+    "country": "United Kingdom",
+    "lat": 51.5074,
+    "lon": -0.1278,
+    "tz_id": "Europe/London",
+    "localtime_epoch": 1748441400,
+    "localtime": "2026-05-28 15:30"
+  },
+  "current": {
+    "last_updated_epoch": 1748441400,
+    "last_updated": "2026-05-28 15:30",
+    "temp_c": 18.5,
+    "temp_f": 65.3,
+    "is_day": 1,
+    "condition": {
+      "text": "Partly Cloudy",
+      "icon": "//cdn.weatherapi.com/weather/64x64/day/116.png",
+      "code": 1003
+    },
+    "wind_mph": 12.4,
+    "wind_kph": 12.4,
+    "wind_degree": 1,
+    "wind_dir": "WSW",
+    "pressure_mb": 1013.0,
+    "pressure_in": 1013.0,
+    "precip_mm": 0.5,
+    "precip_in": 0.5,
+    "humidity": 65,
+    "cloud": 40,
+    "feelslike_c": 17.8,
+    "feelslike_f": 17.8,
+    "windchill_c": 12.4,
+    "windchill_f": 12.4,
+    "heatindex_c": 1.0,
+    "heatindex_f": 1.0,
+    "dewpoint_c": 1.0,
+    "dewpoint_f": 1.0,
+    "vis_km": 10.0,
+    "vis_miles": 10.0,
+    "uv": 4.0,
+    "gust_mph": 22.1,
+    "gust_kph": 22.1,
+    "short_rad": 1.0,
+    "diff_rad": 1.0,
+    "air_quality": {
+      "co": 1.0,
+      "o3": 1.0,
+      "no2": 1.0,
+      "so2": 1.0,
+      "pm2_5": 1.0,
+      "pm10": 1.0,
+      "us-epa-index": 1,
+      "gb-defra-index": 1
+    },
+    "pollen": {
+      "Hazel": 1.0,
+      "Alder": 1.0,
+      "Birch": 1.0,
+      "Oak": 1.0,
+      "Grass": 1.0,
+      "Mugwort": 1.0,
+      "Ragweed": 1.0
+    }
+  },
+  "forecast": {
+    "forecastday": [
+      {
+        "date": "2026-05-28",
+        "date_epoch": 1748441400,
+        "day": {
+          "maxtemp_c": 18.5,
+          "maxtemp_f": 65.3,
+          "mintemp_c": 18.5,
+          "mintemp_f": 65.3,
+          "avgtemp_c": 18.5,
+          "avgtemp_f": 65.3,
+          "maxwind_mph": 12.4,
+          "maxwind_kph": 12.4,
+          "totalprecip_mm": 0.5,
+          "totalprecip_in": 0.5,
+          "totalsnow_cm": 1.0,
+          "avgvis_km": 10.0,
+          "avgvis_miles": 10.0,
+          "avghumidity": 65,
+          "daily_will_it_rain": 1,
+          "daily_chance_of_rain": 1,
+          "daily_will_it_snow": 1,
+          "daily_chance_of_snow": 1,
+          "condition": {},
+          "uv": 4.0,
+          "air_quality": {}
+        },
+        "astro": {
+          "sunrise": "05:30 AM",
+          "sunset": "08:45 PM",
+          "moonrise": "10:15 PM",
+          "moonset": "06:42 AM",
+          "moon_phase": "Waxing Crescent",
+          "moon_illumination": 35.0,
+          "is_moon_up": 1,
+          "is_sun_up": 1
+        },
+        "hour": [
+          {}
+        ]
+      }
+    ]
+  },
+  "alerts": {
+    "alert": [
+      {
+        "headline": "sample value",
+        "msgtype": "sample value",
+        "severity": "sample value",
+        "urgency": "sample value",
+        "areas": "sample value",
+        "category": "sample value",
+        "certainty": "sample value",
+        "event": "Severe Thunderstorm Warning",
+        "note": "sample value",
+        "effective": "2026-05-28T13:00:00Z",
+        "expires": "2026-05-28T13:00:00Z",
+        "desc": "Severe thunderstorms with damaging winds expected in the warning area.",
+        "instruction": "sample value"
+      }
+    ]
+  }
+}

@@ -1,0 +1,105 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+
+provider: WeatherAPI.com
+providerId: weatherapi
+created: '2026-05-28'
+modified: '2026-05-28'
+reconciled: false
+
+tags:
+  - Rate Limiting
+  - Weather
+  - Geolocation
+
+description: >-
+  WeatherAPI.com enforces a monthly call-volume quota (the plan entitlement: 100K → 10M+) as its
+  primary control. Per-second request limits are not published as numeric values on the public
+  pricing or docs pages — the provider says "very high concurrency, contact us if you need a
+  specific number." The Business and Enterprise tiers add IP allow/block lists. Quota is scoped to
+  the account (API key); exceeding it returns HTTP 403 with a JSON ErrorResponse explaining "API
+  key has exceeded calls per month quota." Hard infrastructure throttling responds with HTTP 429.
+
+sources:
+  - https://www.weatherapi.com/docs/
+  - https://www.weatherapi.com/pricing.aspx
+
+responseCodes:
+  quotaExceeded: 403
+  throttled: 429
+  invalidKey: 401
+  badRequest: 400
+
+limits:
+
+  - name: Monthly call quota (Free)
+    scope: account
+    metric: requests_per_month
+    limit: 100000
+    timeFrame: month
+    notes: Resets on the calendar month boundary. Excess returns HTTP 403.
+
+  - name: Monthly call quota (Starter)
+    scope: account
+    metric: requests_per_month
+    limit: 3000000
+    timeFrame: month
+
+  - name: Monthly call quota (Pro+)
+    scope: account
+    metric: requests_per_month
+    limit: 5000000
+    timeFrame: month
+
+  - name: Monthly call quota (Business)
+    scope: account
+    metric: requests_per_month
+    limit: 10000000
+    timeFrame: month
+
+  - name: Monthly call quota (Enterprise)
+    scope: account
+    metric: requests_per_month
+    limit: -1
+    notes: Custom quota negotiated per contract.
+
+  - name: Burst / per-second throttle
+    scope: account
+    metric: requests_per_second
+    limit: 'not publicly documented — contact support for guaranteed concurrency'
+    notes: Hard throttling returns HTTP 429; the SLA targets 99–100% availability with 200ms average response time.
+
+  - name: Bulk request size (Pro+ and above)
+    scope: account
+    metric: locations_per_request
+    limit: 50
+    notes: POST /current.json#bulk accepts up to 50 location entries per call.
+
+policies:
+
+  - name: Quota scope
+    description: All quotas are scoped to a single API key (account). Multiple keys can be issued from the same account dashboard.
+
+  - name: Quota reset
+    description: Monthly quotas reset at 00:00 UTC on the first day of the calendar month.
+
+  - name: Error semantics
+    description: |
+      - 400 — malformed request (missing q, invalid date format, invalid days range).
+      - 401 — missing or unrecognised API key.
+      - 403 — recognised key, but plan does not permit the requested endpoint, parameter, or quota is exhausted.
+      - 429 — infrastructure throttling; retry with exponential backoff.
+
+  - name: Retry guidance
+    description: On 429 or transient 5xx, retry with exponential backoff (e.g. 1s, 2s, 4s, 8s) up to 5 attempts. The 200ms average response time means jitter of ±50ms is appropriate.
+
+  - name: Geographic restriction
+    description: Forecast and history endpoints are global; sports data is currently football (soccer), cricket, and golf. IP lookup respects EU privacy where required.
+
+  - name: SLA
+    description: |
+      - Free 95.5%
+      - Starter / Pro+ 99%
+      - Business 99.9%
+      - Enterprise 100% with contractual SLA

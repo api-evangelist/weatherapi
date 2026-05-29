@@ -1,32 +1,232 @@
 aid: weatherapi
 name: WeatherAPI
-description: "Weather API with other stuff like Astronomy and Geolocation API"
+description: >-
+  WeatherAPI.com provides real-time, forecast, historical, marine, future, astronomy, air quality,
+  pollen, sports, IP lookup, time zone, and geolocation data via a JSON/XML REST API. Trusted by
+  850,000+ developers worldwide with an average ~200ms response time.
 url: https://www.weatherapi.com/
 specificationVersion: '0.20'
 created: '2026-05-28'
 modified: '2026-05-28'
 x-source: public-apis/public-apis
-x-category: "Weather"
-x-tier: 3
-x-tier-reason: bulk-registered-from-public-apis
+x-category: Weather
+x-tier: 2
+x-tier-reason: full-pipeline-enrichment-with-official-openapi
+x-type: company
+
 tags:
   - Weather
+  - Forecast
+  - History
+  - Marine
+  - Astronomy
+  - Geolocation
+  - Sports
+  - Alerts
   - Public APIs
+
 apis:
   - name: WeatherAPI
-    description: "Weather API with other stuff like Astronomy and Geolocation API"
+    description: >-
+      Real-time, forecast (up to 14 days, 300-day future tier), historical (since 2010), marine,
+      astronomy, IP lookup, time zone, sports, and weather-alerts API. Single API key auth via the
+      `key` query parameter. JSON and XML response formats.
     humanURL: https://www.weatherapi.com/
-    baseURL: https://www.weatherapi.com/
+    baseURL: https://api.weatherapi.com/v1
     tags:
       - Weather
+      - Forecast
+      - History
+      - Marine
+      - Astronomy
+      - Geolocation
+      - Sports
+      - Alerts
     properties:
       - type: Documentation
-        url: https://www.weatherapi.com/
+        url: https://www.weatherapi.com/docs/
+      - type: APIReference
+        url: https://www.weatherapi.com/docs/
+      - type: OpenAPI
+        url: openapi/weatherapi-openapi-original.yml
+      - type: APIExplorer
+        url: https://www.weatherapi.com/api-explorer.aspx
+      - type: Authentication
+        url: https://www.weatherapi.com/docs/#intro-authentication
+      - type: SDK
+        url: https://github.com/weatherapicom/python
+        title: Python SDK
+      - type: SDK
+        url: https://github.com/weatherapicom/javascript
+        title: JavaScript SDK
+      - type: SDK
+        url: https://github.com/weatherapicom/php
+        title: PHP SDK
+      - type: SDK
+        url: https://github.com/weatherapicom/java
+        title: Java SDK
+      - type: SDK
+        url: https://github.com/weatherapicom/csharp
+        title: C# SDK
+      - type: SDK
+        url: https://github.com/weatherapicom/go
+        title: Go SDK
+      - type: SDK
+        url: https://github.com/weatherapicom/android
+        title: Android SDK
+      - type: SDK
+        url: https://github.com/weatherapicom/weatherapi-Net-Standard
+        title: .NET Standard SDK
+      - type: SDK
+        url: https://github.com/weatherapicom/weatherapi-iOS
+        title: iOS SDK
+      - type: CodeExamples
+        url: https://github.com/weatherapicom/weatherapi-examples
+        title: Multi-language Examples
+      - type: NaftikoCapability
+        url: capabilities/weatherapi-weather.yaml
+        title: WeatherAPI — Weather
+      - type: NaftikoCapability
+        url: capabilities/weatherapi-history.yaml
+        title: WeatherAPI — History
+      - type: NaftikoCapability
+        url: capabilities/weatherapi-future.yaml
+        title: WeatherAPI — Future
+      - type: NaftikoCapability
+        url: capabilities/weatherapi-marine.yaml
+        title: WeatherAPI — Marine
+      - type: NaftikoCapability
+        url: capabilities/weatherapi-alerts.yaml
+        title: WeatherAPI — Alerts
+      - type: NaftikoCapability
+        url: capabilities/weatherapi-geo.yaml
+        title: WeatherAPI — Geo
+      - type: NaftikoCapability
+        url: capabilities/weatherapi-sports.yaml
+        title: WeatherAPI — Sports
+
 common:
   - type: Website
     url: https://www.weatherapi.com/
+  - type: GettingStarted
+    url: https://www.weatherapi.com/docs/
+  - type: Portal
+    url: https://www.weatherapi.com/my/
+  - type: SignUp
+    url: https://www.weatherapi.com/signup.aspx
+  - type: Pricing
+    url: https://www.weatherapi.com/pricing.aspx
+  - type: TermsOfService
+    url: https://www.weatherapi.com/terms.aspx
+  - type: PrivacyPolicy
+    url: https://www.weatherapi.com/privacy.aspx
+  - type: Support
+    url: https://www.weatherapi.com/contact.aspx
+  - type: Blog
+    url: https://blog.weatherapi.com/
+  - type: GitHubOrganization
+    url: https://github.com/weatherapicom
   - type: PublicAPIsListing
     url: https://github.com/public-apis/public-apis
+  - type: Tools
+    url: https://github.com/weatherapicom/weatherapi-mcp
+    title: MCP Server (Official)
+  - type: Tools
+    url: https://www.npmjs.com/package/weatherapi-mcp
+    title: weatherapi-mcp on npm
+  - type: Plans
+    url: plans/weatherapi-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/weatherapi-rate-limits.yml
+  - type: FinOps
+    url: finops/weatherapi-finops.yml
+  - type: SpectralRules
+    url: rules/weatherapi-rules.yml
+  - type: Vocabulary
+    url: vocabulary/weatherapi-vocabulary.yml
+  - type: JSON-LD
+    url: json-ld/weatherapi-context.jsonld
+  - type: Features
+    data:
+      - name: Real-time Weather
+        description: Current conditions refreshed every 10–15 minutes for any global location.
+      - name: 14-Day Forecast
+        description: Daily and hourly forecast covering up to 14 days ahead (15-minute interval on Enterprise).
+      - name: Historical Weather
+        description: Past weather data from January 1, 2010 onwards.
+      - name: Future Weather
+        description: Long-range forecasts from 14 to 300 days ahead (Pro+ and above).
+      - name: Marine Weather
+        description: Wave height, swell direction, and tide tables for coastal and ocean locations.
+      - name: Astronomy
+        description: Sunrise, sunset, moonrise, moonset, moon phase, and illumination.
+      - name: Air Quality and Pollen
+        description: US EPA and UK DEFRA indices plus pollen data with current and forecast endpoints.
+      - name: Weather Alerts
+        description: Government-issued warnings worldwide (USA, UK, Europe, and global).
+      - name: Sports Events
+        description: Upcoming football, cricket, and golf events tied to a location.
+      - name: Geo Services
+        description: Location search/autocomplete, IP lookup, and time zone resolution.
+      - name: Bulk Requests
+        description: POST /current.json#bulk accepts up to 50 locations per call (Pro+ and above).
+      - name: Multilingual Conditions
+        description: Condition descriptions in 40+ languages via the `lang` parameter.
+      - name: JSON and XML Responses
+        description: Every endpoint supports `.json` and `.xml` response variants.
+      - name: Official MCP Server
+        description: Drop-in Model Context Protocol server for Claude Desktop, Cursor, and other agents.
+  - type: UseCases
+    data:
+      - name: Consumer Weather Apps
+        description: Power mobile and web weather apps with global coverage and 200ms response times.
+      - name: Travel & Trip Planning
+        description: Show forecast, alerts, marine, and astronomy data for trip destinations.
+      - name: Logistics & Fleet Routing
+        description: Avoid weather disruptions on routes using forecast and alerts endpoints.
+      - name: Smart Home & IoT
+        description: Drive thermostats, sprinklers, and shades from real-time and forecast data.
+      - name: Agriculture
+        description: Use rainfall, evapotranspiration, and forecast data to plan irrigation and harvest.
+      - name: Energy Forecasting
+        description: Solar irradiance, wind, and temperature inputs for renewable-energy generation models.
+      - name: Insurance & Risk
+        description: Historical archives for claims investigation and parametric weather insurance.
+      - name: Sports & Events
+        description: Schedule outdoor events around forecast windows and alerts.
+      - name: Maritime & Shipping
+        description: Wave, swell, and tide data for coastal and ocean operations.
+      - name: AI Agents
+        description: Give Claude and other LLM agents live weather context via the official MCP server.
+  - type: Integrations
+    data:
+      - name: Claude Desktop
+        description: Drop-in MCP server (weatherapi-mcp) registered in claude_desktop_config.json.
+      - name: Cursor
+        description: MCP integration via .cursor/mcp.json.
+      - name: Microcks
+        description: OpenAPI spec carries `x-microcks-operation` extensions for one-command mocking.
+      - name: SwaggerHub
+        description: Spec is also published on SwaggerHub under WeatherAPI.com / WeatherAPI.
+      - name: WeatherAI.io
+        description: Sibling product providing AI-summarised weather narrative.
+      - name: Miing.com
+        description: Sibling product for air-quality analytics.
+      - name: Azuce.com
+        description: Sibling product for solar forecasting.
+  - type: Solutions
+    data:
+      - name: Free Tier
+        description: 100K calls/month, 3-day forecast, 1-day history — for evaluation and hobby use.
+      - name: Starter ($7/mo)
+        description: 3M calls/month, 7-day forecast and history — small production workloads.
+      - name: Pro+ ($25/mo)
+        description: 5M calls/month, marine weather, bulk requests, 365-day rolling history.
+      - name: Business ($65/mo)
+        description: 10M calls/month, 14-day forecast, marine with tides, IP allow/block lists, 99.9% SLA.
+      - name: Enterprise (custom)
+        description: 15-minute intervals, full historical archives, 100% uptime SLA with contract.
+
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

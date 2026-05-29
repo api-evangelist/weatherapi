@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/weatherapi/refs/heads/main/json-structure/weatherapi-search-location-structure.json",
+  "name": "SearchLocation",
+  "description": "SearchLocation schema from WeatherAPI.com",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "int32",
+      "example": 2643743
+    },
+    "name": {
+      "type": "string",
+      "example": "London"
+    },
+    "region": {
+      "type": "string",
+      "example": "City of London, Greater London"
+    },
+    "country": {
+      "type": "string",
+      "example": "United Kingdom"
+    },
+    "lat": {
+      "type": "double",
+      "example": 51.5074
+    },
+    "lon": {
+      "type": "double",
+      "example": -0.1278
+    },
+    "url": {
+      "type": "string",
+      "description": "URL-safe location slug",
+      "example": "sample value"
+    }
+  }
+}

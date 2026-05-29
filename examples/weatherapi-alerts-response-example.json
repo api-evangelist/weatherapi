@@ -1,0 +1,31 @@
+{
+  "location": {
+    "name": "London",
+    "region": "City of London, Greater London",
+    "country": "United Kingdom",
+    "lat": 51.5074,
+    "lon": -0.1278,
+    "tz_id": "Europe/London",
+    "localtime_epoch": 1748441400,
+    "localtime": "2026-05-28 15:30"
+  },
+  "alerts": {
+    "alert": [
+      {
+        "headline": "sample value",
+        "msgtype": "sample value",
+        "severity": "sample value",
+        "urgency": "sample value",
+        "areas": "sample value",
+        "category": "sample value",
+        "certainty": "sample value",
+        "event": "Severe Thunderstorm Warning",
+        "note": "sample value",
+        "effective": "2026-05-28T13:00:00Z",
+        "expires": "2026-05-28T13:00:00Z",
+        "desc": "Severe thunderstorms with damaging winds expected in the warning area.",
+        "instruction": "sample value"
+      }
+    ]
+  }
+}

@@ -1,0 +1,219 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/weatherapi/refs/heads/main/json-schema/weatherapi-bulk-response-schema.json",
+  "title": "BulkResponse",
+  "description": "BulkResponse schema from WeatherAPI.com",
+  "type": "object",
+  "properties": {
+    "bulk": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "object",
+            "properties": {
+              "custom_id": {
+                "type": "string"
+              },
+              "q": {
+                "type": "string"
+              },
+              "location": {
+                "type": "object",
+                "description": "Location metadata returned with every weather response.",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Location name",
+                    "example": "London"
+                  },
+                  "region": {
+                    "type": "string",
+                    "description": "Region or state",
+                    "example": "City of London, Greater London"
+                  },
+                  "country": {
+                    "type": "string",
+                    "description": "Country name",
+                    "example": "United Kingdom"
+                  },
+                  "lat": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "Latitude",
+                    "example": 51.5074
+                  },
+                  "lon": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "Longitude",
+                    "example": -0.1278
+                  },
+                  "tz_id": {
+                    "type": "string",
+                    "description": "IANA timezone ID, e.g. Europe/London",
+                    "example": "Europe/London"
+                  },
+                  "localtime_epoch": {
+                    "type": "integer",
+                    "description": "Local time as Unix epoch",
+                    "example": 1748441400
+                  },
+                  "localtime": {
+                    "type": "string",
+                    "description": "Local date and time string",
+                    "example": "2026-05-28 15:30"
+                  }
+                }
+              },
+              "current": {
+                "type": "object",
+                "properties": {
+                  "last_updated_epoch": {
+                    "type": "integer",
+                    "example": 1748441400
+                  },
+                  "last_updated": {
+                    "type": "string",
+                    "example": "2026-05-28 15:30"
+                  },
+                  "temp_c": {
+                    "type": "number",
+                    "description": "Temperature °C",
+                    "example": 18.5
+                  },
+                  "temp_f": {
+                    "type": "number",
+                    "description": "Temperature °F",
+                    "example": 65.3
+                  },
+                  "is_day": {
+                    "type": "integer",
+                    "description": "1=day, 0=night",
+                    "example": 1
+                  },
+                  "condition": {
+                    "$ref": "#/components/schemas/Condition"
+                  },
+                  "wind_mph": {
+                    "type": "number",
+                    "example": 12.4
+                  },
+                  "wind_kph": {
+                    "type": "number",
+                    "example": 12.4
+                  },
+                  "wind_degree": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "wind_dir": {
+                    "type": "string",
+                    "description": "16-point compass direction",
+                    "example": "WSW"
+                  },
+                  "pressure_mb": {
+                    "type": "number",
+                    "example": 1013.0
+                  },
+                  "pressure_in": {
+                    "type": "number",
+                    "example": 1013.0
+                  },
+                  "precip_mm": {
+                    "type": "number",
+                    "example": 0.5
+                  },
+                  "precip_in": {
+                    "type": "number",
+                    "example": 0.5
+                  },
+                  "humidity": {
+                    "type": "integer",
+                    "description": "Humidity %",
+                    "example": 65
+                  },
+                  "cloud": {
+                    "type": "integer",
+                    "description": "Cloud cover %",
+                    "example": 40
+                  },
+                  "feelslike_c": {
+                    "type": "number",
+                    "example": 17.8
+                  },
+                  "feelslike_f": {
+                    "type": "number",
+                    "example": 17.8
+                  },
+                  "windchill_c": {
+                    "type": "number",
+                    "example": 12.4
+                  },
+                  "windchill_f": {
+                    "type": "number",
+                    "example": 12.4
+                  },
+                  "heatindex_c": {
+                    "type": "number",
+                    "example": 1.0
+                  },
+                  "heatindex_f": {
+                    "type": "number",
+                    "example": 1.0
+                  },
+                  "dewpoint_c": {
+                    "type": "number",
+                    "example": 1.0
+                  },
+                  "dewpoint_f": {
+                    "type": "number",
+                    "example": 1.0
+                  },
+                  "vis_km": {
+                    "type": "number",
+                    "example": 10.0
+                  },
+                  "vis_miles": {
+                    "type": "number",
+                    "example": 10.0
+                  },
+                  "uv": {
+                    "type": "number",
+                    "description": "UV Index",
+                    "example": 4.0
+                  },
+                  "gust_mph": {
+                    "type": "number",
+                    "example": 22.1
+                  },
+                  "gust_kph": {
+                    "type": "number",
+                    "example": 22.1
+                  },
+                  "short_rad": {
+                    "type": "number",
+                    "description": "GHI W/m² (paid plans)",
+                    "example": 1.0
+                  },
+                  "diff_rad": {
+                    "type": "number",
+                    "description": "DHI W/m² (paid plans)",
+                    "example": 1.0
+                  },
+                  "air_quality": {
+                    "$ref": "#/components/schemas/AirQuality"
+                  },
+                  "pollen": {
+                    "$ref": "#/components/schemas/Pollen"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

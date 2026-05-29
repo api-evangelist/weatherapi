@@ -1,0 +1,36 @@
+{
+  "maxtemp_c": 18.5,
+  "maxtemp_f": 65.3,
+  "mintemp_c": 18.5,
+  "mintemp_f": 65.3,
+  "avgtemp_c": 18.5,
+  "avgtemp_f": 65.3,
+  "maxwind_mph": 12.4,
+  "maxwind_kph": 12.4,
+  "totalprecip_mm": 0.5,
+  "totalprecip_in": 0.5,
+  "totalsnow_cm": 1.0,
+  "avgvis_km": 10.0,
+  "avgvis_miles": 10.0,
+  "avghumidity": 65,
+  "daily_will_it_rain": 1,
+  "daily_chance_of_rain": 1,
+  "daily_will_it_snow": 1,
+  "daily_chance_of_snow": 1,
+  "condition": {
+    "text": "Partly Cloudy",
+    "icon": "//cdn.weatherapi.com/weather/64x64/day/116.png",
+    "code": 1003
+  },
+  "uv": 4.0,
+  "air_quality": {
+    "co": 1.0,
+    "o3": 1.0,
+    "no2": 1.0,
+    "so2": 1.0,
+    "pm2_5": 1.0,
+    "pm10": 1.0,
+    "us-epa-index": 1,
+    "gb-defra-index": 1
+  }
+}

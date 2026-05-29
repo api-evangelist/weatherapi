@@ -1,0 +1,73 @@
+{
+  "date": "2026-05-28",
+  "date_epoch": 1748441400,
+  "day": {
+    "maxtemp_c": 18.5,
+    "maxtemp_f": 65.3,
+    "mintemp_c": 18.5,
+    "mintemp_f": 65.3,
+    "avgtemp_c": 18.5,
+    "avgtemp_f": 65.3,
+    "maxwind_mph": 12.4,
+    "maxwind_kph": 12.4,
+    "totalprecip_mm": 0.5,
+    "totalprecip_in": 0.5,
+    "totalsnow_cm": 1.0,
+    "avgvis_km": 10.0,
+    "avgvis_miles": 10.0,
+    "avghumidity": 65,
+    "daily_will_it_rain": 1,
+    "daily_chance_of_rain": 1,
+    "daily_will_it_snow": 1,
+    "daily_chance_of_snow": 1,
+    "condition": {
+      "text": "Partly Cloudy",
+      "icon": "//cdn.weatherapi.com/weather/64x64/day/116.png",
+      "code": 1003
+    },
+    "uv": 4.0,
+    "air_quality": {
+      "co": 1.0,
+      "o3": 1.0,
+      "no2": 1.0,
+      "so2": 1.0,
+      "pm2_5": 1.0,
+      "pm10": 1.0,
+      "us-epa-index": 1,
+      "gb-defra-index": 1
+    }
+  },
+  "astro": {
+    "sunrise": "05:30 AM",
+    "sunset": "08:45 PM",
+    "moonrise": "10:15 PM",
+    "moonset": "06:42 AM",
+    "moon_phase": "Waxing Crescent",
+    "moon_illumination": 35.0,
+    "is_moon_up": 1,
+    "is_sun_up": 1
+  },
+  "tides": [
+    {
+      "tide": [
+        {
+          "tide_time": "2026-05-28 04:30",
+          "tide_height_mt": 1.0,
+          "tide_type": "High"
+        }
+      ]
+    }
+  ],
+  "hour": [
+    {
+      "sig_ht_mt": 1.0,
+      "swell_ht_mt": 0.8,
+      "swell_ht_ft": 0.8,
+      "swell_dir": 0.8,
+      "swell_dir_16_point": "sample value",
+      "swell_period_secs": 0.8,
+      "water_temp_c": 18.5,
+      "water_temp_f": 65.3
+    }
+  ]
+}

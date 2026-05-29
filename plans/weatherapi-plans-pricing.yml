@@ -1,0 +1,407 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+
+provider: WeatherAPI.com
+providerId: weatherapi
+created: '2026-05-28'
+modified: '2026-05-28'
+reconciled: true
+
+tags:
+  - Weather
+  - Geolocation
+  - Forecast
+  - Marine
+  - Astronomy
+  - Subscription
+
+description: >-
+  WeatherAPI.com sells five subscription tiers (Free, Starter, Pro+, Business, Enterprise) priced on
+  monthly call volume and breadth of API surface. All tiers receive the same core endpoints
+  (current, search, astronomy, IP lookup, weather maps, SSL, commercial and non-commercial use);
+  paid tiers unlock longer forecasts, deeper history, marine with tides, bulk requests, and richer
+  data products (air quality, pollen, solar, sports, evapotranspiration). Enterprise adds an SLA,
+  15-minute interval data, and 100% uptime guarantee. Pricing is documented on the public pricing
+  page; annual pre-pay yields a roughly 10% discount versus monthly billing.
+
+sources:
+  - https://www.weatherapi.com/pricing.aspx
+  - https://www.weatherapi.com/docs/
+
+plans:
+
+  - id: weatherapi-free
+    name: Free
+    type: freemium
+    description: Free tier suited to evaluation and low-volume hobby projects.
+    entries:
+      - label: Monthly API calls
+        name: api_calls
+        type: quota
+        metric: request
+        limit: 100000
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '$0'
+        userMultiplied: false
+      - label: Forecast days
+        name: forecast_days
+        type: quota
+        metric: day
+        limit: 3
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: included
+        userMultiplied: false
+      - label: History days
+        name: history_days
+        type: quota
+        metric: day
+        limit: 7
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: included
+        userMultiplied: false
+      - label: Uptime SLA
+        name: uptime
+        type: flat
+        metric: month
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '95.5%'
+        userMultiplied: false
+    elements:
+      - name: Real-time weather
+      - name: Search / Autocomplete
+      - name: Astronomy
+      - name: IP Lookup
+      - name: Time Zone
+      - name: Weather Maps
+      - name: HTTPS / SSL
+      - name: Commercial and Non-Commercial Use
+      - name: JSON and XML responses
+
+  - id: weatherapi-starter
+    name: Starter
+    type: subscription
+    description: Entry-tier paid plan for small production workloads.
+    entries:
+      - label: Monthly subscription
+        name: subscription_monthly
+        type: subscription
+        metric: month
+        limit: 1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '$7'
+        userMultiplied: false
+      - label: Annual subscription
+        name: subscription_annual
+        type: subscription
+        metric: year
+        limit: 1
+        timeFrame: year
+        geo: global
+        unit: 1
+        price: '$75'
+        userMultiplied: false
+      - label: Monthly API calls
+        name: api_calls
+        type: quota
+        metric: request
+        limit: 3000000
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: included
+        userMultiplied: false
+      - label: Forecast days
+        name: forecast_days
+        type: quota
+        metric: day
+        limit: 7
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: included
+        userMultiplied: false
+      - label: History days
+        name: history_days
+        type: quota
+        metric: day
+        limit: 7
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: included
+        userMultiplied: false
+      - label: Uptime SLA
+        name: uptime
+        type: flat
+        metric: month
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '99%'
+        userMultiplied: false
+    elements:
+      - name: Everything in Free
+      - name: Air quality
+      - name: Weather alerts
+
+  - id: weatherapi-pro-plus
+    name: Pro+
+    type: subscription
+    description: Mid-tier plan adding marine forecasts, bulk requests, and 365-day history.
+    entries:
+      - label: Monthly subscription
+        name: subscription_monthly
+        type: subscription
+        metric: month
+        limit: 1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '$25'
+        userMultiplied: false
+      - label: Annual subscription
+        name: subscription_annual
+        type: subscription
+        metric: year
+        limit: 1
+        timeFrame: year
+        geo: global
+        unit: 1
+        price: '$270'
+        userMultiplied: false
+      - label: Monthly API calls
+        name: api_calls
+        type: quota
+        metric: request
+        limit: 5000000
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: included
+        userMultiplied: false
+      - label: Forecast days
+        name: forecast_days
+        type: quota
+        metric: day
+        limit: 7
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: included
+        userMultiplied: false
+      - label: History days (rolling)
+        name: history_days
+        type: quota
+        metric: day
+        limit: 365
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: included
+        userMultiplied: false
+      - label: Marine forecast days
+        name: marine_days
+        type: quota
+        metric: day
+        limit: 5
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: included
+        userMultiplied: false
+      - label: Bulk requests
+        name: bulk_requests
+        type: flat
+        metric: request
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: included
+        userMultiplied: false
+      - label: Uptime SLA
+        name: uptime
+        type: flat
+        metric: month
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '99%'
+        userMultiplied: false
+    elements:
+      - name: Everything in Starter
+      - name: Bulk Requests (POST current.json#bulk)
+      - name: Marine weather (5 days)
+      - name: Future weather (14–300 days ahead)
+      - name: 365-day rolling history
+
+  - id: weatherapi-business
+    name: Business
+    type: subscription
+    description: High-volume production plan with marine + tides and IP blocking controls.
+    entries:
+      - label: Monthly subscription
+        name: subscription_monthly
+        type: subscription
+        metric: month
+        limit: 1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '$65'
+        userMultiplied: false
+      - label: Annual subscription
+        name: subscription_annual
+        type: subscription
+        metric: year
+        limit: 1
+        timeFrame: year
+        geo: global
+        unit: 1
+        price: '$702'
+        userMultiplied: false
+      - label: Monthly API calls
+        name: api_calls
+        type: quota
+        metric: request
+        limit: 10000000
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: included
+        userMultiplied: false
+      - label: Forecast days
+        name: forecast_days
+        type: quota
+        metric: day
+        limit: 14
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: included
+        userMultiplied: false
+      - label: History days (rolling)
+        name: history_days
+        type: quota
+        metric: day
+        limit: 365
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: included
+        userMultiplied: false
+      - label: Marine forecast days (with tides)
+        name: marine_days
+        type: quota
+        metric: day
+        limit: 7
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: included
+        userMultiplied: false
+      - label: Uptime SLA
+        name: uptime
+        type: flat
+        metric: month
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '99.9%'
+        userMultiplied: false
+    elements:
+      - name: Everything in Pro+
+      - name: IP allow/block lists
+      - name: Marine with tide data (7 days)
+      - name: 14-day forecast
+
+  - id: weatherapi-enterprise
+    name: Enterprise
+    type: enterprise
+    description: Custom-pricing tier with 15-minute interval data, full historical archives, and a 100% uptime SLA.
+    entries:
+      - label: Pricing
+        name: enterprise_price
+        type: flat
+        metric: varies
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: contact sales
+        userMultiplied: false
+      - label: Monthly API calls
+        name: api_calls
+        type: quota
+        metric: request
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: custom
+        userMultiplied: false
+      - label: Forecast days
+        name: forecast_days
+        type: quota
+        metric: day
+        limit: 365
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: included
+        userMultiplied: false
+      - label: Forecast granularity
+        name: forecast_granularity
+        type: flat
+        metric: varies
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: 15-minute, hourly, and daily intervals
+        userMultiplied: false
+      - label: Historical archives (full)
+        name: history_full
+        type: flat
+        metric: varies
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: 'From 2010-01-01 onwards: air quality, pollen, solar irradiance, sports, wind, evapotranspiration'
+        userMultiplied: false
+      - label: Uptime SLA
+        name: uptime
+        type: flat
+        metric: month
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '100% with SLA'
+        userMultiplied: false
+    elements:
+      - name: Everything in Business
+      - name: 15-minute interval forecasts
+      - name: Complete pollen history
+      - name: Air quality history
+      - name: Solar irradiance history
+      - name: Sports history
+      - name: Wind data history
+      - name: Evapotranspiration history
+      - name: Dedicated support and SLA

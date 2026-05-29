@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/weatherapi/refs/heads/main/json-schema/weatherapi-condition-schema.json",
+  "title": "Condition",
+  "description": "Condition schema from WeatherAPI.com",
+  "type": "object",
+  "properties": {
+    "text": {
+      "type": "string",
+      "description": "Weather condition description",
+      "example": "Partly Cloudy"
+    },
+    "icon": {
+      "type": "string",
+      "description": "URL to condition icon",
+      "example": "//cdn.weatherapi.com/weather/64x64/day/116.png"
+    },
+    "code": {
+      "type": "integer",
+      "description": "Condition code (see conditions.json)",
+      "example": 1003
+    }
+  }
+}

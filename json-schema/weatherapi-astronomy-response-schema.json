@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/weatherapi/refs/heads/main/json-schema/weatherapi-astronomy-response-schema.json",
+  "title": "AstronomyResponse",
+  "description": "AstronomyResponse schema from WeatherAPI.com",
+  "type": "object",
+  "properties": {
+    "location": {
+      "type": "object",
+      "description": "Location metadata returned with every weather response.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Location name",
+          "example": "London"
+        },
+        "region": {
+          "type": "string",
+          "description": "Region or state",
+          "example": "City of London, Greater London"
+        },
+        "country": {
+          "type": "string",
+          "description": "Country name",
+          "example": "United Kingdom"
+        },
+        "lat": {
+          "type": "number",
+          "format": "float",
+          "description": "Latitude",
+          "example": 51.5074
+        },
+        "lon": {
+          "type": "number",
+          "format": "float",
+          "description": "Longitude",
+          "example": -0.1278
+        },
+        "tz_id": {
+          "type": "string",
+          "description": "IANA timezone ID, e.g. Europe/London",
+          "example": "Europe/London"
+        },
+        "localtime_epoch": {
+          "type": "integer",
+          "description": "Local time as Unix epoch",
+          "example": 1748441400
+        },
+        "localtime": {
+          "type": "string",
+          "description": "Local date and time string",
+          "example": "2026-05-28 15:30"
+        }
+      }
+    },
+    "astronomy": {
+      "type": "object",
+      "properties": {
+        "astro": {
+          "type": "object",
+          "properties": {
+            "sunrise": {
+              "type": "string",
+              "example": "05:30 AM"
+            },
+            "sunset": {
+              "type": "string",
+              "example": "08:45 PM"
+            },
+            "moonrise": {
+              "type": "string",
+              "example": "10:15 PM"
+            },
+            "moonset": {
+              "type": "string",
+              "example": "06:42 AM"
+            },
+            "moon_phase": {
+              "type": "string",
+              "example": "Waxing Crescent"
+            },
+            "moon_illumination": {
+              "type": "number",
+              "example": 35.0
+            },
+            "is_moon_up": {
+              "type": "integer",
+              "example": 1
+            },
+            "is_sun_up": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/weatherapi/refs/heads/main/json-schema/weatherapi-pollen-schema.json",
+  "title": "Pollen",
+  "description": "Pollen data in grains/m³. Returned when pollen=yes (Pro+ and above).",
+  "type": "object",
+  "properties": {
+    "Hazel": {
+      "type": "number",
+      "example": 1.0
+    },
+    "Alder": {
+      "type": "number",
+      "example": 1.0
+    },
+    "Birch": {
+      "type": "number",
+      "example": 1.0
+    },
+    "Oak": {
+      "type": "number",
+      "example": 1.0
+    },
+    "Grass": {
+      "type": "number",
+      "example": 1.0
+    },
+    "Mugwort": {
+      "type": "number",
+      "example": 1.0
+    },
+    "Ragweed": {
+      "type": "number",
+      "example": 1.0
+    }
+  }
+}

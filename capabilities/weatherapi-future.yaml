@@ -1,0 +1,102 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: WeatherAPI.com — Future
+  description: |-
+    Future — Future. 1 operation. Lead operation: WeatherAPI Future Weather (14–300 Days Ahead). Self-contained Naftiko capability covering one WeatherAPI business surface.
+  tags:
+  - WeatherAPI
+  - Weather
+  - Future
+  created: '2026-05-28'
+  modified: '2026-05-28'
+binds:
+- namespace: env
+  keys:
+    WEATHERAPI_KEY: WEATHERAPI_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: weatherapi-future
+    baseUri: https://api.weatherapi.com/v1
+    description: WeatherAPI.com — Future business capability. Self-contained, no shared references.
+    authentication:
+      type: apikey
+      key: key
+      value: '{{env.WEATHERAPI_KEY}}'
+      placement: query
+    resources:
+    - name: future-json
+      path: /future.json
+      operations:
+      - name: getFutureWeather
+        method: GET
+        description: WeatherAPI Future Weather (14–300 Days Ahead)
+        inputParameters:
+        - name: key
+          in: query
+          type: string
+          required: true
+          description: Your WeatherAPI.com API key.
+        - name: q
+          in: query
+          type: string
+          required: true
+          description: 'Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268).'
+        - name: dt
+          in: query
+          type: string
+          required: true
+          description: Date between 14 and 300 days from today in yyyy-MM-dd format.
+        - name: lang
+          in: query
+          type: string
+          required: false
+          description: 'Language code for condition text. E.g.: fr, de, es, zh, ar. See full list in docs.'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    namespace: weatherapi-future-rest
+    port: 8080
+    description: REST adapter for WeatherAPI.com — Future. One Spectral-compliant resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/future
+      name: future
+      description: REST surface for /future.
+      operations:
+      - method: GET
+        name: getFutureWeather
+        description: WeatherAPI Future Weather (14–300 Days Ahead)
+        call: weatherapi-future.getFutureWeather
+        with:
+          key: rest.key
+          q: rest.q
+          dt: rest.dt
+          lang: rest.lang
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: weatherapi-future-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for WeatherAPI.com — Future. One tool per consumed operation, routed inline through this capability's consumes block.
+    tools:
+    - name: get-future-weather
+      description: WeatherAPI Future Weather (14–300 Days Ahead)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: weatherapi-future.getFutureWeather
+      with:
+        key: tools.key
+        q: tools.q
+        dt: tools.dt
+        lang: tools.lang
+      outputParameters:
+      - type: object
+        mapping: $.

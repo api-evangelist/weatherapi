@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/weatherapi/refs/heads/main/json-structure/weatherapi-air-quality-structure.json",
+  "name": "AirQuality",
+  "description": "Air quality data. Returned when aqi=yes.",
+  "type": "object",
+  "properties": {
+    "co": {
+      "type": "double",
+      "description": "Carbon monoxide µg/m³",
+      "example": 1.0
+    },
+    "o3": {
+      "type": "double",
+      "description": "Ozone µg/m³",
+      "example": 1.0
+    },
+    "no2": {
+      "type": "double",
+      "description": "Nitrogen dioxide µg/m³",
+      "example": 1.0
+    },
+    "so2": {
+      "type": "double",
+      "description": "Sulphur dioxide µg/m³",
+      "example": 1.0
+    },
+    "pm2_5": {
+      "type": "double",
+      "description": "PM2.5 µg/m³",
+      "example": 1.0
+    },
+    "pm10": {
+      "type": "double",
+      "description": "PM10 µg/m³",
+      "example": 1.0
+    },
+    "us-epa-index": {
+      "type": "int32",
+      "description": "US EPA index 1–6 (1=Good, 6=Hazardous)",
+      "example": 1
+    },
+    "gb-defra-index": {
+      "type": "int32",
+      "description": "UK DEFRA index 1–10",
+      "example": 1
+    }
+  }
+}

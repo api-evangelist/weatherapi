@@ -1,0 +1,494 @@
+vocabulary: 1.0.0
+info:
+  provider: WeatherAPI.com
+  description: |-
+    Unified vocabulary mapping the WeatherAPI.com operational (OpenAPI) and capability (Naftiko) dimensions, covering real-time weather, forecast, historical, marine, future, astronomy, alerts, sports, and geo lookups.
+  created: '2026-05-28'
+  modified: '2026-05-28'
+operational:
+  apis:
+  - name: WeatherAPI.com
+    namespace: weatherapi
+    version: 1.0.2
+    baseUrl: https://api.weatherapi.com/v1
+    status: active
+  resources:
+  - name: current
+    api: weatherapi
+    tags:
+    - Weather
+    operations: &id001
+    - getCurrentWeather
+  - name: forecast
+    api: weatherapi
+    tags:
+    - Weather
+    operations: &id002
+    - getForecast
+  - name: history
+    api: weatherapi
+    tags:
+    - History
+    operations: &id003
+    - getHistory
+  - name: alerts
+    api: weatherapi
+    tags:
+    - Alerts
+    operations: &id004
+    - getAlerts
+  - name: marine
+    api: weatherapi
+    tags:
+    - Marine
+    operations: &id005
+    - getMarine
+  - name: future
+    api: weatherapi
+    tags:
+    - Future
+    operations: &id006
+    - getFutureWeather
+  - name: search
+    api: weatherapi
+    tags:
+    - Geo
+    operations: &id007
+    - searchLocations
+  - name: ip
+    api: weatherapi
+    tags:
+    - Geo
+    operations: &id008
+    - ipLookup
+  - name: timezone
+    api: weatherapi
+    tags:
+    - Geo
+    operations: &id009
+    - getTimezone
+  - name: astronomy
+    api: weatherapi
+    tags:
+    - Geo
+    operations: &id010
+    - getAstronomy
+  - name: sports
+    api: weatherapi
+    tags:
+    - Sports
+    operations: &id011
+    - getSports
+  - name: current
+    api: weatherapi
+    tags: []
+    operations: &id012
+    - getBulkCurrentWeather
+  actions:
+  - verb: get
+    httpMethod: GET
+    pattern: read
+  - verb: search
+    httpMethod: GET
+    pattern: read
+  - verb: ip
+    httpMethod: GET
+    pattern: read
+  schemas:
+    location:
+    - Location
+    - SearchLocation
+    - BulkLocation
+    current:
+    - CurrentWeather
+    - CurrentWeatherResponse
+    - Condition
+    forecast:
+    - ForecastDay
+    - HourForecast
+    - ForecastDayEntry
+    - ForecastWeatherResponse
+    astronomy:
+    - AstroElement
+    - AstronomyResponse
+    marine:
+    - MarineHour
+    - MarineForecastDay
+    - Tide
+    - MarineWeatherResponse
+    alerts:
+    - Alert
+    - AlertsResponse
+    air_quality:
+    - AirQuality
+    - Pollen
+    geo:
+    - IpLookupResponse
+    - TimezoneResponse
+    sports:
+    - SportEvent
+    - SportsResponse
+    bulk:
+    - BulkRequest
+    - BulkResponse
+    errors:
+    - ErrorResponse
+  parameters:
+    pagination: []
+    identifiers:
+    - name: q
+      description: Location query — city, lat/lon, zip, postcode, IATA airport, METAR code, IP, or auto:ip.
+    - name: dt
+      description: Date in YYYY-MM-DD format (used by history, future, astronomy).
+    - name: end_dt
+      description: Upper bound date for history range queries.
+    filters:
+    - name: days
+      description: Number of forecast/marine days to return.
+    - name: aqi
+      description: Toggle to include air quality data (yes/no).
+    - name: pollen
+      description: Toggle to include pollen data (yes/no).
+    - name: alerts
+      description: Toggle to include weather alerts (yes/no).
+    - name: tides
+      description: Toggle to include tide data on marine forecasts (yes/no).
+    - name: lang
+      description: Language code for condition translations (40+ languages).
+    - name: current_fields
+      description: Comma-delimited list of fields to include in the response.
+    measurement: []
+  enums:
+    units:
+    - name: temp_c / temp_f
+      values:
+      - Celsius
+      - Fahrenheit
+    - name: wind_kph / wind_mph
+      values:
+      - km/h
+      - mph
+    - name: precip_mm / precip_in
+      values:
+      - millimetres
+      - inches
+    - name: pressure_mb / pressure_in
+      values:
+      - millibars
+      - inches Hg
+    - name: vis_km / vis_miles
+      values:
+      - kilometres
+      - miles
+    wind_directions:
+    - N
+    - NNE
+    - NE
+    - ENE
+    - E
+    - ESE
+    - SE
+    - SSE
+    - S
+    - SSW
+    - SW
+    - WSW
+    - W
+    - WNW
+    - NW
+    - NNW
+    severity:
+    - Minor
+    - Moderate
+    - Severe
+    - Extreme
+    urgency:
+    - Immediate
+    - Expected
+    - Future
+    - Past
+    - Unknown
+    certainty:
+    - Observed
+    - Likely
+    - Possible
+    - Unlikely
+    - Unknown
+    tide_type:
+    - HIGH
+    - LOW
+    moon_phase:
+    - New Moon
+    - Waxing Crescent
+    - First Quarter
+    - Waxing Gibbous
+    - Full Moon
+    - Waning Gibbous
+    - Last Quarter
+    - Waning Crescent
+    aqi_indices:
+    - name: us-epa-index
+      range: 1 to 6
+    - name: gb-defra-index
+      range: 1 to 10
+  authentication:
+    schemes:
+    - name: ApiKeyAuth
+      type: apiKey
+      in: query
+      parameter: key
+      description: Single account-scoped API key, passed as the `key` query parameter on every request.
+    flows:
+    - signup-issued static key
+    scopes: []
+    usedBy:
+    - weatherapi
+capability:
+  workflows:
+  - name: WeatherAPI.com — Alerts
+    file: capabilities/weatherapi-alerts.yaml
+    description: 'Alerts — Alerts. 1 operation. Lead operation: WeatherAPI Weather Alerts. Self-contained Naftiko capability covering one WeatherAPI business surface.'
+    apis:
+    - WeatherAPI
+    toolCount: 1
+    personas:
+    - Weather Data Developer
+    - Mobile App Developer
+    - Logistics/Travel Planner
+    domains:
+    - WeatherAPI
+    - Weather
+    - Alerts
+  - name: WeatherAPI.com — Future
+    file: capabilities/weatherapi-future.yaml
+    description: 'Future — Future. 1 operation. Lead operation: WeatherAPI Future Weather (14–300 Days Ahead). Self-contained Naftiko capability covering one WeatherAPI business surface.'
+    apis:
+    - WeatherAPI
+    toolCount: 1
+    personas:
+    - Weather Data Developer
+    - Mobile App Developer
+    - Logistics/Travel Planner
+    domains:
+    - WeatherAPI
+    - Weather
+    - Future
+  - name: WeatherAPI.com — Geo
+    file: capabilities/weatherapi-geo.yaml
+    description: 'Geo — Geo. 4 operations. Lead operation: WeatherAPI Search / Autocomplete Locations. Self-contained Naftiko capability covering one WeatherAPI business surface.'
+    apis:
+    - WeatherAPI
+    toolCount: 4
+    personas:
+    - Weather Data Developer
+    - Mobile App Developer
+    - Logistics/Travel Planner
+    domains:
+    - WeatherAPI
+    - Weather
+    - Geo
+  - name: WeatherAPI.com — History
+    file: capabilities/weatherapi-history.yaml
+    description: 'History — History. 1 operation. Lead operation: WeatherAPI Historical Weather. Self-contained Naftiko capability covering one WeatherAPI business surface.'
+    apis:
+    - WeatherAPI
+    toolCount: 1
+    personas:
+    - Weather Data Developer
+    - Mobile App Developer
+    - Logistics/Travel Planner
+    domains:
+    - WeatherAPI
+    - Weather
+    - History
+  - name: WeatherAPI.com — Marine
+    file: capabilities/weatherapi-marine.yaml
+    description: 'Marine — Marine. 1 operation. Lead operation: WeatherAPI Marine Weather. Self-contained Naftiko capability covering one WeatherAPI business surface.'
+    apis:
+    - WeatherAPI
+    toolCount: 1
+    personas:
+    - Weather Data Developer
+    - Mobile App Developer
+    - Logistics/Travel Planner
+    domains:
+    - WeatherAPI
+    - Weather
+    - Marine
+  - name: WeatherAPI.com — Sports
+    file: capabilities/weatherapi-sports.yaml
+    description: 'Sports — Sports. 1 operation. Lead operation: WeatherAPI Sports Events. Self-contained Naftiko capability covering one WeatherAPI business surface.'
+    apis:
+    - WeatherAPI
+    toolCount: 1
+    personas:
+    - Weather Data Developer
+    - Mobile App Developer
+    - Logistics/Travel Planner
+    domains:
+    - WeatherAPI
+    - Weather
+    - Sports
+  - name: WeatherAPI.com — Weather
+    file: capabilities/weatherapi-weather.yaml
+    description: 'Weather — Weather. 3 operations. Lead operation: WeatherAPI Current / Real-time Weather. Self-contained Naftiko capability covering one WeatherAPI business surface.'
+    apis:
+    - WeatherAPI
+    toolCount: 3
+    personas:
+    - Weather Data Developer
+    - Mobile App Developer
+    - Logistics/Travel Planner
+    domains:
+    - WeatherAPI
+    - Weather
+    - Weather
+  personas:
+  - id: weather-data-developer
+    name: Weather Data Developer
+    description: Integrates real-time, forecast, and historical weather data into web/mobile apps and dashboards.
+    workflows:
+    - WeatherAPI.com — Alerts
+    - WeatherAPI.com — Future
+    - WeatherAPI.com — Geo
+    - WeatherAPI.com — History
+    - WeatherAPI.com — Marine
+    - WeatherAPI.com — Sports
+    - WeatherAPI.com — Weather
+  - id: mobile-app-developer
+    name: Mobile App Developer
+    description: Builds consumer mobile apps that surface forecast, astronomy, marine, or alerts data based on the user location.
+    workflows:
+    - WeatherAPI.com — Alerts
+    - WeatherAPI.com — Future
+    - WeatherAPI.com — Geo
+    - WeatherAPI.com — History
+    - WeatherAPI.com — Marine
+    - WeatherAPI.com — Sports
+    - WeatherAPI.com — Weather
+  - id: logistics-planner
+    name: Logistics & Travel Planner
+    description: Plans routes, deliveries, and events around forecast, alerts, marine conditions, and sports schedules.
+    workflows:
+    - WeatherAPI.com — Alerts
+    - WeatherAPI.com — Future
+    - WeatherAPI.com — Marine
+    - WeatherAPI.com — Sports
+  - id: data-scientist
+    name: Climate Data Scientist
+    description: Mines historical weather data from 2010 onwards for trend analysis and ML training.
+    workflows:
+    - WeatherAPI.com — History
+  domains:
+  - name: Real-time Weather
+    description: Current conditions for any location worldwide.
+  - name: Forecast
+    description: 14-day daily and hourly weather forecasts.
+  - name: Historical Weather
+    description: Past weather data from January 1, 2010.
+  - name: Future Weather
+    description: Long-range forecasts 14 to 300 days ahead.
+  - name: Marine
+    description: Marine weather with waves, swells, and tide tables.
+  - name: Alerts
+    description: Government-issued weather warnings.
+  - name: Geo
+    description: Location search, IP geolocation, time zones, and astronomy.
+  - name: Sports
+    description: Upcoming football, cricket, and golf events.
+  namespaces:
+  - consumed: weatherapi-alerts
+    rest: weatherapi-alerts-rest
+    mcp: weatherapi-alerts-mcp
+    restPort: 8080
+    mcpPort: 9090
+  - consumed: weatherapi-future
+    rest: weatherapi-future-rest
+    mcp: weatherapi-future-mcp
+    restPort: 8080
+    mcpPort: 9090
+  - consumed: weatherapi-geo
+    rest: weatherapi-geo-rest
+    mcp: weatherapi-geo-mcp
+    restPort: 8080
+    mcpPort: 9090
+  - consumed: weatherapi-history
+    rest: weatherapi-history-rest
+    mcp: weatherapi-history-mcp
+    restPort: 8080
+    mcpPort: 9090
+  - consumed: weatherapi-marine
+    rest: weatherapi-marine-rest
+    mcp: weatherapi-marine-mcp
+    restPort: 8080
+    mcpPort: 9090
+  - consumed: weatherapi-sports
+    rest: weatherapi-sports-rest
+    mcp: weatherapi-sports-mcp
+    restPort: 8080
+    mcpPort: 9090
+  - consumed: weatherapi-weather
+    rest: weatherapi-weather-rest
+    mcp: weatherapi-weather-mcp
+    restPort: 8080
+    mcpPort: 9090
+  binds:
+  - name: WEATHERAPI_KEY
+    description: WeatherAPI.com API key (free tier available, passed as ?key=...).
+    usedBy:
+    - WeatherAPI.com — Alerts
+    - WeatherAPI.com — Future
+    - WeatherAPI.com — Geo
+    - WeatherAPI.com — History
+    - WeatherAPI.com — Marine
+    - WeatherAPI.com — Sports
+    - WeatherAPI.com — Weather
+crossReference:
+- resource: current
+  operations: *id001
+  workflows:
+  - WeatherAPI.com — Alerts
+- resource: forecast
+  operations: *id002
+  workflows:
+  - WeatherAPI.com — Alerts
+- resource: history
+  operations: *id003
+  workflows:
+  - WeatherAPI.com — History
+- resource: alerts
+  operations: *id004
+  workflows:
+  - WeatherAPI.com — Alerts
+- resource: marine
+  operations: *id005
+  workflows:
+  - WeatherAPI.com — Marine
+- resource: future
+  operations: *id006
+  workflows:
+  - WeatherAPI.com — Future
+- resource: search
+  operations: *id007
+  workflows:
+  - WeatherAPI.com — Alerts
+- resource: ip
+  operations: *id008
+  workflows:
+  - WeatherAPI.com — Alerts
+- resource: timezone
+  operations: *id009
+  workflows:
+  - WeatherAPI.com — Alerts
+- resource: astronomy
+  operations: *id010
+  workflows:
+  - WeatherAPI.com — Alerts
+- resource: sports
+  operations: *id011
+  workflows:
+  - WeatherAPI.com — Sports
+- resource: current
+  operations: *id012
+  workflows:
+  - WeatherAPI.com — Alerts

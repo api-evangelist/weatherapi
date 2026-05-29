@@ -1,0 +1,640 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "weatherapi": "https://www.weatherapi.com/schema/",
+    "schema": "https://schema.org/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "AirQuality": "weatherapi:AirQuality",
+    "Alert": "weatherapi:Alert",
+    "AlertsResponse": "weatherapi:AlertsResponse",
+    "AstroElement": "weatherapi:AstroElement",
+    "AstronomyResponse": "weatherapi:AstronomyResponse",
+    "BulkLocation": "weatherapi:BulkLocation",
+    "BulkRequest": "weatherapi:BulkRequest",
+    "BulkResponse": "weatherapi:BulkResponse",
+    "Condition": "weatherapi:Condition",
+    "CurrentWeatherResponse": "weatherapi:CurrentWeatherResponse",
+    "CurrentWeather": "weatherapi:CurrentWeather",
+    "ForecastDayEntry": "weatherapi:ForecastDayEntry",
+    "ForecastDay": "weatherapi:ForecastDay",
+    "ForecastWeatherResponse": "weatherapi:ForecastWeatherResponse",
+    "HourForecast": "weatherapi:HourForecast",
+    "IpLookupResponse": "weatherapi:IpLookupResponse",
+    "Location": "weatherapi:Location",
+    "MarineForecastDay": "weatherapi:MarineForecastDay",
+    "MarineHour": "weatherapi:MarineHour",
+    "MarineWeatherResponse": "weatherapi:MarineWeatherResponse",
+    "Pollen": "weatherapi:Pollen",
+    "SearchLocation": "weatherapi:SearchLocation",
+    "SportEvent": "weatherapi:SportEvent",
+    "SportsResponse": "weatherapi:SportsResponse",
+    "Tide": "weatherapi:Tide",
+    "TimezoneResponse": "weatherapi:TimezoneResponse",
+    "co": {
+      "@id": "weatherapi:co",
+      "@type": "xsd:decimal"
+    },
+    "o3": {
+      "@id": "weatherapi:o3",
+      "@type": "xsd:decimal"
+    },
+    "no2": {
+      "@id": "weatherapi:no2",
+      "@type": "xsd:decimal"
+    },
+    "so2": {
+      "@id": "weatherapi:so2",
+      "@type": "xsd:decimal"
+    },
+    "pm25": {
+      "@id": "weatherapi:pm2_5",
+      "@type": "xsd:decimal"
+    },
+    "pm10": {
+      "@id": "weatherapi:pm10",
+      "@type": "xsd:decimal"
+    },
+    "us-epa-index": {
+      "@id": "weatherapi:us-epa-index",
+      "@type": "xsd:integer"
+    },
+    "gb-defra-index": {
+      "@id": "weatherapi:gb-defra-index",
+      "@type": "xsd:integer"
+    },
+    "headline": {
+      "@id": "weatherapi:headline",
+      "@type": "xsd:string"
+    },
+    "msgtype": {
+      "@id": "weatherapi:msgtype",
+      "@type": "xsd:string"
+    },
+    "severity": {
+      "@id": "weatherapi:severity",
+      "@type": "xsd:string"
+    },
+    "urgency": {
+      "@id": "weatherapi:urgency",
+      "@type": "xsd:string"
+    },
+    "areas": {
+      "@id": "weatherapi:areas",
+      "@type": "xsd:string"
+    },
+    "category": {
+      "@id": "weatherapi:category",
+      "@type": "xsd:string"
+    },
+    "certainty": {
+      "@id": "weatherapi:certainty",
+      "@type": "xsd:string"
+    },
+    "event": {
+      "@id": "weatherapi:event",
+      "@type": "xsd:string"
+    },
+    "note": {
+      "@id": "weatherapi:note",
+      "@type": "xsd:string"
+    },
+    "effective": {
+      "@id": "weatherapi:effective",
+      "@type": "xsd:string"
+    },
+    "expires": {
+      "@id": "weatherapi:expires",
+      "@type": "xsd:string"
+    },
+    "desc": {
+      "@id": "weatherapi:desc",
+      "@type": "xsd:string"
+    },
+    "instruction": {
+      "@id": "weatherapi:instruction",
+      "@type": "xsd:string"
+    },
+    "name": "schema:name",
+    "region": {
+      "@id": "weatherapi:region",
+      "@type": "xsd:string"
+    },
+    "country": {
+      "@id": "weatherapi:country",
+      "@type": "xsd:string"
+    },
+    "lat": {
+      "@id": "weatherapi:lat",
+      "@type": "xsd:float"
+    },
+    "lon": {
+      "@id": "weatherapi:lon",
+      "@type": "xsd:float"
+    },
+    "tzId": {
+      "@id": "weatherapi:tz_id",
+      "@type": "xsd:string"
+    },
+    "localtimeEpoch": {
+      "@id": "weatherapi:localtime_epoch",
+      "@type": "xsd:integer"
+    },
+    "localtime": {
+      "@id": "weatherapi:localtime",
+      "@type": "xsd:string"
+    },
+    "location": {
+      "@id": "weatherapi:location",
+      "@type": "@id"
+    },
+    "alert": {
+      "@id": "weatherapi:alert",
+      "@container": "@set"
+    },
+    "alerts": {
+      "@id": "weatherapi:alerts",
+      "@type": "@id"
+    },
+    "sunrise": {
+      "@id": "weatherapi:sunrise",
+      "@type": "xsd:string"
+    },
+    "sunset": {
+      "@id": "weatherapi:sunset",
+      "@type": "xsd:string"
+    },
+    "moonrise": {
+      "@id": "weatherapi:moonrise",
+      "@type": "xsd:string"
+    },
+    "moonset": {
+      "@id": "weatherapi:moonset",
+      "@type": "xsd:string"
+    },
+    "moonPhase": {
+      "@id": "weatherapi:moon_phase",
+      "@type": "xsd:string"
+    },
+    "moonIllumination": {
+      "@id": "weatherapi:moon_illumination",
+      "@type": "xsd:decimal"
+    },
+    "isMoonUp": {
+      "@id": "weatherapi:is_moon_up",
+      "@type": "xsd:integer"
+    },
+    "isSunUp": {
+      "@id": "weatherapi:is_sun_up",
+      "@type": "xsd:integer"
+    },
+    "astro": {
+      "@id": "weatherapi:astro",
+      "@type": "@id"
+    },
+    "astronomy": {
+      "@id": "weatherapi:astronomy",
+      "@type": "@id"
+    },
+    "q": {
+      "@id": "weatherapi:q",
+      "@type": "xsd:string"
+    },
+    "customId": {
+      "@id": "weatherapi:custom_id",
+      "@type": "xsd:string"
+    },
+    "locations": {
+      "@id": "weatherapi:locations",
+      "@container": "@set"
+    },
+    "lastUpdatedEpoch": {
+      "@id": "weatherapi:last_updated_epoch",
+      "@type": "xsd:integer"
+    },
+    "last_updated": "schema:dateModified",
+    "tempC": {
+      "@id": "weatherapi:temp_c",
+      "@type": "xsd:decimal"
+    },
+    "tempF": {
+      "@id": "weatherapi:temp_f",
+      "@type": "xsd:decimal"
+    },
+    "isDay": {
+      "@id": "weatherapi:is_day",
+      "@type": "xsd:integer"
+    },
+    "condition": {
+      "@id": "weatherapi:condition"
+    },
+    "windMph": {
+      "@id": "weatherapi:wind_mph",
+      "@type": "xsd:decimal"
+    },
+    "windKph": {
+      "@id": "weatherapi:wind_kph",
+      "@type": "xsd:decimal"
+    },
+    "windDegree": {
+      "@id": "weatherapi:wind_degree",
+      "@type": "xsd:integer"
+    },
+    "windDir": {
+      "@id": "weatherapi:wind_dir",
+      "@type": "xsd:string"
+    },
+    "pressureMb": {
+      "@id": "weatherapi:pressure_mb",
+      "@type": "xsd:decimal"
+    },
+    "pressureIn": {
+      "@id": "weatherapi:pressure_in",
+      "@type": "xsd:decimal"
+    },
+    "precipMm": {
+      "@id": "weatherapi:precip_mm",
+      "@type": "xsd:decimal"
+    },
+    "precipIn": {
+      "@id": "weatherapi:precip_in",
+      "@type": "xsd:decimal"
+    },
+    "humidity": {
+      "@id": "weatherapi:humidity",
+      "@type": "xsd:integer"
+    },
+    "cloud": {
+      "@id": "weatherapi:cloud",
+      "@type": "xsd:integer"
+    },
+    "feelslikeC": {
+      "@id": "weatherapi:feelslike_c",
+      "@type": "xsd:decimal"
+    },
+    "feelslikeF": {
+      "@id": "weatherapi:feelslike_f",
+      "@type": "xsd:decimal"
+    },
+    "windchillC": {
+      "@id": "weatherapi:windchill_c",
+      "@type": "xsd:decimal"
+    },
+    "windchillF": {
+      "@id": "weatherapi:windchill_f",
+      "@type": "xsd:decimal"
+    },
+    "heatindexC": {
+      "@id": "weatherapi:heatindex_c",
+      "@type": "xsd:decimal"
+    },
+    "heatindexF": {
+      "@id": "weatherapi:heatindex_f",
+      "@type": "xsd:decimal"
+    },
+    "dewpointC": {
+      "@id": "weatherapi:dewpoint_c",
+      "@type": "xsd:decimal"
+    },
+    "dewpointF": {
+      "@id": "weatherapi:dewpoint_f",
+      "@type": "xsd:decimal"
+    },
+    "visKm": {
+      "@id": "weatherapi:vis_km",
+      "@type": "xsd:decimal"
+    },
+    "visMiles": {
+      "@id": "weatherapi:vis_miles",
+      "@type": "xsd:decimal"
+    },
+    "uv": {
+      "@id": "weatherapi:uv",
+      "@type": "xsd:decimal"
+    },
+    "gustMph": {
+      "@id": "weatherapi:gust_mph",
+      "@type": "xsd:decimal"
+    },
+    "gustKph": {
+      "@id": "weatherapi:gust_kph",
+      "@type": "xsd:decimal"
+    },
+    "shortRad": {
+      "@id": "weatherapi:short_rad",
+      "@type": "xsd:decimal"
+    },
+    "diffRad": {
+      "@id": "weatherapi:diff_rad",
+      "@type": "xsd:decimal"
+    },
+    "airQuality": {
+      "@id": "weatherapi:air_quality",
+      "@type": "@id"
+    },
+    "pollen": {
+      "@id": "weatherapi:pollen"
+    },
+    "current": {
+      "@id": "weatherapi:current",
+      "@type": "@id"
+    },
+    "query": {
+      "@id": "weatherapi:query",
+      "@type": "@id"
+    },
+    "bulk": {
+      "@id": "weatherapi:bulk",
+      "@container": "@set"
+    },
+    "text": {
+      "@id": "weatherapi:text",
+      "@type": "xsd:string"
+    },
+    "icon": {
+      "@id": "weatherapi:icon",
+      "@type": "xsd:string"
+    },
+    "code": {
+      "@id": "weatherapi:code",
+      "@type": "xsd:integer"
+    },
+    "date": {
+      "@id": "weatherapi:date",
+      "@type": "xsd:date"
+    },
+    "dateEpoch": {
+      "@id": "weatherapi:date_epoch",
+      "@type": "xsd:integer"
+    },
+    "maxtempC": {
+      "@id": "weatherapi:maxtemp_c",
+      "@type": "xsd:decimal"
+    },
+    "maxtempF": {
+      "@id": "weatherapi:maxtemp_f",
+      "@type": "xsd:decimal"
+    },
+    "mintempC": {
+      "@id": "weatherapi:mintemp_c",
+      "@type": "xsd:decimal"
+    },
+    "mintempF": {
+      "@id": "weatherapi:mintemp_f",
+      "@type": "xsd:decimal"
+    },
+    "avgtempC": {
+      "@id": "weatherapi:avgtemp_c",
+      "@type": "xsd:decimal"
+    },
+    "avgtempF": {
+      "@id": "weatherapi:avgtemp_f",
+      "@type": "xsd:decimal"
+    },
+    "maxwindMph": {
+      "@id": "weatherapi:maxwind_mph",
+      "@type": "xsd:decimal"
+    },
+    "maxwindKph": {
+      "@id": "weatherapi:maxwind_kph",
+      "@type": "xsd:decimal"
+    },
+    "totalprecipMm": {
+      "@id": "weatherapi:totalprecip_mm",
+      "@type": "xsd:decimal"
+    },
+    "totalprecipIn": {
+      "@id": "weatherapi:totalprecip_in",
+      "@type": "xsd:decimal"
+    },
+    "totalsnowCm": {
+      "@id": "weatherapi:totalsnow_cm",
+      "@type": "xsd:decimal"
+    },
+    "avgvisKm": {
+      "@id": "weatherapi:avgvis_km",
+      "@type": "xsd:decimal"
+    },
+    "avgvisMiles": {
+      "@id": "weatherapi:avgvis_miles",
+      "@type": "xsd:decimal"
+    },
+    "avghumidity": {
+      "@id": "weatherapi:avghumidity",
+      "@type": "xsd:integer"
+    },
+    "dailyWillItRain": {
+      "@id": "weatherapi:daily_will_it_rain",
+      "@type": "xsd:integer"
+    },
+    "dailyChanceOfRain": {
+      "@id": "weatherapi:daily_chance_of_rain",
+      "@type": "xsd:integer"
+    },
+    "dailyWillItSnow": {
+      "@id": "weatherapi:daily_will_it_snow",
+      "@type": "xsd:integer"
+    },
+    "dailyChanceOfSnow": {
+      "@id": "weatherapi:daily_chance_of_snow",
+      "@type": "xsd:integer"
+    },
+    "day": {
+      "@id": "weatherapi:day",
+      "@type": "@id"
+    },
+    "timeEpoch": {
+      "@id": "weatherapi:time_epoch",
+      "@type": "xsd:integer"
+    },
+    "time": {
+      "@id": "weatherapi:time",
+      "@type": "xsd:string"
+    },
+    "snowCm": {
+      "@id": "weatherapi:snow_cm",
+      "@type": "xsd:decimal"
+    },
+    "willItRain": {
+      "@id": "weatherapi:will_it_rain",
+      "@type": "xsd:integer"
+    },
+    "chanceOfRain": {
+      "@id": "weatherapi:chance_of_rain",
+      "@type": "xsd:integer"
+    },
+    "willItSnow": {
+      "@id": "weatherapi:will_it_snow",
+      "@type": "xsd:integer"
+    },
+    "chanceOfSnow": {
+      "@id": "weatherapi:chance_of_snow",
+      "@type": "xsd:integer"
+    },
+    "et0": {
+      "@id": "weatherapi:et0",
+      "@type": "xsd:decimal"
+    },
+    "hour": {
+      "@id": "weatherapi:hour",
+      "@container": "@set"
+    },
+    "forecastday": {
+      "@id": "weatherapi:forecastday",
+      "@container": "@set"
+    },
+    "forecast": {
+      "@id": "weatherapi:forecast",
+      "@type": "@id"
+    },
+    "ip": {
+      "@id": "weatherapi:ip",
+      "@type": "xsd:string"
+    },
+    "type": {
+      "@id": "weatherapi:type",
+      "@type": "xsd:string"
+    },
+    "continentCode": {
+      "@id": "weatherapi:continent_code",
+      "@type": "xsd:string"
+    },
+    "continentName": {
+      "@id": "weatherapi:continent_name",
+      "@type": "xsd:string"
+    },
+    "countryCode": {
+      "@id": "weatherapi:country_code",
+      "@type": "xsd:string"
+    },
+    "countryName": {
+      "@id": "weatherapi:country_name",
+      "@type": "xsd:string"
+    },
+    "isEu": {
+      "@id": "weatherapi:is_eu",
+      "@type": "xsd:boolean"
+    },
+    "geonameId": {
+      "@id": "weatherapi:geoname_id",
+      "@type": "xsd:string"
+    },
+    "city": {
+      "@id": "weatherapi:city",
+      "@type": "xsd:string"
+    },
+    "tideTime": {
+      "@id": "weatherapi:tide_time",
+      "@type": "xsd:string"
+    },
+    "tideHeightMt": {
+      "@id": "weatherapi:tide_height_mt",
+      "@type": "xsd:decimal"
+    },
+    "tideType": {
+      "@id": "weatherapi:tide_type",
+      "@type": "xsd:string"
+    },
+    "tide": {
+      "@id": "weatherapi:tide",
+      "@container": "@set"
+    },
+    "tides": {
+      "@id": "weatherapi:tides",
+      "@container": "@set"
+    },
+    "sigHtMt": {
+      "@id": "weatherapi:sig_ht_mt",
+      "@type": "xsd:decimal"
+    },
+    "swellHtMt": {
+      "@id": "weatherapi:swell_ht_mt",
+      "@type": "xsd:decimal"
+    },
+    "swellHtFt": {
+      "@id": "weatherapi:swell_ht_ft",
+      "@type": "xsd:decimal"
+    },
+    "swellDir": {
+      "@id": "weatherapi:swell_dir",
+      "@type": "xsd:decimal"
+    },
+    "swellDir16Point": {
+      "@id": "weatherapi:swell_dir_16_point",
+      "@type": "xsd:string"
+    },
+    "swellPeriodSecs": {
+      "@id": "weatherapi:swell_period_secs",
+      "@type": "xsd:decimal"
+    },
+    "waterTempC": {
+      "@id": "weatherapi:water_temp_c",
+      "@type": "xsd:decimal"
+    },
+    "waterTempF": {
+      "@id": "weatherapi:water_temp_f",
+      "@type": "xsd:decimal"
+    },
+    "Hazel": {
+      "@id": "weatherapi:Hazel",
+      "@type": "xsd:decimal"
+    },
+    "Alder": {
+      "@id": "weatherapi:Alder",
+      "@type": "xsd:decimal"
+    },
+    "Birch": {
+      "@id": "weatherapi:Birch",
+      "@type": "xsd:decimal"
+    },
+    "Oak": {
+      "@id": "weatherapi:Oak",
+      "@type": "xsd:decimal"
+    },
+    "Grass": {
+      "@id": "weatherapi:Grass",
+      "@type": "xsd:decimal"
+    },
+    "Mugwort": {
+      "@id": "weatherapi:Mugwort",
+      "@type": "xsd:decimal"
+    },
+    "Ragweed": {
+      "@id": "weatherapi:Ragweed",
+      "@type": "xsd:decimal"
+    },
+    "id": {
+      "@id": "weatherapi:id",
+      "@type": "xsd:integer"
+    },
+    "url": "schema:url",
+    "stadium": {
+      "@id": "weatherapi:stadium",
+      "@type": "xsd:string"
+    },
+    "tournament": {
+      "@id": "weatherapi:tournament",
+      "@type": "xsd:string"
+    },
+    "start": {
+      "@id": "weatherapi:start",
+      "@type": "xsd:string"
+    },
+    "match": {
+      "@id": "weatherapi:match",
+      "@type": "xsd:string"
+    },
+    "football": {
+      "@id": "weatherapi:football",
+      "@container": "@set"
+    },
+    "cricket": {
+      "@id": "weatherapi:cricket",
+      "@container": "@set"
+    },
+    "golf": {
+      "@id": "weatherapi:golf",
+      "@container": "@set"
+    }
+  }
+}

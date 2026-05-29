@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/weatherapi/refs/heads/main/json-structure/weatherapi-sport-event-structure.json",
+  "name": "SportEvent",
+  "description": "SportEvent schema from WeatherAPI.com",
+  "type": "object",
+  "properties": {
+    "stadium": {
+      "type": "string",
+      "example": "Wembley Stadium"
+    },
+    "country": {
+      "type": "string",
+      "example": "United Kingdom"
+    },
+    "region": {
+      "type": "string",
+      "example": "City of London, Greater London"
+    },
+    "tournament": {
+      "type": "string",
+      "example": "Premier League"
+    },
+    "start": {
+      "type": "string",
+      "description": "Local start datetime yyyy-MM-dd HH:mm",
+      "example": "sample value"
+    },
+    "match": {
+      "type": "string",
+      "example": "Manchester United vs Liverpool"
+    }
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/weatherapi/refs/heads/main/json-schema/weatherapi-alert-schema.json",
+  "title": "Alert",
+  "description": "Alert schema from WeatherAPI.com",
+  "type": "object",
+  "properties": {
+    "headline": {
+      "type": "string",
+      "example": "sample value"
+    },
+    "msgtype": {
+      "type": "string",
+      "example": "sample value"
+    },
+    "severity": {
+      "type": "string",
+      "example": "sample value"
+    },
+    "urgency": {
+      "type": "string",
+      "example": "sample value"
+    },
+    "areas": {
+      "type": "string",
+      "example": "sample value"
+    },
+    "category": {
+      "type": "string",
+      "example": "sample value"
+    },
+    "certainty": {
+      "type": "string",
+      "example": "sample value"
+    },
+    "event": {
+      "type": "string",
+      "example": "Severe Thunderstorm Warning"
+    },
+    "note": {
+      "type": "string",
+      "example": "sample value"
+    },
+    "effective": {
+      "type": "string",
+      "example": "2026-05-28T13:00:00Z"
+    },
+    "expires": {
+      "type": "string",
+      "example": "2026-05-28T13:00:00Z"
+    },
+    "desc": {
+      "type": "string",
+      "example": "Severe thunderstorms with damaging winds expected in the warning area."
+    },
+    "instruction": {
+      "type": "string",
+      "example": "sample value"
+    }
+  }
+}

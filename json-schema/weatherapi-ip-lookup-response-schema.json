@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/weatherapi/refs/heads/main/json-schema/weatherapi-ip-lookup-response-schema.json",
+  "title": "IpLookupResponse",
+  "description": "IpLookupResponse schema from WeatherAPI.com",
+  "type": "object",
+  "properties": {
+    "ip": {
+      "type": "string",
+      "example": "sample value"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "ipv4",
+        "ipv6"
+      ],
+      "example": "ipv4"
+    },
+    "continent_code": {
+      "type": "string",
+      "example": "EGLL"
+    },
+    "continent_name": {
+      "type": "string",
+      "example": "EU"
+    },
+    "country_code": {
+      "type": "string",
+      "example": "United Kingdom"
+    },
+    "country_name": {
+      "type": "string",
+      "example": "United Kingdom"
+    },
+    "is_eu": {
+      "type": "boolean",
+      "example": false
+    },
+    "geoname_id": {
+      "type": "string",
+      "example": "sample value"
+    },
+    "city": {
+      "type": "string",
+      "example": "sample value"
+    },
+    "region": {
+      "type": "string",
+      "example": "City of London, Greater London"
+    },
+    "lat": {
+      "type": "number",
+      "example": 51.5074
+    },
+    "lon": {
+      "type": "number",
+      "example": -0.1278
+    },
+    "tz_id": {
+      "type": "string",
+      "example": "Europe/London"
+    },
+    "localtime_epoch": {
+      "type": "integer",
+      "example": 1748441400
+    },
+    "localtime": {
+      "type": "string",
+      "example": "2026-05-28 15:30"
+    }
+  }
+}
