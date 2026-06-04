@@ -1,0 +1,64 @@
+arazzo: 1.0.1
+info:
+  title: WeatherAPI Search to Current Weather
+  summary: Resolve a location with autocomplete search, then fetch its current weather.
+  description: >-
+    The canonical WeatherAPI location-picker pattern. A free-text query is run
+    through the search/autocomplete endpoint to resolve a precise location, the
+    top match is selected, and that resolved location is used to retrieve
+    up-to-date current weather. Every step spells out its request inline so the
+    flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: weatherApi
+  url: ../openapi/weatherapi-openapi-original.yml
+  type: openapi
+workflows:
+- workflowId: search-to-current
+  summary: Search for a location and return the current weather for the best match.
+  description: >-
+    Runs an autocomplete search for the supplied query, picks the first matching
+    location, and fetches its current weather using the resolved location id.
+  inputs:
+    type: object
+    required:
+    - query
+    properties:
+      query:
+        type: string
+        description: Partial city name, postcode, or coordinates to search for.
+  steps:
+  - stepId: searchLocation
+    description: >-
+      Resolve the free-text query into one or more matching locations and keep
+      the id of the best match.
+    operationId: searchLocations
+    parameters:
+    - name: q
+      in: query
+      value: $inputs.query
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      matchedId: $response.body#/0/id
+      matchedName: $response.body#/0/name
+  - stepId: getCurrent
+    description: >-
+      Fetch the current weather for the resolved location using its location id
+      in the WeatherAPI id: prefix form.
+    operationId: getCurrentWeather
+    parameters:
+    - name: q
+      in: query
+      value: id:$steps.searchLocation.outputs.matchedId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      locationName: $response.body#/location/name
+      tempC: $response.body#/current/temp_c
+      condition: $response.body#/current/condition/text
+  outputs:
+    matchedName: $steps.searchLocation.outputs.matchedName
+    tempC: $steps.getCurrent.outputs.tempC
+    condition: $steps.getCurrent.outputs.condition

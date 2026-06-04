@@ -1,0 +1,73 @@
+arazzo: 1.0.1
+info:
+  title: WeatherAPI Search to Astronomy
+  summary: Resolve a location with autocomplete search, then fetch sun and moon data for a date.
+  description: >-
+    A focused astronomy lookup. A free-text query is resolved through the
+    search/autocomplete endpoint, the best match is selected, and the astronomy
+    endpoint returns sunrise, sunset, moonrise, moonset, moon phase, and moon
+    illumination for the resolved location on the requested date. Every step
+    spells out its request inline so the flow can be read and executed without
+    opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: weatherApi
+  url: ../openapi/weatherapi-openapi-original.yml
+  type: openapi
+workflows:
+- workflowId: search-to-astronomy
+  summary: Search for a location and return astronomy data for a date.
+  description: >-
+    Runs an autocomplete search for the supplied query, picks the first matching
+    location, and fetches its astronomy detail for the requested date.
+  inputs:
+    type: object
+    required:
+    - query
+    - date
+    properties:
+      query:
+        type: string
+        description: Partial city name, postcode, or coordinates to search for.
+      date:
+        type: string
+        description: Date in yyyy-MM-dd format for the astronomy lookup.
+  steps:
+  - stepId: searchLocation
+    description: Resolve the free-text query into the best matching location.
+    operationId: searchLocations
+    parameters:
+    - name: q
+      in: query
+      value: $inputs.query
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      matchedId: $response.body#/0/id
+      matchedName: $response.body#/0/name
+  - stepId: getAstronomy
+    description: >-
+      Fetch sunrise, sunset, moonrise, moonset, and moon phase for the resolved
+      location on the requested date.
+    operationId: getAstronomy
+    parameters:
+    - name: q
+      in: query
+      value: id:$steps.searchLocation.outputs.matchedId
+    - name: dt
+      in: query
+      value: $inputs.date
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      locationName: $response.body#/location/name
+      sunrise: $response.body#/astronomy/astro/sunrise
+      sunset: $response.body#/astronomy/astro/sunset
+      moonPhase: $response.body#/astronomy/astro/moon_phase
+      moonIllumination: $response.body#/astronomy/astro/moon_illumination
+  outputs:
+    matchedName: $steps.searchLocation.outputs.matchedName
+    sunrise: $steps.getAstronomy.outputs.sunrise
+    sunset: $steps.getAstronomy.outputs.sunset
+    moonPhase: $steps.getAstronomy.outputs.moonPhase
+    moonIllumination: $steps.getAstronomy.outputs.moonIllumination

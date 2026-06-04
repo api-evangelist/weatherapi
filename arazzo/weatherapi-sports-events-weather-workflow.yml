@@ -1,0 +1,78 @@
+arazzo: 1.0.1
+info:
+  title: WeatherAPI Sports Events with Weather
+  summary: Resolve a location, list its upcoming sports events, then fetch current weather context.
+  description: >-
+    Combines upcoming sports fixtures with live weather for the surrounding
+    location. A free-text query is resolved through the search/autocomplete
+    endpoint, the sports endpoint lists upcoming football, cricket, and golf
+    events near the resolved location, and a current weather call adds the live
+    conditions that fans and organizers care about. Every step spells out its
+    request inline so the flow can be read and executed without opening the
+    underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: weatherApi
+  url: ../openapi/weatherapi-openapi-original.yml
+  type: openapi
+workflows:
+- workflowId: sports-events-weather
+  summary: Search a location, list its sports events, and add current weather.
+  description: >-
+    Resolves the query into a location, lists upcoming sports events for it, and
+    retrieves current weather for the same location.
+  inputs:
+    type: object
+    required:
+    - query
+    properties:
+      query:
+        type: string
+        description: Partial city name, postcode, or coordinates to search for.
+  steps:
+  - stepId: searchLocation
+    description: Resolve the free-text query into the best matching location.
+    operationId: searchLocations
+    parameters:
+    - name: q
+      in: query
+      value: $inputs.query
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      matchedId: $response.body#/0/id
+      matchedName: $response.body#/0/name
+  - stepId: getSports
+    description: >-
+      List upcoming football, cricket, and golf events for the resolved
+      location.
+    operationId: getSports
+    parameters:
+    - name: q
+      in: query
+      value: id:$steps.searchLocation.outputs.matchedId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      football: $response.body#/football
+      cricket: $response.body#/cricket
+      golf: $response.body#/golf
+  - stepId: getCurrent
+    description: Fetch current weather context for the same resolved location.
+    operationId: getCurrentWeather
+    parameters:
+    - name: q
+      in: query
+      value: id:$steps.searchLocation.outputs.matchedId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      tempC: $response.body#/current/temp_c
+      condition: $response.body#/current/condition/text
+  outputs:
+    matchedName: $steps.searchLocation.outputs.matchedName
+    football: $steps.getSports.outputs.football
+    cricket: $steps.getSports.outputs.cricket
+    golf: $steps.getSports.outputs.golf
+    tempC: $steps.getCurrent.outputs.tempC
+    condition: $steps.getCurrent.outputs.condition

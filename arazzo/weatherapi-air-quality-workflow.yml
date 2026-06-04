@@ -1,0 +1,92 @@
+arazzo: 1.0.1
+info:
+  title: WeatherAPI Current and Forecast Air Quality
+  summary: Resolve a location, then fetch current and forecast weather with air quality and pollen enabled.
+  description: >-
+    Surfaces the WeatherAPI air-quality and pollen data that rides alongside the
+    weather payloads. The query is resolved with autocomplete search, current
+    weather is fetched with the AQI flag enabled to read live air quality, and a
+    forecast is fetched with both AQI and pollen flags enabled for forward
+    looking exposure planning. Every step spells out its request inline so the
+    flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: weatherApi
+  url: ../openapi/weatherapi-openapi-original.yml
+  type: openapi
+workflows:
+- workflowId: air-quality
+  summary: Search a location and read current plus forecast air quality and pollen.
+  description: >-
+    Resolves the query into a location, fetches current weather with air quality
+    enabled, and fetches a forecast with air quality and pollen enabled.
+  inputs:
+    type: object
+    required:
+    - query
+    - days
+    properties:
+      query:
+        type: string
+        description: Partial city name, postcode, or coordinates to search for.
+      days:
+        type: integer
+        description: Number of forecast days to return (1-14, plan dependent).
+  steps:
+  - stepId: searchLocation
+    description: Resolve the free-text query into the best matching location.
+    operationId: searchLocations
+    parameters:
+    - name: q
+      in: query
+      value: $inputs.query
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      matchedId: $response.body#/0/id
+      matchedName: $response.body#/0/name
+  - stepId: getCurrentAqi
+    description: >-
+      Fetch current weather for the resolved location with the air quality flag
+      enabled so the response carries the air_quality block.
+    operationId: getCurrentWeather
+    parameters:
+    - name: q
+      in: query
+      value: id:$steps.searchLocation.outputs.matchedId
+    - name: aqi
+      in: query
+      value: 'yes'
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      epaIndex: $response.body#/current/air_quality/us-epa-index
+      pm25: $response.body#/current/air_quality/pm2_5
+  - stepId: getForecastAqiPollen
+    description: >-
+      Fetch a forecast for the resolved location with both air quality and
+      pollen flags enabled for forward looking exposure planning.
+    operationId: getForecast
+    parameters:
+    - name: q
+      in: query
+      value: id:$steps.searchLocation.outputs.matchedId
+    - name: days
+      in: query
+      value: $inputs.days
+    - name: aqi
+      in: query
+      value: 'yes'
+    - name: pollen
+      in: query
+      value: 'yes'
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      forecastDays: $response.body#/forecast/forecastday
+  outputs:
+    matchedName: $steps.searchLocation.outputs.matchedName
+    currentEpaIndex: $steps.getCurrentAqi.outputs.epaIndex
+    currentPm25: $steps.getCurrentAqi.outputs.pm25
+    forecastDays: $steps.getForecastAqiPollen.outputs.forecastDays

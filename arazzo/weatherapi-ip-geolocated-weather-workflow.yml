@@ -1,0 +1,85 @@
+arazzo: 1.0.1
+info:
+  title: WeatherAPI IP Geolocated Weather
+  summary: Geolocate an IP address, then fetch current weather and a forecast for that point.
+  description: >-
+    Turns an IP address into a localized weather view. The IP lookup endpoint
+    geolocates the supplied IPv4, IPv6, or auto:ip value to a latitude and
+    longitude, current weather is fetched for that coordinate, and a short
+    forecast is fetched for the same point. Every step spells out its request
+    inline so the flow can be read and executed without opening the underlying
+    OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: weatherApi
+  url: ../openapi/weatherapi-openapi-original.yml
+  type: openapi
+workflows:
+- workflowId: ip-geolocated-weather
+  summary: Geolocate an IP and return current weather plus a forecast for it.
+  description: >-
+    Resolves the IP to a coordinate, fetches current weather for that point, and
+    retrieves a short forecast for the same coordinate.
+  inputs:
+    type: object
+    required:
+    - ip
+    - days
+    properties:
+      ip:
+        type: string
+        description: IPv4, IPv6 address, or auto:ip to geolocate.
+      days:
+        type: integer
+        description: Number of forecast days to return (1-14, plan dependent).
+  steps:
+  - stepId: lookupIp
+    description: >-
+      Geolocate the supplied IP address to a latitude and longitude plus
+      timezone.
+    operationId: ipLookup
+    parameters:
+    - name: q
+      in: query
+      value: $inputs.ip
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      lat: $response.body#/lat
+      lon: $response.body#/lon
+      tzId: $response.body#/tz_id
+  - stepId: getCurrent
+    description: >-
+      Fetch current weather for the geolocated coordinate using the lat,lon
+      query form.
+    operationId: getCurrentWeather
+    parameters:
+    - name: q
+      in: query
+      value: $steps.lookupIp.outputs.lat,$steps.lookupIp.outputs.lon
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      locationName: $response.body#/location/name
+      tempC: $response.body#/current/temp_c
+      condition: $response.body#/current/condition/text
+  - stepId: getForecast
+    description: Fetch a short forecast for the same geolocated coordinate.
+    operationId: getForecast
+    parameters:
+    - name: q
+      in: query
+      value: $steps.lookupIp.outputs.lat,$steps.lookupIp.outputs.lon
+    - name: days
+      in: query
+      value: $inputs.days
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      forecastDays: $response.body#/forecast/forecastday
+  outputs:
+    locationName: $steps.getCurrent.outputs.locationName
+    tzId: $steps.lookupIp.outputs.tzId
+    tempC: $steps.getCurrent.outputs.tempC
+    condition: $steps.getCurrent.outputs.condition
+    forecastDays: $steps.getForecast.outputs.forecastDays

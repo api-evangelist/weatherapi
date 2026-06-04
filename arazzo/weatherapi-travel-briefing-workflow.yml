@@ -1,0 +1,128 @@
+arazzo: 1.0.1
+info:
+  title: WeatherAPI Travel Briefing
+  summary: Build a full travel briefing for a destination — current, forecast, astronomy, and alerts.
+  description: >-
+    A comprehensive destination briefing that chains the most useful WeatherAPI
+    endpoints. The query is resolved through the search/autocomplete endpoint,
+    current conditions with air quality are fetched, a multi-day forecast with
+    pollen and alerts is retrieved, astronomy for the arrival date is added, and
+    the dedicated alerts endpoint pulls any government warnings. Every step
+    spells out its request inline so the flow can be read and executed without
+    opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: weatherApi
+  url: ../openapi/weatherapi-openapi-original.yml
+  type: openapi
+workflows:
+- workflowId: travel-briefing
+  summary: Resolve a destination and assemble current, forecast, astronomy, and alerts.
+  description: >-
+    Resolves the destination query into a location, then layers current weather
+    with air quality, a forecast with pollen and alerts, astronomy for the
+    arrival date, and the full government alert list.
+  inputs:
+    type: object
+    required:
+    - query
+    - days
+    - arrivalDate
+    properties:
+      query:
+        type: string
+        description: Destination city name, postcode, or coordinates to search for.
+      days:
+        type: integer
+        description: Number of forecast days to return (1-14, plan dependent).
+      arrivalDate:
+        type: string
+        description: Arrival date in yyyy-MM-dd format for the astronomy lookup.
+  steps:
+  - stepId: searchLocation
+    description: Resolve the destination query into the best matching location.
+    operationId: searchLocations
+    parameters:
+    - name: q
+      in: query
+      value: $inputs.query
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      matchedId: $response.body#/0/id
+      matchedName: $response.body#/0/name
+  - stepId: getCurrent
+    description: Fetch current conditions with air quality for the destination.
+    operationId: getCurrentWeather
+    parameters:
+    - name: q
+      in: query
+      value: id:$steps.searchLocation.outputs.matchedId
+    - name: aqi
+      in: query
+      value: 'yes'
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      tempC: $response.body#/current/temp_c
+      condition: $response.body#/current/condition/text
+      epaIndex: $response.body#/current/air_quality/us-epa-index
+  - stepId: getForecast
+    description: >-
+      Fetch a multi-day forecast for the destination with pollen and alerts
+      enabled.
+    operationId: getForecast
+    parameters:
+    - name: q
+      in: query
+      value: id:$steps.searchLocation.outputs.matchedId
+    - name: days
+      in: query
+      value: $inputs.days
+    - name: pollen
+      in: query
+      value: 'yes'
+    - name: alerts
+      in: query
+      value: 'yes'
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      forecastDays: $response.body#/forecast/forecastday
+  - stepId: getAstronomy
+    description: Add sun and moon detail for the destination on the arrival date.
+    operationId: getAstronomy
+    parameters:
+    - name: q
+      in: query
+      value: id:$steps.searchLocation.outputs.matchedId
+    - name: dt
+      in: query
+      value: $inputs.arrivalDate
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      sunrise: $response.body#/astronomy/astro/sunrise
+      sunset: $response.body#/astronomy/astro/sunset
+      moonPhase: $response.body#/astronomy/astro/moon_phase
+  - stepId: getAlerts
+    description: Pull any active government weather alerts for the destination.
+    operationId: getAlerts
+    parameters:
+    - name: q
+      in: query
+      value: id:$steps.searchLocation.outputs.matchedId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      alerts: $response.body#/alerts/alert
+  outputs:
+    matchedName: $steps.searchLocation.outputs.matchedName
+    tempC: $steps.getCurrent.outputs.tempC
+    condition: $steps.getCurrent.outputs.condition
+    epaIndex: $steps.getCurrent.outputs.epaIndex
+    forecastDays: $steps.getForecast.outputs.forecastDays
+    sunrise: $steps.getAstronomy.outputs.sunrise
+    sunset: $steps.getAstronomy.outputs.sunset
+    moonPhase: $steps.getAstronomy.outputs.moonPhase
+    alerts: $steps.getAlerts.outputs.alerts

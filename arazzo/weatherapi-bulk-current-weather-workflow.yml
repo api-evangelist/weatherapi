@@ -1,0 +1,65 @@
+arazzo: 1.0.1
+info:
+  title: WeatherAPI Bulk Current Weather
+  summary: Retrieve current weather for many locations in a single bulk request.
+  description: >-
+    Fetches current weather for up to fifty locations in one call. The bulk
+    current weather endpoint is invoked with q=bulk and a JSON body listing each
+    location and its custom id, returning a per-location current weather result
+    set with air quality enabled. Every step spells out its request inline so the
+    flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: weatherApi
+  url: ../openapi/weatherapi-openapi-original.yml
+  type: openapi
+workflows:
+- workflowId: bulk-current-weather
+  summary: Fetch current weather for a batch of locations in one request.
+  description: >-
+    Submits a batch of locations to the bulk current weather endpoint and
+    returns the per-location result set.
+  inputs:
+    type: object
+    required:
+    - locations
+    properties:
+      locations:
+        type: array
+        description: List of locations, each with a q value and a custom_id.
+        items:
+          type: object
+          required:
+          - q
+          - custom_id
+          properties:
+            q:
+              type: string
+              description: Location query for this entry.
+            custom_id:
+              type: string
+              description: Caller-supplied id echoed back in the result.
+  steps:
+  - stepId: getBulkCurrent
+    description: >-
+      Submit the batch of locations to the bulk current weather endpoint with
+      air quality enabled and return the per-location results.
+    operationId: getBulkCurrentWeather
+    parameters:
+    - name: q
+      in: query
+      value: bulk
+    - name: aqi
+      in: query
+      value: 'yes'
+    requestBody:
+      contentType: application/json
+      payload:
+        locations: $inputs.locations
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      results: $response.body#/bulk
+  outputs:
+    results: $steps.getBulkCurrent.outputs.results

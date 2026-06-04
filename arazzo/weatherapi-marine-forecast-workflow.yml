@@ -1,0 +1,70 @@
+arazzo: 1.0.1
+info:
+  title: WeatherAPI Marine Forecast
+  summary: Resolve a coastal location, then fetch its marine and tide forecast.
+  description: >-
+    A sailing and coastal planning flow. A free-text query is resolved through
+    the search/autocomplete endpoint to pin a coastal point, and the marine
+    endpoint returns the sailing forecast including wave height, swell, water
+    temperature, and tide data for the requested number of days. Every step
+    spells out its request inline so the flow can be read and executed without
+    opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: weatherApi
+  url: ../openapi/weatherapi-openapi-original.yml
+  type: openapi
+workflows:
+- workflowId: marine-forecast
+  summary: Search a coastal location and return its marine and tide forecast.
+  description: >-
+    Resolves the query into a location and retrieves a marine forecast with tide
+    data for the requested number of days.
+  inputs:
+    type: object
+    required:
+    - query
+    - days
+    properties:
+      query:
+        type: string
+        description: Partial coastal place name or coordinates to search for.
+      days:
+        type: integer
+        description: Number of marine forecast days to return (1-7, plan dependent).
+  steps:
+  - stepId: searchLocation
+    description: Resolve the free-text query into the best matching coastal location.
+    operationId: searchLocations
+    parameters:
+    - name: q
+      in: query
+      value: $inputs.query
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      matchedId: $response.body#/0/id
+      matchedName: $response.body#/0/name
+  - stepId: getMarine
+    description: >-
+      Fetch the marine forecast with tide data enabled for the resolved
+      location across the requested number of days.
+    operationId: getMarine
+    parameters:
+    - name: q
+      in: query
+      value: id:$steps.searchLocation.outputs.matchedId
+    - name: days
+      in: query
+      value: $inputs.days
+    - name: tides
+      in: query
+      value: 'yes'
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      locationName: $response.body#/location/name
+      forecastDays: $response.body#/forecast/forecastday
+  outputs:
+    matchedName: $steps.searchLocation.outputs.matchedName
+    forecastDays: $steps.getMarine.outputs.forecastDays

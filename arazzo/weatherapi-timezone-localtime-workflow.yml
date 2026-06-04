@@ -1,0 +1,74 @@
+arazzo: 1.0.1
+info:
+  title: WeatherAPI Timezone and Local Conditions
+  summary: Resolve a location, read its timezone and local time, then fetch current weather.
+  description: >-
+    Pairs the timezone endpoint with current conditions so an application can
+    show both the local clock and the live weather for a place. The query is
+    resolved via autocomplete search, the timezone endpoint returns the tz id
+    and local time, and a current weather call adds temperature and conditions.
+    Every step spells out its request inline so the flow can be read and executed
+    without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: weatherApi
+  url: ../openapi/weatherapi-openapi-original.yml
+  type: openapi
+workflows:
+- workflowId: timezone-localtime
+  summary: Search a location, read its timezone, and fetch current weather.
+  description: >-
+    Resolves the query into a location, fetches its timezone and local time, and
+    retrieves current weather for the same location.
+  inputs:
+    type: object
+    required:
+    - query
+    properties:
+      query:
+        type: string
+        description: Partial city name, postcode, or coordinates to search for.
+  steps:
+  - stepId: searchLocation
+    description: Resolve the free-text query into the best matching location.
+    operationId: searchLocations
+    parameters:
+    - name: q
+      in: query
+      value: $inputs.query
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      matchedId: $response.body#/0/id
+      matchedName: $response.body#/0/name
+  - stepId: getTimezone
+    description: >-
+      Fetch the timezone id and current local time for the resolved location.
+    operationId: getTimezone
+    parameters:
+    - name: q
+      in: query
+      value: id:$steps.searchLocation.outputs.matchedId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      tzId: $response.body#/location/tz_id
+      localtime: $response.body#/location/localtime
+  - stepId: getCurrent
+    description: Fetch current weather for the same resolved location.
+    operationId: getCurrentWeather
+    parameters:
+    - name: q
+      in: query
+      value: id:$steps.searchLocation.outputs.matchedId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      tempC: $response.body#/current/temp_c
+      condition: $response.body#/current/condition/text
+  outputs:
+    matchedName: $steps.searchLocation.outputs.matchedName
+    tzId: $steps.getTimezone.outputs.tzId
+    localtime: $steps.getTimezone.outputs.localtime
+    tempC: $steps.getCurrent.outputs.tempC
+    condition: $steps.getCurrent.outputs.condition

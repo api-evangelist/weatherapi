@@ -1,0 +1,93 @@
+arazzo: 1.0.1
+info:
+  title: WeatherAPI Weather Alerts Check
+  summary: Resolve a location, probe its forecast for alerts, then branch to pull full alert detail.
+  description: >-
+    A government-alert monitoring flow with branching. A free-text query is
+    resolved through the search/autocomplete endpoint, a short forecast is
+    fetched with the alerts flag enabled to probe whether any warnings exist, and
+    the flow branches: when the forecast carries one or more alerts it calls the
+    dedicated alerts endpoint to pull full alert detail, and when no alerts are
+    present it ends cleanly. Every step spells out its request inline so the flow
+    can be read and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: weatherApi
+  url: ../openapi/weatherapi-openapi-original.yml
+  type: openapi
+workflows:
+- workflowId: weather-alerts-check
+  summary: Search a location, probe for alerts, and pull detail when present.
+  description: >-
+    Resolves the query into a location, fetches a forecast with alerts enabled,
+    and branches to the dedicated alerts endpoint only when warnings exist.
+  inputs:
+    type: object
+    required:
+    - query
+    properties:
+      query:
+        type: string
+        description: Partial city name, postcode, or coordinates to search for.
+  steps:
+  - stepId: searchLocation
+    description: Resolve the free-text query into the best matching location.
+    operationId: searchLocations
+    parameters:
+    - name: q
+      in: query
+      value: $inputs.query
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      matchedId: $response.body#/0/id
+      matchedName: $response.body#/0/name
+  - stepId: probeForecastAlerts
+    description: >-
+      Fetch a one-day forecast with alerts enabled to determine whether any
+      government warnings are active for the resolved location.
+    operationId: getForecast
+    parameters:
+    - name: q
+      in: query
+      value: id:$steps.searchLocation.outputs.matchedId
+    - name: days
+      in: query
+      value: 1
+    - name: alerts
+      in: query
+      value: 'yes'
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      alertList: $response.body#/alerts/alert
+    onSuccess:
+    - name: hasAlerts
+      type: goto
+      stepId: getAlertDetail
+      criteria:
+      - context: $response.body
+        condition: $.alerts.alert.length > 0
+        type: jsonpath
+    - name: noAlerts
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.alerts.alert.length == 0
+        type: jsonpath
+  - stepId: getAlertDetail
+    description: >-
+      Pull the full set of government weather alerts for the resolved location
+      from the dedicated alerts endpoint.
+    operationId: getAlerts
+    parameters:
+    - name: q
+      in: query
+      value: id:$steps.searchLocation.outputs.matchedId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      alerts: $response.body#/alerts/alert
+  outputs:
+    matchedName: $steps.searchLocation.outputs.matchedName
+    alerts: $steps.getAlertDetail.outputs.alerts

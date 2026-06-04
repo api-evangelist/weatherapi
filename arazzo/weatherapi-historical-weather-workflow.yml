@@ -1,0 +1,67 @@
+arazzo: 1.0.1
+info:
+  title: WeatherAPI Historical Weather
+  summary: Resolve a location, then fetch historical weather for a past date.
+  description: >-
+    Pulls observed weather for a date in the past. A free-text query is resolved
+    through the search/autocomplete endpoint, and the history endpoint returns
+    the hourly and daily breakdown for the resolved location on the requested
+    date (on or after 1 January 2010). Every step spells out its request inline
+    so the flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: weatherApi
+  url: ../openapi/weatherapi-openapi-original.yml
+  type: openapi
+workflows:
+- workflowId: historical-weather
+  summary: Search a location and return its historical weather for a date.
+  description: >-
+    Resolves the query into a location and retrieves historical weather for the
+    supplied past date.
+  inputs:
+    type: object
+    required:
+    - query
+    - date
+    properties:
+      query:
+        type: string
+        description: Partial city name, postcode, or coordinates to search for.
+      date:
+        type: string
+        description: Past date in yyyy-MM-dd format, on or after 2010-01-01.
+  steps:
+  - stepId: searchLocation
+    description: Resolve the free-text query into the best matching location.
+    operationId: searchLocations
+    parameters:
+    - name: q
+      in: query
+      value: $inputs.query
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      matchedId: $response.body#/0/id
+      matchedName: $response.body#/0/name
+  - stepId: getHistory
+    description: >-
+      Fetch historical weather for the resolved location on the requested past
+      date, including the hourly breakdown.
+    operationId: getHistory
+    parameters:
+    - name: q
+      in: query
+      value: id:$steps.searchLocation.outputs.matchedId
+    - name: dt
+      in: query
+      value: $inputs.date
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      locationName: $response.body#/location/name
+      forecastDays: $response.body#/forecast/forecastday
+  outputs:
+    matchedName: $steps.searchLocation.outputs.matchedName
+    forecastDays: $steps.getHistory.outputs.forecastDays
