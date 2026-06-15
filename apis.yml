@@ -106,6 +106,8 @@ apis:
         title: WeatherAPI — Sports
 
 common:
+  - type: PostmanWorkspace
+    url: https://www.postman.com/kinlaneapi/weatherapi/overview
   - type: ArazzoWorkflows
     url: arazzo/
     workflows:
