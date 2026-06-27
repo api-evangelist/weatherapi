@@ -53,110 +53,107 @@ apis:
         url: https://www.weatherapi.com/api-explorer.aspx
       - type: Authentication
         url: https://www.weatherapi.com/docs/#intro-authentication
-      - type: SDK
+      - type: SDKs
         url: https://github.com/weatherapicom/python
         title: Python SDK
-      - type: SDK
+      - type: SDKs
         url: https://github.com/weatherapicom/javascript
         title: JavaScript SDK
-      - type: SDK
+      - type: SDKs
         url: https://github.com/weatherapicom/php
         title: PHP SDK
-      - type: SDK
+      - type: SDKs
         url: https://github.com/weatherapicom/java
         title: Java SDK
-      - type: SDK
+      - type: SDKs
         url: https://github.com/weatherapicom/csharp
         title: C# SDK
-      - type: SDK
+      - type: SDKs
         url: https://github.com/weatherapicom/go
         title: Go SDK
-      - type: SDK
+      - type: SDKs
         url: https://github.com/weatherapicom/android
         title: Android SDK
-      - type: SDK
+      - type: SDKs
         url: https://github.com/weatherapicom/weatherapi-Net-Standard
         title: .NET Standard SDK
-      - type: SDK
+      - type: SDKs
         url: https://github.com/weatherapicom/weatherapi-iOS
         title: iOS SDK
       - type: CodeExamples
         url: https://github.com/weatherapicom/weatherapi-examples
         title: Multi-language Examples
-      - type: NaftikoCapability
+      - type: X-NaftikoCapability
         url: capabilities/weatherapi-weather.yaml
         title: WeatherAPI — Weather
-      - type: NaftikoCapability
+      - type: X-NaftikoCapability
         url: capabilities/weatherapi-history.yaml
         title: WeatherAPI — History
-      - type: NaftikoCapability
+      - type: X-NaftikoCapability
         url: capabilities/weatherapi-future.yaml
         title: WeatherAPI — Future
-      - type: NaftikoCapability
+      - type: X-NaftikoCapability
         url: capabilities/weatherapi-marine.yaml
         title: WeatherAPI — Marine
-      - type: NaftikoCapability
+      - type: X-NaftikoCapability
         url: capabilities/weatherapi-alerts.yaml
         title: WeatherAPI — Alerts
-      - type: NaftikoCapability
+      - type: X-NaftikoCapability
         url: capabilities/weatherapi-geo.yaml
         title: WeatherAPI — Geo
-      - type: NaftikoCapability
+      - type: X-NaftikoCapability
         url: capabilities/weatherapi-sports.yaml
         title: WeatherAPI — Sports
 
 common:
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/weatherapi/overview
-  - type: ArazzoWorkflows
-    url: arazzo/
-    workflows:
-    - url: arazzo/weatherapi-air-quality-workflow.yml
-      name: WeatherAPI Current and Forecast Air Quality
-      summary: Resolve a location, then fetch current and forecast weather with air quality and pollen enabled.
-    - url: arazzo/weatherapi-bulk-current-weather-workflow.yml
-      name: WeatherAPI Bulk Current Weather
-      summary: Retrieve current weather for many locations in a single bulk request.
-    - url: arazzo/weatherapi-forecast-with-astronomy-workflow.yml
-      name: WeatherAPI Forecast with Astronomy
-      summary: Resolve a location, pull a multi-day forecast, then enrich it with astronomy for the same date.
-    - url: arazzo/weatherapi-future-weather-workflow.yml
-      name: WeatherAPI Future Weather
-      summary: Resolve a location, then fetch the long-range future forecast for a date 14-300 days out.
-    - url: arazzo/weatherapi-historical-weather-workflow.yml
-      name: WeatherAPI Historical Weather
-      summary: Resolve a location, then fetch historical weather for a past date.
-    - url: arazzo/weatherapi-ip-geolocated-weather-workflow.yml
-      name: WeatherAPI IP Geolocated Weather
-      summary: Geolocate an IP address, then fetch current weather and a forecast for that point.
-    - url: arazzo/weatherapi-marine-forecast-workflow.yml
-      name: WeatherAPI Marine Forecast
-      summary: Resolve a coastal location, then fetch its marine and tide forecast.
-    - url: arazzo/weatherapi-search-to-astronomy-workflow.yml
-      name: WeatherAPI Search to Astronomy
-      summary: Resolve a location with autocomplete search, then fetch sun and moon data for a date.
-    - url: arazzo/weatherapi-search-to-current-workflow.yml
-      name: WeatherAPI Search to Current Weather
-      summary: Resolve a location with autocomplete search, then fetch its current weather.
-    - url: arazzo/weatherapi-sports-events-weather-workflow.yml
-      name: WeatherAPI Sports Events with Weather
-      summary: Resolve a location, list its upcoming sports events, then fetch current weather context.
-    - url: arazzo/weatherapi-timezone-localtime-workflow.yml
-      name: WeatherAPI Timezone and Local Conditions
-      summary: Resolve a location, read its timezone and local time, then fetch current weather.
-    - url: arazzo/weatherapi-travel-briefing-workflow.yml
-      name: WeatherAPI Travel Briefing
-      summary: "Build a full travel briefing for a destination \u2014 current, forecast, astronomy, and alerts."
-    - url: arazzo/weatherapi-weather-alerts-workflow.yml
-      name: WeatherAPI Weather Alerts Check
-      summary: Resolve a location, probe its forecast for alerts, then branch to pull full alert detail.
+  - type: Arazzo
+    url: arazzo/weatherapi-air-quality-workflow.yml
+    name: WeatherAPI Current and Forecast Air Quality
+  - type: Arazzo
+    url: arazzo/weatherapi-bulk-current-weather-workflow.yml
+    name: WeatherAPI Bulk Current Weather
+  - type: Arazzo
+    url: arazzo/weatherapi-forecast-with-astronomy-workflow.yml
+    name: WeatherAPI Forecast with Astronomy
+  - type: Arazzo
+    url: arazzo/weatherapi-future-weather-workflow.yml
+    name: WeatherAPI Future Weather
+  - type: Arazzo
+    url: arazzo/weatherapi-historical-weather-workflow.yml
+    name: WeatherAPI Historical Weather
+  - type: Arazzo
+    url: arazzo/weatherapi-ip-geolocated-weather-workflow.yml
+    name: WeatherAPI IP Geolocated Weather
+  - type: Arazzo
+    url: arazzo/weatherapi-marine-forecast-workflow.yml
+    name: WeatherAPI Marine Forecast
+  - type: Arazzo
+    url: arazzo/weatherapi-search-to-astronomy-workflow.yml
+    name: WeatherAPI Search to Astronomy
+  - type: Arazzo
+    url: arazzo/weatherapi-search-to-current-workflow.yml
+    name: WeatherAPI Search to Current Weather
+  - type: Arazzo
+    url: arazzo/weatherapi-sports-events-weather-workflow.yml
+    name: WeatherAPI Sports Events with Weather
+  - type: Arazzo
+    url: arazzo/weatherapi-timezone-localtime-workflow.yml
+    name: WeatherAPI Timezone and Local Conditions
+  - type: Arazzo
+    url: arazzo/weatherapi-travel-briefing-workflow.yml
+    name: WeatherAPI Travel Briefing
+  - type: Arazzo
+    url: arazzo/weatherapi-weather-alerts-workflow.yml
+    name: WeatherAPI Weather Alerts Check
   - type: Website
     url: https://www.weatherapi.com/
   - type: GettingStarted
     url: https://www.weatherapi.com/docs/
   - type: Portal
     url: https://www.weatherapi.com/my/
-  - type: SignUp
+  - type: Signup
     url: https://www.weatherapi.com/signup.aspx
   - type: Pricing
     url: https://www.weatherapi.com/pricing.aspx
@@ -188,7 +185,7 @@ common:
     url: rules/weatherapi-rules.yml
   - type: Vocabulary
     url: vocabulary/weatherapi-vocabulary.yml
-  - type: JSON-LD
+  - type: JSONLD
     url: json-ld/weatherapi-context.jsonld
   - type: Features
     data:
