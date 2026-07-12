@@ -106,6 +106,10 @@ apis:
         title: WeatherAPI — Sports
 
 common:
+  - type: DomainSecurity
+    url: security/weatherapi-domain-security.yml
+  - type: Authentication
+    url: authentication/weatherapi-authentication.yml
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/weatherapi/overview
   - type: Arazzo

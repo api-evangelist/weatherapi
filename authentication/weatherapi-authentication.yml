@@ -1,0 +1,17 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/weatherapi-openapi-original.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - query
+schemes:
+- name: ApiKeyAuth
+  type: apiKey
+  in: query
+  parameter: key
+  description: API key obtained from https://www.weatherapi.com/my/. Pass as `?key=YOUR_API_KEY`
+    query parameter.
+  sources:
+  - openapi/weatherapi-openapi-original.yml

@@ -1,0 +1,21 @@
+generated: '2026-07-11'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: www.weatherapi.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct  9 03:04:41 2026 GMT
+  hsts: false
+- host: api.weatherapi.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Sep 25 23:03:40 2026 GMT
+  hsts: false
+domains:
+- domain: weatherapi.com
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: reject
