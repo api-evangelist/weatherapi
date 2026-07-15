@@ -106,6 +106,8 @@ apis:
         title: WeatherAPI — Sports
 
 common:
+  - type: AgenticAccess
+    url: agentic-access/weatherapi-agentic-access.yml
   - type: DomainSecurity
     url: security/weatherapi-domain-security.yml
   - type: Authentication
