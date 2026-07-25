@@ -1,0 +1,205 @@
+openapi: 3.1.0
+info:
+  title: WeatherAPI.com Alerts Sports API
+  description: 'WeatherAPI.com provides real-time, forecast, historical, marine, future, astronomy, air quality, pollen, sports, IP lookup, timezone, and geolocation data via a JSON/XML REST API. Trusted by 850,000+ developers worldwide. Average response time ~200ms.
+
+
+    ## Authentication
+
+    All endpoints require an API key passed as the `key` query parameter.
+
+
+    ## Base URL
+
+    `https://api.weatherapi.com/v1`
+
+
+    ## Location Query (`q` parameter)
+
+    Accepts: city name, lat/lon decimal, US zip, UK postcode, Canada postal code, METAR code (`metar:EGLL`), IATA airport code (`iata:DXB`), IP lookup (`auto:ip`), IPv4/IPv6 address, or location ID (`id:2801268`).
+
+
+    ## Plans
+
+    - **Free**: 100K calls/month, 3-day forecast, 1-day history
+
+    - **Starter**: $7/mo — 3M calls, 7-day forecast, 7-day history
+
+    - **Pro+**: $25/mo — 5M calls, 300-day future, 365-day history
+
+    - **Business**: $65/mo — 10M calls, evapotranspiration
+
+    - **Enterprise**: Custom — 15-min interval, pollen history, wind@100m, SLA'
+  version: 1.0.2
+  contact:
+    name: WeatherAPI.com Support
+    url: https://www.weatherapi.com/contact.aspx
+  license:
+    name: Commercial / Non-Commercial
+    url: https://www.weatherapi.com/terms.aspx
+  x-logo:
+    url: https://cdn.weatherapi.com/v4/images/weatherapi_logo.png
+  x-last-validated: '2026-05-28'
+  x-generated-from: provider-openapi
+servers:
+- url: https://api.weatherapi.com/v1
+  description: Production (HTTPS)
+- url: http://api.weatherapi.com/v1
+  description: Production (HTTP)
+security:
+- ApiKeyAuth: []
+tags:
+- name: Sports
+  description: Upcoming sports events
+paths:
+  /sports.json:
+    get:
+      tags:
+      - Sports
+      summary: WeatherAPI Sports Events
+      description: Returns upcoming sports events for football (soccer), cricket, and golf. Historical sports data available on Enterprise plan.
+      operationId: getSports
+      parameters:
+      - $ref: '#/components/parameters/key'
+      - $ref: '#/components/parameters/q'
+      responses:
+        '200':
+          description: Sports events
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SportsResponse'
+              examples:
+                GetSports200Example:
+                  summary: Default getSports 200 response
+                  x-microcks-default: true
+                  value:
+                    football:
+                    - stadium: Wembley Stadium
+                      country: United Kingdom
+                      region: City of London, Greater London
+                      tournament: Premier League
+                      start: sample value
+                      match: Manchester United vs Liverpool
+                    cricket:
+                    - stadium: Wembley Stadium
+                      country: United Kingdom
+                      region: City of London, Greater London
+                      tournament: Premier League
+                      start: sample value
+                      match: Manchester United vs Liverpool
+                    golf:
+                    - stadium: Wembley Stadium
+                      country: United Kingdom
+                      region: City of London, Greater London
+                      tournament: Premier League
+                      start: sample value
+                      match: Manchester United vs Liverpool
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  parameters:
+    q:
+      name: q
+      in: query
+      required: true
+      description: 'Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268).'
+      schema:
+        type: string
+        example: London
+    key:
+      name: key
+      in: query
+      required: true
+      description: Your WeatherAPI.com API key.
+      schema:
+        type: string
+        example: YOUR_API_KEY
+  responses:
+    Forbidden:
+      description: Forbidden — API key quota exceeded, disabled, or plan does not include this resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Unauthorized — API key missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Bad request — invalid parameter or location not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  schemas:
+    SportEvent:
+      type: object
+      properties:
+        stadium:
+          type: string
+          example: Wembley Stadium
+        country:
+          type: string
+          example: United Kingdom
+        region:
+          type: string
+          example: City of London, Greater London
+        tournament:
+          type: string
+          example: Premier League
+        start:
+          type: string
+          description: Local start datetime yyyy-MM-dd HH:mm
+          example: sample value
+        match:
+          type: string
+          example: Manchester United vs Liverpool
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              description: WeatherAPI error code
+            message:
+              type: string
+      example:
+        error:
+          code: 1006
+          message: No location found matching parameter 'q'
+    SportsResponse:
+      type: object
+      properties:
+        football:
+          type: array
+          items:
+            $ref: '#/components/schemas/SportEvent'
+        cricket:
+          type: array
+          items:
+            $ref: '#/components/schemas/SportEvent'
+        golf:
+          type: array
+          items:
+            $ref: '#/components/schemas/SportEvent'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: key
+      description: API key obtained from https://www.weatherapi.com/my/. Pass as `?key=YOUR_API_KEY` query parameter.
+externalDocs:
+  description: Official WeatherAPI.com Documentation
+  url: https://www.weatherapi.com/docs/

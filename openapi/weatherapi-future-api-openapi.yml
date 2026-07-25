@@ -1,0 +1,758 @@
+openapi: 3.1.0
+info:
+  title: WeatherAPI.com Alerts Future API
+  description: 'WeatherAPI.com provides real-time, forecast, historical, marine, future, astronomy, air quality, pollen, sports, IP lookup, timezone, and geolocation data via a JSON/XML REST API. Trusted by 850,000+ developers worldwide. Average response time ~200ms.
+
+
+    ## Authentication
+
+    All endpoints require an API key passed as the `key` query parameter.
+
+
+    ## Base URL
+
+    `https://api.weatherapi.com/v1`
+
+
+    ## Location Query (`q` parameter)
+
+    Accepts: city name, lat/lon decimal, US zip, UK postcode, Canada postal code, METAR code (`metar:EGLL`), IATA airport code (`iata:DXB`), IP lookup (`auto:ip`), IPv4/IPv6 address, or location ID (`id:2801268`).
+
+
+    ## Plans
+
+    - **Free**: 100K calls/month, 3-day forecast, 1-day history
+
+    - **Starter**: $7/mo — 3M calls, 7-day forecast, 7-day history
+
+    - **Pro+**: $25/mo — 5M calls, 300-day future, 365-day history
+
+    - **Business**: $65/mo — 10M calls, evapotranspiration
+
+    - **Enterprise**: Custom — 15-min interval, pollen history, wind@100m, SLA'
+  version: 1.0.2
+  contact:
+    name: WeatherAPI.com Support
+    url: https://www.weatherapi.com/contact.aspx
+  license:
+    name: Commercial / Non-Commercial
+    url: https://www.weatherapi.com/terms.aspx
+  x-logo:
+    url: https://cdn.weatherapi.com/v4/images/weatherapi_logo.png
+  x-last-validated: '2026-05-28'
+  x-generated-from: provider-openapi
+servers:
+- url: https://api.weatherapi.com/v1
+  description: Production (HTTPS)
+- url: http://api.weatherapi.com/v1
+  description: Production (HTTP)
+security:
+- ApiKeyAuth: []
+tags:
+- name: Future
+  description: Long-range future weather (14–300 days)
+paths:
+  /future.json:
+    get:
+      tags:
+      - Future
+      summary: WeatherAPI Future Weather (14–300 Days Ahead)
+      description: Returns 3-hourly weather forecast for a date between 14 days and 300 days in the future. Available on Pro+ plan and above.
+      operationId: getFutureWeather
+      parameters:
+      - $ref: '#/components/parameters/key'
+      - $ref: '#/components/parameters/q'
+      - name: dt
+        in: query
+        required: true
+        description: Date between 14 and 300 days from today in yyyy-MM-dd format.
+        schema:
+          type: string
+          format: date
+          example: '2026-06-01'
+        example: '2026-06-01'
+      - $ref: '#/components/parameters/lang'
+      responses:
+        '200':
+          description: Future weather data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForecastWeatherResponse'
+              examples:
+                GetFutureWeather200Example:
+                  summary: Default getFutureWeather 200 response
+                  x-microcks-default: true
+                  value:
+                    location:
+                      name: London
+                      region: City of London, Greater London
+                      country: United Kingdom
+                      lat: 51.5074
+                      lon: -0.1278
+                      tz_id: Europe/London
+                      localtime_epoch: 1748441400
+                      localtime: 2026-05-28 15:30
+                    current:
+                      last_updated_epoch: 1748441400
+                      last_updated: 2026-05-28 15:30
+                      temp_c: 18.5
+                      temp_f: 65.3
+                      is_day: 1
+                      condition:
+                        text: Partly Cloudy
+                        icon: //cdn.weatherapi.com/weather/64x64/day/116.png
+                        code: 1003
+                      wind_mph: 12.4
+                      wind_kph: 12.4
+                      wind_degree: 1
+                      wind_dir: WSW
+                      pressure_mb: 1013.0
+                      pressure_in: 1013.0
+                      precip_mm: 0.5
+                      precip_in: 0.5
+                      humidity: 65
+                      cloud: 40
+                      feelslike_c: 17.8
+                      feelslike_f: 17.8
+                      windchill_c: 12.4
+                      windchill_f: 12.4
+                      heatindex_c: 1.0
+                      heatindex_f: 1.0
+                      dewpoint_c: 1.0
+                      dewpoint_f: 1.0
+                      vis_km: 10.0
+                      vis_miles: 10.0
+                      uv: 4.0
+                      gust_mph: 22.1
+                      gust_kph: 22.1
+                      short_rad: 1.0
+                      diff_rad: 1.0
+                      air_quality:
+                        co: 1.0
+                        o3: 1.0
+                        no2: 1.0
+                        so2: 1.0
+                        pm2_5: 1.0
+                        pm10: 1.0
+                        us-epa-index: 1
+                        gb-defra-index: 1
+                      pollen:
+                        Hazel: 1.0
+                        Alder: 1.0
+                        Birch: 1.0
+                        Oak: 1.0
+                        Grass: 1.0
+                        Mugwort: 1.0
+                        Ragweed: 1.0
+                    forecast:
+                      forecastday:
+                      - date: '2026-05-28'
+                        date_epoch: 1748441400
+                        hour: []
+                    alerts:
+                      alert:
+                      - headline: sample value
+                        msgtype: sample value
+                        severity: sample value
+                        urgency: sample value
+                        areas: sample value
+                        category: sample value
+                        certainty: sample value
+                        event: Severe Thunderstorm Warning
+                        note: sample value
+                        effective: '2026-05-28T13:00:00Z'
+                        expires: '2026-05-28T13:00:00Z'
+                        desc: Severe thunderstorms with damaging winds expected in the warning area.
+                        instruction: sample value
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    ForecastDay:
+      type: object
+      properties:
+        maxtemp_c:
+          type: number
+          example: 18.5
+        maxtemp_f:
+          type: number
+          example: 65.3
+        mintemp_c:
+          type: number
+          example: 18.5
+        mintemp_f:
+          type: number
+          example: 65.3
+        avgtemp_c:
+          type: number
+          example: 18.5
+        avgtemp_f:
+          type: number
+          example: 65.3
+        maxwind_mph:
+          type: number
+          example: 12.4
+        maxwind_kph:
+          type: number
+          example: 12.4
+        totalprecip_mm:
+          type: number
+          example: 0.5
+        totalprecip_in:
+          type: number
+          example: 0.5
+        totalsnow_cm:
+          type: number
+          example: 1.0
+        avgvis_km:
+          type: number
+          example: 10.0
+        avgvis_miles:
+          type: number
+          example: 10.0
+        avghumidity:
+          type: integer
+          example: 65
+        daily_will_it_rain:
+          type: integer
+          example: 1
+        daily_chance_of_rain:
+          type: integer
+          example: 1
+        daily_will_it_snow:
+          type: integer
+          example: 1
+        daily_chance_of_snow:
+          type: integer
+          example: 1
+        condition:
+          $ref: '#/components/schemas/Condition'
+        uv:
+          type: number
+          example: 4.0
+        air_quality:
+          $ref: '#/components/schemas/AirQuality'
+    HourForecast:
+      type: object
+      properties:
+        time_epoch:
+          type: integer
+          example: 1748441400
+        time:
+          type: string
+          example: sample value
+        temp_c:
+          type: number
+          example: 18.5
+        temp_f:
+          type: number
+          example: 65.3
+        is_day:
+          type: integer
+          example: 1
+        condition:
+          $ref: '#/components/schemas/Condition'
+        wind_mph:
+          type: number
+          example: 12.4
+        wind_kph:
+          type: number
+          example: 12.4
+        wind_degree:
+          type: integer
+          example: 1
+        wind_dir:
+          type: string
+          example: WSW
+        pressure_mb:
+          type: number
+          example: 1013.0
+        pressure_in:
+          type: number
+          example: 1013.0
+        precip_mm:
+          type: number
+          example: 0.5
+        precip_in:
+          type: number
+          example: 0.5
+        snow_cm:
+          type: number
+          example: 1.0
+        humidity:
+          type: integer
+          example: 65
+        cloud:
+          type: integer
+          example: 40
+        feelslike_c:
+          type: number
+          example: 17.8
+        feelslike_f:
+          type: number
+          example: 17.8
+        windchill_c:
+          type: number
+          example: 12.4
+        windchill_f:
+          type: number
+          example: 12.4
+        heatindex_c:
+          type: number
+          example: 1.0
+        heatindex_f:
+          type: number
+          example: 1.0
+        dewpoint_c:
+          type: number
+          example: 1.0
+        dewpoint_f:
+          type: number
+          example: 1.0
+        will_it_rain:
+          type: integer
+          example: 1
+        chance_of_rain:
+          type: integer
+          example: 1
+        will_it_snow:
+          type: integer
+          example: 1
+        chance_of_snow:
+          type: integer
+          example: 1
+        vis_km:
+          type: number
+          example: 10.0
+        vis_miles:
+          type: number
+          example: 10.0
+        gust_mph:
+          type: number
+          example: 22.1
+        gust_kph:
+          type: number
+          example: 22.1
+        uv:
+          type: number
+          example: 4.0
+        short_rad:
+          type: number
+          example: 1.0
+        diff_rad:
+          type: number
+          example: 1.0
+        et0:
+          type: number
+          description: Evapotranspiration (Business+)
+          example: 1.0
+        air_quality:
+          $ref: '#/components/schemas/AirQuality'
+        pollen:
+          $ref: '#/components/schemas/Pollen'
+    Condition:
+      type: object
+      properties:
+        text:
+          type: string
+          description: Weather condition description
+          example: Partly Cloudy
+        icon:
+          type: string
+          description: URL to condition icon
+          example: //cdn.weatherapi.com/weather/64x64/day/116.png
+        code:
+          type: integer
+          description: Condition code (see conditions.json)
+          example: 1003
+    Alert:
+      type: object
+      properties:
+        headline:
+          type: string
+          example: sample value
+        msgtype:
+          type: string
+          example: sample value
+        severity:
+          type: string
+          example: sample value
+        urgency:
+          type: string
+          example: sample value
+        areas:
+          type: string
+          example: sample value
+        category:
+          type: string
+          example: sample value
+        certainty:
+          type: string
+          example: sample value
+        event:
+          type: string
+          example: Severe Thunderstorm Warning
+        note:
+          type: string
+          example: sample value
+        effective:
+          type: string
+          example: '2026-05-28T13:00:00Z'
+        expires:
+          type: string
+          example: '2026-05-28T13:00:00Z'
+        desc:
+          type: string
+          example: Severe thunderstorms with damaging winds expected in the warning area.
+        instruction:
+          type: string
+          example: sample value
+    AstroElement:
+      type: object
+      properties:
+        sunrise:
+          type: string
+          example: 05:30 AM
+        sunset:
+          type: string
+          example: 08:45 PM
+        moonrise:
+          type: string
+          example: 10:15 PM
+        moonset:
+          type: string
+          example: 06:42 AM
+        moon_phase:
+          type: string
+          example: Waxing Crescent
+        moon_illumination:
+          type: number
+          example: 35.0
+        is_moon_up:
+          type: integer
+          example: 1
+        is_sun_up:
+          type: integer
+          example: 1
+    CurrentWeather:
+      type: object
+      properties:
+        last_updated_epoch:
+          type: integer
+          example: 1748441400
+        last_updated:
+          type: string
+          example: 2026-05-28 15:30
+        temp_c:
+          type: number
+          description: Temperature °C
+          example: 18.5
+        temp_f:
+          type: number
+          description: Temperature °F
+          example: 65.3
+        is_day:
+          type: integer
+          description: 1=day, 0=night
+          example: 1
+        condition:
+          $ref: '#/components/schemas/Condition'
+        wind_mph:
+          type: number
+          example: 12.4
+        wind_kph:
+          type: number
+          example: 12.4
+        wind_degree:
+          type: integer
+          example: 1
+        wind_dir:
+          type: string
+          description: 16-point compass direction
+          example: WSW
+        pressure_mb:
+          type: number
+          example: 1013.0
+        pressure_in:
+          type: number
+          example: 1013.0
+        precip_mm:
+          type: number
+          example: 0.5
+        precip_in:
+          type: number
+          example: 0.5
+        humidity:
+          type: integer
+          description: Humidity %
+          example: 65
+        cloud:
+          type: integer
+          description: Cloud cover %
+          example: 40
+        feelslike_c:
+          type: number
+          example: 17.8
+        feelslike_f:
+          type: number
+          example: 17.8
+        windchill_c:
+          type: number
+          example: 12.4
+        windchill_f:
+          type: number
+          example: 12.4
+        heatindex_c:
+          type: number
+          example: 1.0
+        heatindex_f:
+          type: number
+          example: 1.0
+        dewpoint_c:
+          type: number
+          example: 1.0
+        dewpoint_f:
+          type: number
+          example: 1.0
+        vis_km:
+          type: number
+          example: 10.0
+        vis_miles:
+          type: number
+          example: 10.0
+        uv:
+          type: number
+          description: UV Index
+          example: 4.0
+        gust_mph:
+          type: number
+          example: 22.1
+        gust_kph:
+          type: number
+          example: 22.1
+        short_rad:
+          type: number
+          description: GHI W/m² (paid plans)
+          example: 1.0
+        diff_rad:
+          type: number
+          description: DHI W/m² (paid plans)
+          example: 1.0
+        air_quality:
+          $ref: '#/components/schemas/AirQuality'
+        pollen:
+          $ref: '#/components/schemas/Pollen'
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              description: WeatherAPI error code
+            message:
+              type: string
+      example:
+        error:
+          code: 1006
+          message: No location found matching parameter 'q'
+    ForecastDayEntry:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+          example: '2026-05-28'
+        date_epoch:
+          type: integer
+          example: 1748441400
+        day:
+          $ref: '#/components/schemas/ForecastDay'
+        astro:
+          $ref: '#/components/schemas/AstroElement'
+        hour:
+          type: array
+          items:
+            $ref: '#/components/schemas/HourForecast'
+    ForecastWeatherResponse:
+      type: object
+      properties:
+        location:
+          $ref: '#/components/schemas/Location'
+        current:
+          $ref: '#/components/schemas/CurrentWeather'
+        forecast:
+          type: object
+          properties:
+            forecastday:
+              type: array
+              items:
+                $ref: '#/components/schemas/ForecastDayEntry'
+        alerts:
+          type: object
+          properties:
+            alert:
+              type: array
+              items:
+                $ref: '#/components/schemas/Alert'
+    Location:
+      type: object
+      description: Location metadata returned with every weather response.
+      properties:
+        name:
+          type: string
+          description: Location name
+          example: London
+        region:
+          type: string
+          description: Region or state
+          example: City of London, Greater London
+        country:
+          type: string
+          description: Country name
+          example: United Kingdom
+        lat:
+          type: number
+          format: float
+          description: Latitude
+          example: 51.5074
+        lon:
+          type: number
+          format: float
+          description: Longitude
+          example: -0.1278
+        tz_id:
+          type: string
+          description: IANA timezone ID, e.g. Europe/London
+          example: Europe/London
+        localtime_epoch:
+          type: integer
+          description: Local time as Unix epoch
+          example: 1748441400
+        localtime:
+          type: string
+          description: Local date and time string
+          example: 2026-05-28 15:30
+    AirQuality:
+      type: object
+      description: Air quality data. Returned when aqi=yes.
+      properties:
+        co:
+          type: number
+          description: Carbon monoxide µg/m³
+          example: 1.0
+        o3:
+          type: number
+          description: Ozone µg/m³
+          example: 1.0
+        no2:
+          type: number
+          description: Nitrogen dioxide µg/m³
+          example: 1.0
+        so2:
+          type: number
+          description: Sulphur dioxide µg/m³
+          example: 1.0
+        pm2_5:
+          type: number
+          description: PM2.5 µg/m³
+          example: 1.0
+        pm10:
+          type: number
+          description: PM10 µg/m³
+          example: 1.0
+        us-epa-index:
+          type: integer
+          description: US EPA index 1–6 (1=Good, 6=Hazardous)
+          example: 1
+        gb-defra-index:
+          type: integer
+          description: UK DEFRA index 1–10
+          example: 1
+    Pollen:
+      type: object
+      description: Pollen data in grains/m³. Returned when pollen=yes (Pro+ and above).
+      properties:
+        Hazel:
+          type: number
+          example: 1.0
+        Alder:
+          type: number
+          example: 1.0
+        Birch:
+          type: number
+          example: 1.0
+        Oak:
+          type: number
+          example: 1.0
+        Grass:
+          type: number
+          example: 1.0
+        Mugwort:
+          type: number
+          example: 1.0
+        Ragweed:
+          type: number
+          example: 1.0
+  parameters:
+    q:
+      name: q
+      in: query
+      required: true
+      description: 'Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268).'
+      schema:
+        type: string
+        example: London
+    key:
+      name: key
+      in: query
+      required: true
+      description: Your WeatherAPI.com API key.
+      schema:
+        type: string
+        example: YOUR_API_KEY
+    lang:
+      name: lang
+      in: query
+      required: false
+      description: 'Language code for condition text. E.g.: fr, de, es, zh, ar. See full list in docs.'
+      schema:
+        type: string
+        example: fr
+  responses:
+    Forbidden:
+      description: Forbidden — API key quota exceeded, disabled, or plan does not include this resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Unauthorized — API key missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Bad request — invalid parameter or location not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: key
+      description: API key obtained from https://www.weatherapi.com/my/. Pass as `?key=YOUR_API_KEY` query parameter.
+externalDocs:
+  description: Official WeatherAPI.com Documentation
+  url: https://www.weatherapi.com/docs/

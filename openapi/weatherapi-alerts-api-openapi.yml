@@ -1,0 +1,263 @@
+openapi: 3.1.0
+info:
+  title: WeatherAPI.com Alerts API
+  description: 'WeatherAPI.com provides real-time, forecast, historical, marine, future, astronomy, air quality, pollen, sports, IP lookup, timezone, and geolocation data via a JSON/XML REST API. Trusted by 850,000+ developers worldwide. Average response time ~200ms.
+
+
+    ## Authentication
+
+    All endpoints require an API key passed as the `key` query parameter.
+
+
+    ## Base URL
+
+    `https://api.weatherapi.com/v1`
+
+
+    ## Location Query (`q` parameter)
+
+    Accepts: city name, lat/lon decimal, US zip, UK postcode, Canada postal code, METAR code (`metar:EGLL`), IATA airport code (`iata:DXB`), IP lookup (`auto:ip`), IPv4/IPv6 address, or location ID (`id:2801268`).
+
+
+    ## Plans
+
+    - **Free**: 100K calls/month, 3-day forecast, 1-day history
+
+    - **Starter**: $7/mo — 3M calls, 7-day forecast, 7-day history
+
+    - **Pro+**: $25/mo — 5M calls, 300-day future, 365-day history
+
+    - **Business**: $65/mo — 10M calls, evapotranspiration
+
+    - **Enterprise**: Custom — 15-min interval, pollen history, wind@100m, SLA'
+  version: 1.0.2
+  contact:
+    name: WeatherAPI.com Support
+    url: https://www.weatherapi.com/contact.aspx
+  license:
+    name: Commercial / Non-Commercial
+    url: https://www.weatherapi.com/terms.aspx
+  x-logo:
+    url: https://cdn.weatherapi.com/v4/images/weatherapi_logo.png
+  x-last-validated: '2026-05-28'
+  x-generated-from: provider-openapi
+servers:
+- url: https://api.weatherapi.com/v1
+  description: Production (HTTPS)
+- url: http://api.weatherapi.com/v1
+  description: Production (HTTP)
+security:
+- ApiKeyAuth: []
+tags:
+- name: Alerts
+  description: Government weather alerts
+paths:
+  /alerts.json:
+    get:
+      tags:
+      - Alerts
+      summary: WeatherAPI Weather Alerts
+      description: Returns government weather alerts and warnings (USA, UK, Europe, rest of world) for a given location, if available.
+      operationId: getAlerts
+      parameters:
+      - $ref: '#/components/parameters/key'
+      - $ref: '#/components/parameters/q'
+      responses:
+        '200':
+          description: Weather alerts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertsResponse'
+              examples:
+                GetAlerts200Example:
+                  summary: Default getAlerts 200 response
+                  x-microcks-default: true
+                  value:
+                    location:
+                      name: London
+                      region: City of London, Greater London
+                      country: United Kingdom
+                      lat: 51.5074
+                      lon: -0.1278
+                      tz_id: Europe/London
+                      localtime_epoch: 1748441400
+                      localtime: 2026-05-28 15:30
+                    alerts:
+                      alert:
+                      - headline: sample value
+                        msgtype: sample value
+                        severity: sample value
+                        urgency: sample value
+                        areas: sample value
+                        category: sample value
+                        certainty: sample value
+                        event: Severe Thunderstorm Warning
+                        note: sample value
+                        effective: '2026-05-28T13:00:00Z'
+                        expires: '2026-05-28T13:00:00Z'
+                        desc: Severe thunderstorms with damaging winds expected in the warning area.
+                        instruction: sample value
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  parameters:
+    q:
+      name: q
+      in: query
+      required: true
+      description: 'Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268).'
+      schema:
+        type: string
+        example: London
+    key:
+      name: key
+      in: query
+      required: true
+      description: Your WeatherAPI.com API key.
+      schema:
+        type: string
+        example: YOUR_API_KEY
+  responses:
+    Forbidden:
+      description: Forbidden — API key quota exceeded, disabled, or plan does not include this resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Unauthorized — API key missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Bad request — invalid parameter or location not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  schemas:
+    Alert:
+      type: object
+      properties:
+        headline:
+          type: string
+          example: sample value
+        msgtype:
+          type: string
+          example: sample value
+        severity:
+          type: string
+          example: sample value
+        urgency:
+          type: string
+          example: sample value
+        areas:
+          type: string
+          example: sample value
+        category:
+          type: string
+          example: sample value
+        certainty:
+          type: string
+          example: sample value
+        event:
+          type: string
+          example: Severe Thunderstorm Warning
+        note:
+          type: string
+          example: sample value
+        effective:
+          type: string
+          example: '2026-05-28T13:00:00Z'
+        expires:
+          type: string
+          example: '2026-05-28T13:00:00Z'
+        desc:
+          type: string
+          example: Severe thunderstorms with damaging winds expected in the warning area.
+        instruction:
+          type: string
+          example: sample value
+    AlertsResponse:
+      type: object
+      properties:
+        location:
+          $ref: '#/components/schemas/Location'
+        alerts:
+          type: object
+          properties:
+            alert:
+              type: array
+              items:
+                $ref: '#/components/schemas/Alert'
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              description: WeatherAPI error code
+            message:
+              type: string
+      example:
+        error:
+          code: 1006
+          message: No location found matching parameter 'q'
+    Location:
+      type: object
+      description: Location metadata returned with every weather response.
+      properties:
+        name:
+          type: string
+          description: Location name
+          example: London
+        region:
+          type: string
+          description: Region or state
+          example: City of London, Greater London
+        country:
+          type: string
+          description: Country name
+          example: United Kingdom
+        lat:
+          type: number
+          format: float
+          description: Latitude
+          example: 51.5074
+        lon:
+          type: number
+          format: float
+          description: Longitude
+          example: -0.1278
+        tz_id:
+          type: string
+          description: IANA timezone ID, e.g. Europe/London
+          example: Europe/London
+        localtime_epoch:
+          type: integer
+          description: Local time as Unix epoch
+          example: 1748441400
+        localtime:
+          type: string
+          description: Local date and time string
+          example: 2026-05-28 15:30
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: key
+      description: API key obtained from https://www.weatherapi.com/my/. Pass as `?key=YOUR_API_KEY` query parameter.
+externalDocs:
+  description: Official WeatherAPI.com Documentation
+  url: https://www.weatherapi.com/docs/

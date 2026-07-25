@@ -1,0 +1,457 @@
+openapi: 3.1.0
+info:
+  title: WeatherAPI.com Alerts Geo API
+  description: 'WeatherAPI.com provides real-time, forecast, historical, marine, future, astronomy, air quality, pollen, sports, IP lookup, timezone, and geolocation data via a JSON/XML REST API. Trusted by 850,000+ developers worldwide. Average response time ~200ms.
+
+
+    ## Authentication
+
+    All endpoints require an API key passed as the `key` query parameter.
+
+
+    ## Base URL
+
+    `https://api.weatherapi.com/v1`
+
+
+    ## Location Query (`q` parameter)
+
+    Accepts: city name, lat/lon decimal, US zip, UK postcode, Canada postal code, METAR code (`metar:EGLL`), IATA airport code (`iata:DXB`), IP lookup (`auto:ip`), IPv4/IPv6 address, or location ID (`id:2801268`).
+
+
+    ## Plans
+
+    - **Free**: 100K calls/month, 3-day forecast, 1-day history
+
+    - **Starter**: $7/mo — 3M calls, 7-day forecast, 7-day history
+
+    - **Pro+**: $25/mo — 5M calls, 300-day future, 365-day history
+
+    - **Business**: $65/mo — 10M calls, evapotranspiration
+
+    - **Enterprise**: Custom — 15-min interval, pollen history, wind@100m, SLA'
+  version: 1.0.2
+  contact:
+    name: WeatherAPI.com Support
+    url: https://www.weatherapi.com/contact.aspx
+  license:
+    name: Commercial / Non-Commercial
+    url: https://www.weatherapi.com/terms.aspx
+  x-logo:
+    url: https://cdn.weatherapi.com/v4/images/weatherapi_logo.png
+  x-last-validated: '2026-05-28'
+  x-generated-from: provider-openapi
+servers:
+- url: https://api.weatherapi.com/v1
+  description: Production (HTTPS)
+- url: http://api.weatherapi.com/v1
+  description: Production (HTTP)
+security:
+- ApiKeyAuth: []
+tags:
+- name: Geo
+  description: Location, IP lookup, timezone, astronomy
+paths:
+  /search.json:
+    get:
+      tags:
+      - Geo
+      summary: WeatherAPI Search / Autocomplete Locations
+      description: Returns matching cities and towns as an array of Location objects. Useful for building autocomplete location pickers.
+      operationId: searchLocations
+      parameters:
+      - $ref: '#/components/parameters/key'
+      - name: q
+        in: query
+        required: true
+        description: Partial city name, postcode, or coordinates to search.
+        schema:
+          type: string
+          example: lond
+        example: lond
+      responses:
+        '200':
+          description: List of matching locations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SearchLocation'
+              examples:
+                SearchLocations200Example:
+                  summary: Default searchLocations 200 response
+                  x-microcks-default: true
+                  value:
+                  - id: 2643743
+                    name: London
+                    region: City of London, Greater London
+                    country: United Kingdom
+                    lat: 51.5074
+                    lon: -0.1278
+                    url: sample value
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /ip.json:
+    get:
+      tags:
+      - Geo
+      summary: WeatherAPI IP Lookup
+      description: Returns geolocation and timezone data for a given IPv4 or IPv6 address. Pass `auto:ip` to auto-detect the caller's IP.
+      operationId: ipLookup
+      parameters:
+      - $ref: '#/components/parameters/key'
+      - name: q
+        in: query
+        required: true
+        description: IPv4, IPv6 address, or `auto:ip` for caller's IP.
+        schema:
+          type: string
+          example: auto:ip
+        example: auto:ip
+      responses:
+        '200':
+          description: IP geolocation data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IpLookupResponse'
+              examples:
+                IpLookup200Example:
+                  summary: Default ipLookup 200 response
+                  x-microcks-default: true
+                  value:
+                    ip: sample value
+                    type: ipv4
+                    continent_code: EGLL
+                    continent_name: EU
+                    country_code: United Kingdom
+                    country_name: United Kingdom
+                    is_eu: false
+                    geoname_id: sample value
+                    city: sample value
+                    region: City of London, Greater London
+                    lat: 51.5074
+                    lon: -0.1278
+                    tz_id: Europe/London
+                    localtime_epoch: 1748441400
+                    localtime: 2026-05-28 15:30
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /timezone.json:
+    get:
+      tags:
+      - Geo
+      summary: WeatherAPI Time Zone
+      description: Returns the local time and timezone information for a given location.
+      operationId: getTimezone
+      parameters:
+      - $ref: '#/components/parameters/key'
+      - $ref: '#/components/parameters/q'
+      responses:
+        '200':
+          description: Timezone data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimezoneResponse'
+              examples:
+                GetTimezone200Example:
+                  summary: Default getTimezone 200 response
+                  x-microcks-default: true
+                  value:
+                    location:
+                      name: London
+                      region: City of London, Greater London
+                      country: United Kingdom
+                      lat: 51.5074
+                      lon: -0.1278
+                      tz_id: Europe/London
+                      localtime_epoch: 1748441400
+                      localtime: 2026-05-28 15:30
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /astronomy.json:
+    get:
+      tags:
+      - Geo
+      summary: WeatherAPI Astronomy
+      description: Returns sunrise, sunset, moonrise, moonset, moon phase, and moon illumination for a given location and date.
+      operationId: getAstronomy
+      parameters:
+      - $ref: '#/components/parameters/key'
+      - $ref: '#/components/parameters/q'
+      - name: dt
+        in: query
+        required: true
+        description: Date in yyyy-MM-dd format.
+        schema:
+          type: string
+          format: date
+          example: '2026-03-20'
+        example: '2026-03-20'
+      responses:
+        '200':
+          description: Astronomy data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AstronomyResponse'
+              examples:
+                GetAstronomy200Example:
+                  summary: Default getAstronomy 200 response
+                  x-microcks-default: true
+                  value:
+                    location:
+                      name: London
+                      region: City of London, Greater London
+                      country: United Kingdom
+                      lat: 51.5074
+                      lon: -0.1278
+                      tz_id: Europe/London
+                      localtime_epoch: 1748441400
+                      localtime: 2026-05-28 15:30
+                    astronomy:
+                      astro:
+                        sunrise: 05:30 AM
+                        sunset: 08:45 PM
+                        moonrise: 10:15 PM
+                        moonset: 06:42 AM
+                        moon_phase: Waxing Crescent
+                        moon_illumination: 35.0
+                        is_moon_up: 1
+                        is_sun_up: 1
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  parameters:
+    q:
+      name: q
+      in: query
+      required: true
+      description: 'Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268).'
+      schema:
+        type: string
+        example: London
+    key:
+      name: key
+      in: query
+      required: true
+      description: Your WeatherAPI.com API key.
+      schema:
+        type: string
+        example: YOUR_API_KEY
+  schemas:
+    Location:
+      type: object
+      description: Location metadata returned with every weather response.
+      properties:
+        name:
+          type: string
+          description: Location name
+          example: London
+        region:
+          type: string
+          description: Region or state
+          example: City of London, Greater London
+        country:
+          type: string
+          description: Country name
+          example: United Kingdom
+        lat:
+          type: number
+          format: float
+          description: Latitude
+          example: 51.5074
+        lon:
+          type: number
+          format: float
+          description: Longitude
+          example: -0.1278
+        tz_id:
+          type: string
+          description: IANA timezone ID, e.g. Europe/London
+          example: Europe/London
+        localtime_epoch:
+          type: integer
+          description: Local time as Unix epoch
+          example: 1748441400
+        localtime:
+          type: string
+          description: Local date and time string
+          example: 2026-05-28 15:30
+    SearchLocation:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2643743
+        name:
+          type: string
+          example: London
+        region:
+          type: string
+          example: City of London, Greater London
+        country:
+          type: string
+          example: United Kingdom
+        lat:
+          type: number
+          example: 51.5074
+        lon:
+          type: number
+          example: -0.1278
+        url:
+          type: string
+          description: URL-safe location slug
+          example: sample value
+    AstronomyResponse:
+      type: object
+      properties:
+        location:
+          $ref: '#/components/schemas/Location'
+        astronomy:
+          type: object
+          properties:
+            astro:
+              $ref: '#/components/schemas/AstroElement'
+    TimezoneResponse:
+      type: object
+      properties:
+        location:
+          $ref: '#/components/schemas/Location'
+    IpLookupResponse:
+      type: object
+      properties:
+        ip:
+          type: string
+          example: sample value
+        type:
+          type: string
+          enum:
+          - ipv4
+          - ipv6
+          example: ipv4
+        continent_code:
+          type: string
+          example: EGLL
+        continent_name:
+          type: string
+          example: EU
+        country_code:
+          type: string
+          example: United Kingdom
+        country_name:
+          type: string
+          example: United Kingdom
+        is_eu:
+          type: boolean
+          example: false
+        geoname_id:
+          type: string
+          example: sample value
+        city:
+          type: string
+          example: sample value
+        region:
+          type: string
+          example: City of London, Greater London
+        lat:
+          type: number
+          example: 51.5074
+        lon:
+          type: number
+          example: -0.1278
+        tz_id:
+          type: string
+          example: Europe/London
+        localtime_epoch:
+          type: integer
+          example: 1748441400
+        localtime:
+          type: string
+          example: 2026-05-28 15:30
+    AstroElement:
+      type: object
+      properties:
+        sunrise:
+          type: string
+          example: 05:30 AM
+        sunset:
+          type: string
+          example: 08:45 PM
+        moonrise:
+          type: string
+          example: 10:15 PM
+        moonset:
+          type: string
+          example: 06:42 AM
+        moon_phase:
+          type: string
+          example: Waxing Crescent
+        moon_illumination:
+          type: number
+          example: 35.0
+        is_moon_up:
+          type: integer
+          example: 1
+        is_sun_up:
+          type: integer
+          example: 1
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              description: WeatherAPI error code
+            message:
+              type: string
+      example:
+        error:
+          code: 1006
+          message: No location found matching parameter 'q'
+  responses:
+    Unauthorized:
+      description: Unauthorized — API key missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Bad request — invalid parameter or location not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: key
+      description: API key obtained from https://www.weatherapi.com/my/. Pass as `?key=YOUR_API_KEY` query parameter.
+externalDocs:
+  description: Official WeatherAPI.com Documentation
+  url: https://www.weatherapi.com/docs/
