@@ -1,4 +1,18 @@
 aid: weatherapi
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/weatherapi.png
 name: WeatherAPI
 description: >-
   WeatherAPI.com provides real-time, forecast, historical, marine, future, astronomy, air quality,
@@ -26,85 +40,370 @@ tags:
   - Public APIs
 
 apis:
-  - name: WeatherAPI
-    description: >-
-      Real-time, forecast (up to 14 days, 300-day future tier), historical (since 2010), marine,
-      astronomy, IP lookup, time zone, sports, and weather-alerts API. Single API key auth via the
-      `key` query parameter. JSON and XML response formats.
-    humanURL: https://www.weatherapi.com/
-    baseURL: https://api.weatherapi.com/v1
-    tags:
-      - Weather
-      - Forecast
-      - History
-      - Marine
-      - Astronomy
-      - Geolocation
-      - Sports
-      - Alerts
-    properties:
-      - type: Documentation
-        url: https://www.weatherapi.com/docs/
-      - type: APIReference
-        url: https://www.weatherapi.com/docs/
-      - type: OpenAPI
-        url: openapi/weatherapi-openapi-original.yml
-      - type: APIExplorer
-        url: https://www.weatherapi.com/api-explorer.aspx
-      - type: Authentication
-        url: https://www.weatherapi.com/docs/#intro-authentication
-      - type: SDKs
-        url: https://github.com/weatherapicom/python
-        title: Python SDK
-      - type: SDKs
-        url: https://github.com/weatherapicom/javascript
-        title: JavaScript SDK
-      - type: SDKs
-        url: https://github.com/weatherapicom/php
-        title: PHP SDK
-      - type: SDKs
-        url: https://github.com/weatherapicom/java
-        title: Java SDK
-      - type: SDKs
-        url: https://github.com/weatherapicom/csharp
-        title: C# SDK
-      - type: SDKs
-        url: https://github.com/weatherapicom/go
-        title: Go SDK
-      - type: SDKs
-        url: https://github.com/weatherapicom/android
-        title: Android SDK
-      - type: SDKs
-        url: https://github.com/weatherapicom/weatherapi-Net-Standard
-        title: .NET Standard SDK
-      - type: SDKs
-        url: https://github.com/weatherapicom/weatherapi-iOS
-        title: iOS SDK
-      - type: CodeExamples
-        url: https://github.com/weatherapicom/weatherapi-examples
-        title: Multi-language Examples
-      - type: X-NaftikoCapability
-        url: capabilities/weatherapi-weather.yaml
-        title: WeatherAPI — Weather
-      - type: X-NaftikoCapability
-        url: capabilities/weatherapi-history.yaml
-        title: WeatherAPI — History
-      - type: X-NaftikoCapability
-        url: capabilities/weatherapi-future.yaml
-        title: WeatherAPI — Future
-      - type: X-NaftikoCapability
-        url: capabilities/weatherapi-marine.yaml
-        title: WeatherAPI — Marine
-      - type: X-NaftikoCapability
-        url: capabilities/weatherapi-alerts.yaml
-        title: WeatherAPI — Alerts
-      - type: X-NaftikoCapability
-        url: capabilities/weatherapi-geo.yaml
-        title: WeatherAPI — Geo
-      - type: X-NaftikoCapability
-        url: capabilities/weatherapi-sports.yaml
-        title: WeatherAPI — Sports
-
+- aid: weatherapi:weatherapi-alerts-api
+  name: WeatherAPI Alerts API
+  description: Government weather alerts
+  humanURL: https://www.weatherapi.com/
+  baseURL: https://api.weatherapi.com/v1
+  tags:
+  - Alerts
+  properties:
+  - type: OpenAPI
+    url: openapi/weatherapi-alerts-api-openapi.yml
+  - type: Documentation
+    url: https://www.weatherapi.com/docs/
+  - type: APIReference
+    url: https://www.weatherapi.com/docs/
+  - type: APIExplorer
+    url: https://www.weatherapi.com/api-explorer.aspx
+  - type: Authentication
+    url: https://www.weatherapi.com/docs/#intro-authentication
+  - type: SDKs
+    url: https://github.com/weatherapicom/python
+  - type: SDKs
+    url: https://github.com/weatherapicom/javascript
+  - type: SDKs
+    url: https://github.com/weatherapicom/php
+  - type: SDKs
+    url: https://github.com/weatherapicom/java
+  - type: SDKs
+    url: https://github.com/weatherapicom/csharp
+  - type: SDKs
+    url: https://github.com/weatherapicom/go
+  - type: SDKs
+    url: https://github.com/weatherapicom/android
+  - type: SDKs
+    url: https://github.com/weatherapicom/weatherapi-Net-Standard
+  - type: SDKs
+    url: https://github.com/weatherapicom/weatherapi-iOS
+  - type: CodeExamples
+    url: https://github.com/weatherapicom/weatherapi-examples
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-weather.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-history.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-future.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-marine.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-alerts.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-geo.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-sports.yaml
+- aid: weatherapi:weatherapi-future-api
+  name: WeatherAPI Future API
+  description: Long-range future weather (14–300 days)
+  humanURL: https://www.weatherapi.com/
+  baseURL: https://api.weatherapi.com/v1
+  tags:
+  - Future
+  properties:
+  - type: OpenAPI
+    url: openapi/weatherapi-future-api-openapi.yml
+  - type: Documentation
+    url: https://www.weatherapi.com/docs/
+  - type: APIReference
+    url: https://www.weatherapi.com/docs/
+  - type: APIExplorer
+    url: https://www.weatherapi.com/api-explorer.aspx
+  - type: Authentication
+    url: https://www.weatherapi.com/docs/#intro-authentication
+  - type: SDKs
+    url: https://github.com/weatherapicom/python
+  - type: SDKs
+    url: https://github.com/weatherapicom/javascript
+  - type: SDKs
+    url: https://github.com/weatherapicom/php
+  - type: SDKs
+    url: https://github.com/weatherapicom/java
+  - type: SDKs
+    url: https://github.com/weatherapicom/csharp
+  - type: SDKs
+    url: https://github.com/weatherapicom/go
+  - type: SDKs
+    url: https://github.com/weatherapicom/android
+  - type: SDKs
+    url: https://github.com/weatherapicom/weatherapi-Net-Standard
+  - type: SDKs
+    url: https://github.com/weatherapicom/weatherapi-iOS
+  - type: CodeExamples
+    url: https://github.com/weatherapicom/weatherapi-examples
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-weather.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-history.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-future.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-marine.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-alerts.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-geo.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-sports.yaml
+- aid: weatherapi:weatherapi-geo-api
+  name: WeatherAPI Geo API
+  description: Location, IP lookup, timezone, astronomy
+  humanURL: https://www.weatherapi.com/
+  baseURL: https://api.weatherapi.com/v1
+  tags:
+  - Geo
+  properties:
+  - type: OpenAPI
+    url: openapi/weatherapi-geo-api-openapi.yml
+  - type: Documentation
+    url: https://www.weatherapi.com/docs/
+  - type: APIReference
+    url: https://www.weatherapi.com/docs/
+  - type: APIExplorer
+    url: https://www.weatherapi.com/api-explorer.aspx
+  - type: Authentication
+    url: https://www.weatherapi.com/docs/#intro-authentication
+  - type: SDKs
+    url: https://github.com/weatherapicom/python
+  - type: SDKs
+    url: https://github.com/weatherapicom/javascript
+  - type: SDKs
+    url: https://github.com/weatherapicom/php
+  - type: SDKs
+    url: https://github.com/weatherapicom/java
+  - type: SDKs
+    url: https://github.com/weatherapicom/csharp
+  - type: SDKs
+    url: https://github.com/weatherapicom/go
+  - type: SDKs
+    url: https://github.com/weatherapicom/android
+  - type: SDKs
+    url: https://github.com/weatherapicom/weatherapi-Net-Standard
+  - type: SDKs
+    url: https://github.com/weatherapicom/weatherapi-iOS
+  - type: CodeExamples
+    url: https://github.com/weatherapicom/weatherapi-examples
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-weather.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-history.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-future.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-marine.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-alerts.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-geo.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-sports.yaml
+- aid: weatherapi:weatherapi-history-api
+  name: WeatherAPI History API
+  description: Historical weather data
+  humanURL: https://www.weatherapi.com/
+  baseURL: https://api.weatherapi.com/v1
+  tags:
+  - History
+  properties:
+  - type: OpenAPI
+    url: openapi/weatherapi-history-api-openapi.yml
+  - type: Documentation
+    url: https://www.weatherapi.com/docs/
+  - type: APIReference
+    url: https://www.weatherapi.com/docs/
+  - type: APIExplorer
+    url: https://www.weatherapi.com/api-explorer.aspx
+  - type: Authentication
+    url: https://www.weatherapi.com/docs/#intro-authentication
+  - type: SDKs
+    url: https://github.com/weatherapicom/python
+  - type: SDKs
+    url: https://github.com/weatherapicom/javascript
+  - type: SDKs
+    url: https://github.com/weatherapicom/php
+  - type: SDKs
+    url: https://github.com/weatherapicom/java
+  - type: SDKs
+    url: https://github.com/weatherapicom/csharp
+  - type: SDKs
+    url: https://github.com/weatherapicom/go
+  - type: SDKs
+    url: https://github.com/weatherapicom/android
+  - type: SDKs
+    url: https://github.com/weatherapicom/weatherapi-Net-Standard
+  - type: SDKs
+    url: https://github.com/weatherapicom/weatherapi-iOS
+  - type: CodeExamples
+    url: https://github.com/weatherapicom/weatherapi-examples
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-weather.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-history.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-future.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-marine.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-alerts.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-geo.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-sports.yaml
+- aid: weatherapi:weatherapi-marine-api
+  name: WeatherAPI Marine API
+  description: Marine and sailing weather
+  humanURL: https://www.weatherapi.com/
+  baseURL: https://api.weatherapi.com/v1
+  tags:
+  - Marine
+  properties:
+  - type: OpenAPI
+    url: openapi/weatherapi-marine-api-openapi.yml
+  - type: Documentation
+    url: https://www.weatherapi.com/docs/
+  - type: APIReference
+    url: https://www.weatherapi.com/docs/
+  - type: APIExplorer
+    url: https://www.weatherapi.com/api-explorer.aspx
+  - type: Authentication
+    url: https://www.weatherapi.com/docs/#intro-authentication
+  - type: SDKs
+    url: https://github.com/weatherapicom/python
+  - type: SDKs
+    url: https://github.com/weatherapicom/javascript
+  - type: SDKs
+    url: https://github.com/weatherapicom/php
+  - type: SDKs
+    url: https://github.com/weatherapicom/java
+  - type: SDKs
+    url: https://github.com/weatherapicom/csharp
+  - type: SDKs
+    url: https://github.com/weatherapicom/go
+  - type: SDKs
+    url: https://github.com/weatherapicom/android
+  - type: SDKs
+    url: https://github.com/weatherapicom/weatherapi-Net-Standard
+  - type: SDKs
+    url: https://github.com/weatherapicom/weatherapi-iOS
+  - type: CodeExamples
+    url: https://github.com/weatherapicom/weatherapi-examples
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-weather.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-history.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-future.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-marine.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-alerts.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-geo.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-sports.yaml
+- aid: weatherapi:weatherapi-sports-api
+  name: WeatherAPI Sports API
+  description: Upcoming sports events
+  humanURL: https://www.weatherapi.com/
+  baseURL: https://api.weatherapi.com/v1
+  tags:
+  - Sports
+  properties:
+  - type: OpenAPI
+    url: openapi/weatherapi-sports-api-openapi.yml
+  - type: Documentation
+    url: https://www.weatherapi.com/docs/
+  - type: APIReference
+    url: https://www.weatherapi.com/docs/
+  - type: APIExplorer
+    url: https://www.weatherapi.com/api-explorer.aspx
+  - type: Authentication
+    url: https://www.weatherapi.com/docs/#intro-authentication
+  - type: SDKs
+    url: https://github.com/weatherapicom/python
+  - type: SDKs
+    url: https://github.com/weatherapicom/javascript
+  - type: SDKs
+    url: https://github.com/weatherapicom/php
+  - type: SDKs
+    url: https://github.com/weatherapicom/java
+  - type: SDKs
+    url: https://github.com/weatherapicom/csharp
+  - type: SDKs
+    url: https://github.com/weatherapicom/go
+  - type: SDKs
+    url: https://github.com/weatherapicom/android
+  - type: SDKs
+    url: https://github.com/weatherapicom/weatherapi-Net-Standard
+  - type: SDKs
+    url: https://github.com/weatherapicom/weatherapi-iOS
+  - type: CodeExamples
+    url: https://github.com/weatherapicom/weatherapi-examples
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-weather.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-history.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-future.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-marine.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-alerts.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-geo.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-sports.yaml
+- aid: weatherapi:weatherapi-weather-api
+  name: WeatherAPI Weather API
+  description: Real-time and forecast weather endpoints
+  humanURL: https://www.weatherapi.com/
+  baseURL: https://api.weatherapi.com/v1
+  tags:
+  - Weather
+  properties:
+  - type: OpenAPI
+    url: openapi/weatherapi-weather-api-openapi.yml
+  - type: Documentation
+    url: https://www.weatherapi.com/docs/
+  - type: APIReference
+    url: https://www.weatherapi.com/docs/
+  - type: APIExplorer
+    url: https://www.weatherapi.com/api-explorer.aspx
+  - type: Authentication
+    url: https://www.weatherapi.com/docs/#intro-authentication
+  - type: SDKs
+    url: https://github.com/weatherapicom/python
+  - type: SDKs
+    url: https://github.com/weatherapicom/javascript
+  - type: SDKs
+    url: https://github.com/weatherapicom/php
+  - type: SDKs
+    url: https://github.com/weatherapicom/java
+  - type: SDKs
+    url: https://github.com/weatherapicom/csharp
+  - type: SDKs
+    url: https://github.com/weatherapicom/go
+  - type: SDKs
+    url: https://github.com/weatherapicom/android
+  - type: SDKs
+    url: https://github.com/weatherapicom/weatherapi-Net-Standard
+  - type: SDKs
+    url: https://github.com/weatherapicom/weatherapi-iOS
+  - type: CodeExamples
+    url: https://github.com/weatherapicom/weatherapi-examples
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-weather.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-history.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-future.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-marine.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-alerts.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-geo.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/weatherapi-sports.yaml
 common:
   - type: AgenticAccess
     url: agentic-access/weatherapi-agentic-access.yml
