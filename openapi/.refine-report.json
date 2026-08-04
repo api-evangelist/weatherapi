@@ -1,0 +1,26 @@
+{
+  "provider": "weatherapi",
+  "sources": [
+    "weatherapi-alerts-api-openapi.yml",
+    "weatherapi-future-api-openapi.yml",
+    "weatherapi-geo-api-openapi.yml",
+    "weatherapi-history-api-openapi.yml",
+    "weatherapi-marine-api-openapi.yml",
+    "weatherapi-sports-api-openapi.yml",
+    "weatherapi-weather-api-openapi.yml"
+  ],
+  "outputs": [
+    "weatherapi-alerts-api-openapi.yml",
+    "weatherapi-future-api-openapi.yml",
+    "weatherapi-geo-api-openapi.yml",
+    "weatherapi-history-api-openapi.yml",
+    "weatherapi-marine-api-openapi.yml",
+    "weatherapi-sports-api-openapi.yml",
+    "weatherapi-weather-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
