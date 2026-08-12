@@ -78,20 +78,6 @@ apis:
     url: https://github.com/weatherapicom/weatherapi-iOS
   - type: CodeExamples
     url: https://github.com/weatherapicom/weatherapi-examples
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-weather.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-history.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-future.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-marine.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-alerts.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-geo.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-sports.yaml
 - aid: weatherapi:weatherapi-future-api
   name: WeatherAPI Future API
   description: Long-range future weather (14–300 days)
@@ -130,20 +116,6 @@ apis:
     url: https://github.com/weatherapicom/weatherapi-iOS
   - type: CodeExamples
     url: https://github.com/weatherapicom/weatherapi-examples
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-weather.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-history.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-future.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-marine.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-alerts.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-geo.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-sports.yaml
 - aid: weatherapi:weatherapi-geo-api
   name: WeatherAPI Geo API
   description: Location, IP lookup, timezone, astronomy
@@ -182,20 +154,6 @@ apis:
     url: https://github.com/weatherapicom/weatherapi-iOS
   - type: CodeExamples
     url: https://github.com/weatherapicom/weatherapi-examples
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-weather.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-history.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-future.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-marine.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-alerts.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-geo.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-sports.yaml
 - aid: weatherapi:weatherapi-history-api
   name: WeatherAPI History API
   description: Historical weather data
@@ -234,20 +192,6 @@ apis:
     url: https://github.com/weatherapicom/weatherapi-iOS
   - type: CodeExamples
     url: https://github.com/weatherapicom/weatherapi-examples
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-weather.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-history.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-future.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-marine.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-alerts.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-geo.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-sports.yaml
 - aid: weatherapi:weatherapi-marine-api
   name: WeatherAPI Marine API
   description: Marine and sailing weather
@@ -286,20 +230,6 @@ apis:
     url: https://github.com/weatherapicom/weatherapi-iOS
   - type: CodeExamples
     url: https://github.com/weatherapicom/weatherapi-examples
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-weather.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-history.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-future.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-marine.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-alerts.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-geo.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-sports.yaml
 - aid: weatherapi:weatherapi-sports-api
   name: WeatherAPI Sports API
   description: Upcoming sports events
@@ -338,20 +268,6 @@ apis:
     url: https://github.com/weatherapicom/weatherapi-iOS
   - type: CodeExamples
     url: https://github.com/weatherapicom/weatherapi-examples
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-weather.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-history.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-future.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-marine.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-alerts.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-geo.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-sports.yaml
 - aid: weatherapi:weatherapi-weather-api
   name: WeatherAPI Weather API
   description: Real-time and forecast weather endpoints
@@ -390,20 +306,6 @@ apis:
     url: https://github.com/weatherapicom/weatherapi-iOS
   - type: CodeExamples
     url: https://github.com/weatherapicom/weatherapi-examples
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-weather.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-history.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-future.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-marine.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-alerts.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-geo.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/weatherapi-sports.yaml
 common:
   - type: AgenticAccess
     url: agentic-access/weatherapi-agentic-access.yml
