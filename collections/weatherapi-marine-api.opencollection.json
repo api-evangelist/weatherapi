@@ -1,0 +1,75 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WeatherAPI.com Alerts Marine API",
+    "version": "1.0.2"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "key",
+      "value": "{{key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Marine",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "WeatherAPI Marine Weather",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.weatherapi.com/v1/marine.json",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "query",
+                "description": "Your WeatherAPI.com API key."
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268)."
+              },
+              {
+                "name": "days",
+                "value": "1",
+                "type": "query",
+                "description": "Number of forecast days (1–7 depending on plan)."
+              },
+              {
+                "name": "dt",
+                "value": "",
+                "type": "query",
+                "description": "Restrict date output in yyyy-MM-dd format."
+              },
+              {
+                "name": "hour",
+                "value": "",
+                "type": "query",
+                "description": "Restrict output to a specific hour (0–23) in 24-hour format."
+              },
+              {
+                "name": "tides",
+                "value": "yes",
+                "type": "query",
+                "description": "Enable/disable tide data (Pro+ and above)."
+              }
+            ]
+          },
+          "docs": "Returns marine and sailing weather forecast (up to 7 days depending on plan) including tide data (Pro+ and above), wave height, swell, and water temperature."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

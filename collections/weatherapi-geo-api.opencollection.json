@@ -1,0 +1,132 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WeatherAPI.com Alerts Geo API",
+    "version": "1.0.2"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "key",
+      "value": "{{key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Geo",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "WeatherAPI Search / Autocomplete Locations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.weatherapi.com/v1/search.json",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "query",
+                "description": "Your WeatherAPI.com API key."
+              },
+              {
+                "name": "q",
+                "value": "lond",
+                "type": "query",
+                "description": "Partial city name, postcode, or coordinates to search."
+              }
+            ]
+          },
+          "docs": "Returns matching cities and towns as an array of Location objects. Useful for building autocomplete location pickers."
+        },
+        {
+          "info": {
+            "name": "WeatherAPI IP Lookup",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.weatherapi.com/v1/ip.json",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "query",
+                "description": "Your WeatherAPI.com API key."
+              },
+              {
+                "name": "q",
+                "value": "auto:ip",
+                "type": "query",
+                "description": "IPv4, IPv6 address, or `auto:ip` for caller's IP."
+              }
+            ]
+          },
+          "docs": "Returns geolocation and timezone data for a given IPv4 or IPv6 address. Pass `auto:ip` to auto-detect the caller's IP."
+        },
+        {
+          "info": {
+            "name": "WeatherAPI Time Zone",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.weatherapi.com/v1/timezone.json",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "query",
+                "description": "Your WeatherAPI.com API key."
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268)."
+              }
+            ]
+          },
+          "docs": "Returns the local time and timezone information for a given location."
+        },
+        {
+          "info": {
+            "name": "WeatherAPI Astronomy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.weatherapi.com/v1/astronomy.json",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "query",
+                "description": "Your WeatherAPI.com API key."
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268)."
+              },
+              {
+                "name": "dt",
+                "value": "2026-03-20",
+                "type": "query",
+                "description": "Date in yyyy-MM-dd format."
+              }
+            ]
+          },
+          "docs": "Returns sunrise, sunset, moonrise, moonset, moon phase, and moon illumination for a given location and date."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

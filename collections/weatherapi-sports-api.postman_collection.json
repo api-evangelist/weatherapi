@@ -1,0 +1,289 @@
+{
+  "item": [
+    {
+      "id": "3a91e1b0-12ca-41d6-9052-e11ab28681a3",
+      "name": "Sports",
+      "description": {
+        "content": "Upcoming sports events",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f3a0b281-ec18-4e56-8d86-43141cc468bc",
+          "name": "WeatherAPI Sports Events",
+          "request": {
+            "name": "WeatherAPI Sports Events",
+            "description": {
+              "content": "Returns upcoming sports events for football (soccer), cricket, and golf. Historical sports data available on Enterprise plan.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sports.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "key",
+                  "value": "<string>",
+                  "description": "(Required) Your WeatherAPI.com API key."
+                },
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "(Required) Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c6f8f25c-3d03-4380-b126-37f4f96d4d2a",
+              "name": "Sports events",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sports.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "YOUR_API_KEY"
+                    },
+                    {
+                      "key": "q",
+                      "value": "London"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"football\": [\n    {\n      \"stadium\": \"Wembley Stadium\",\n      \"country\": \"United Kingdom\",\n      \"region\": \"City of London, Greater London\",\n      \"tournament\": \"Premier League\",\n      \"start\": \"sample value\",\n      \"match\": \"Manchester United vs Liverpool\"\n    }\n  ],\n  \"cricket\": [\n    {\n      \"stadium\": \"Wembley Stadium\",\n      \"country\": \"United Kingdom\",\n      \"region\": \"City of London, Greater London\",\n      \"tournament\": \"Premier League\",\n      \"start\": \"sample value\",\n      \"match\": \"Manchester United vs Liverpool\"\n    }\n  ],\n  \"golf\": [\n    {\n      \"stadium\": \"Wembley Stadium\",\n      \"country\": \"United Kingdom\",\n      \"region\": \"City of London, Greater London\",\n      \"tournament\": \"Premier League\",\n      \"start\": \"sample value\",\n      \"match\": \"Manchester United vs Liverpool\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b97c882f-cef2-4684-8f4a-124facdcc515",
+              "name": "Bad request — invalid parameter or location not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sports.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "YOUR_API_KEY"
+                    },
+                    {
+                      "key": "q",
+                      "value": "London"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 1006,\n    \"message\": \"No location found matching parameter 'q'\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d3edf90e-5dc3-473a-8894-4a78f6a56537",
+              "name": "Unauthorized — API key missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sports.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "YOUR_API_KEY"
+                    },
+                    {
+                      "key": "q",
+                      "value": "London"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 1006,\n    \"message\": \"No location found matching parameter 'q'\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a1ebf654-c44d-40b8-8da8-cb9f2243acd8",
+              "name": "Forbidden — API key quota exceeded, disabled, or plan does not include this resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sports.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "YOUR_API_KEY"
+                    },
+                    {
+                      "key": "q",
+                      "value": "London"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 1006,\n    \"message\": \"No location found matching parameter 'q'\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.weatherapi.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "cad2f5e2-12b8-40ea-9cff-3c01eb0464bd",
+    "name": "WeatherAPI.com Alerts Sports API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "WeatherAPI.com provides real-time, forecast, historical, marine, future, astronomy, air quality, pollen, sports, IP lookup, timezone, and geolocation data via a JSON/XML REST API. Trusted by 850,000+ developers worldwide. Average response time ~200ms.\n\n## Authentication\nAll endpoints require an API key passed as the `key` query parameter.\n\n## Base URL\n`https://api.weatherapi.com/v1`\n\n## Location Query (`q` parameter)\nAccepts: city name, lat/lon decimal, US zip, UK postcode, Canada postal code, METAR code (`metar:EGLL`), IATA airport code (`iata:DXB`), IP lookup (`auto:ip`), IPv4/IPv6 address, or location ID (`id:2801268`).\n\n## Plans\n- **Free**: 100K calls/month, 3-day forecast, 1-day history\n- **Starter**: $7/mo — 3M calls, 7-day forecast, 7-day history\n- **Pro+**: $25/mo — 5M calls, 300-day future, 365-day history\n- **Business**: $65/mo — 10M calls, evapotranspiration\n- **Enterprise**: Custom — 15-min interval, pollen history, wind@100m, SLA\n\nContact Support:\n Name: WeatherAPI.com Support",
+      "type": "text/plain"
+    }
+  }
+}

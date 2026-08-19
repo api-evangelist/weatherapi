@@ -1,0 +1,835 @@
+{
+  "item": [
+    {
+      "id": "803977be-de86-446a-b4a1-b8ed36f23c3d",
+      "name": "Geo",
+      "description": {
+        "content": "Location, IP lookup, timezone, astronomy",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "42b17b35-e960-4fa9-ab5e-27530ebb5fa7",
+          "name": "WeatherAPI Search / Autocomplete Locations",
+          "request": {
+            "name": "WeatherAPI Search / Autocomplete Locations",
+            "description": {
+              "content": "Returns matching cities and towns as an array of Location objects. Useful for building autocomplete location pickers.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "search.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "key",
+                  "value": "<string>",
+                  "description": "(Required) Your WeatherAPI.com API key."
+                },
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "(Required) Partial city name, postcode, or coordinates to search."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fa6a0d5f-c094-4a6d-b818-1eba02385348",
+              "name": "List of matching locations",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "YOUR_API_KEY"
+                    },
+                    {
+                      "key": "q",
+                      "value": "lond"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 2643743,\n    \"name\": \"London\",\n    \"region\": \"City of London, Greater London\",\n    \"country\": \"United Kingdom\",\n    \"lat\": 51.5074,\n    \"lon\": -0.1278,\n    \"url\": \"sample value\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f3fc7450-426e-433d-b694-cfffd86b046e",
+              "name": "Bad request — invalid parameter or location not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "YOUR_API_KEY"
+                    },
+                    {
+                      "key": "q",
+                      "value": "lond"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 1006,\n    \"message\": \"No location found matching parameter 'q'\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f585276e-23ea-4924-96e9-edf53f5475b1",
+              "name": "Unauthorized — API key missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "YOUR_API_KEY"
+                    },
+                    {
+                      "key": "q",
+                      "value": "lond"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 1006,\n    \"message\": \"No location found matching parameter 'q'\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8be4ee52-bc0f-47a0-afb3-ea32007ae3bf",
+          "name": "WeatherAPI IP Lookup",
+          "request": {
+            "name": "WeatherAPI IP Lookup",
+            "description": {
+              "content": "Returns geolocation and timezone data for a given IPv4 or IPv6 address. Pass `auto:ip` to auto-detect the caller's IP.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ip.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "key",
+                  "value": "<string>",
+                  "description": "(Required) Your WeatherAPI.com API key."
+                },
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "(Required) IPv4, IPv6 address, or `auto:ip` for caller's IP."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5599ed58-06e7-4f77-86c7-5b8804af3def",
+              "name": "IP geolocation data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ip.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "YOUR_API_KEY"
+                    },
+                    {
+                      "key": "q",
+                      "value": "auto:ip"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ip\": \"sample value\",\n  \"type\": \"ipv4\",\n  \"continent_code\": \"EGLL\",\n  \"continent_name\": \"EU\",\n  \"country_code\": \"United Kingdom\",\n  \"country_name\": \"United Kingdom\",\n  \"is_eu\": false,\n  \"geoname_id\": \"sample value\",\n  \"city\": \"sample value\",\n  \"region\": \"City of London, Greater London\",\n  \"lat\": 51.5074,\n  \"lon\": -0.1278,\n  \"tz_id\": \"Europe/London\",\n  \"localtime_epoch\": 1748441400,\n  \"localtime\": \"2026-05-28 15:30\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "09ce204c-1893-4a92-b3a3-22440a54eea3",
+              "name": "Bad request — invalid parameter or location not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ip.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "YOUR_API_KEY"
+                    },
+                    {
+                      "key": "q",
+                      "value": "auto:ip"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 1006,\n    \"message\": \"No location found matching parameter 'q'\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2b31f01d-d5e5-4815-9cb0-1e6d6a080074",
+              "name": "Unauthorized — API key missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ip.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "YOUR_API_KEY"
+                    },
+                    {
+                      "key": "q",
+                      "value": "auto:ip"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 1006,\n    \"message\": \"No location found matching parameter 'q'\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a66e8891-a67f-49a3-93d6-d8f75360e8bc",
+          "name": "WeatherAPI Time Zone",
+          "request": {
+            "name": "WeatherAPI Time Zone",
+            "description": {
+              "content": "Returns the local time and timezone information for a given location.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "timezone.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "key",
+                  "value": "<string>",
+                  "description": "(Required) Your WeatherAPI.com API key."
+                },
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "(Required) Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4592749c-b1cf-4304-8ffa-24368097d484",
+              "name": "Timezone data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "timezone.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "YOUR_API_KEY"
+                    },
+                    {
+                      "key": "q",
+                      "value": "London"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"location\": {\n    \"name\": \"London\",\n    \"region\": \"City of London, Greater London\",\n    \"country\": \"United Kingdom\",\n    \"lat\": 51.5074,\n    \"lon\": -0.1278,\n    \"tz_id\": \"Europe/London\",\n    \"localtime_epoch\": 1748441400,\n    \"localtime\": \"2026-05-28 15:30\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9a6b82f5-0988-4712-8de4-4c00f002610a",
+              "name": "Bad request — invalid parameter or location not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "timezone.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "YOUR_API_KEY"
+                    },
+                    {
+                      "key": "q",
+                      "value": "London"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 1006,\n    \"message\": \"No location found matching parameter 'q'\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "caf7a733-019c-453a-89d2-9b9e94fcc369",
+              "name": "Unauthorized — API key missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "timezone.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "YOUR_API_KEY"
+                    },
+                    {
+                      "key": "q",
+                      "value": "London"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 1006,\n    \"message\": \"No location found matching parameter 'q'\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4541ac53-5e36-40b9-94df-8fb7ecb566a0",
+          "name": "WeatherAPI Astronomy",
+          "request": {
+            "name": "WeatherAPI Astronomy",
+            "description": {
+              "content": "Returns sunrise, sunset, moonrise, moonset, moon phase, and moon illumination for a given location and date.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "astronomy.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "key",
+                  "value": "<string>",
+                  "description": "(Required) Your WeatherAPI.com API key."
+                },
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "(Required) Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268)."
+                },
+                {
+                  "disabled": false,
+                  "key": "dt",
+                  "value": "<date>",
+                  "description": "(Required) Date in yyyy-MM-dd format."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3b21c3fb-df03-4709-b1f7-802d53230710",
+              "name": "Astronomy data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "astronomy.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "YOUR_API_KEY"
+                    },
+                    {
+                      "key": "q",
+                      "value": "London"
+                    },
+                    {
+                      "key": "dt",
+                      "value": "2026-03-20"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"location\": {\n    \"name\": \"London\",\n    \"region\": \"City of London, Greater London\",\n    \"country\": \"United Kingdom\",\n    \"lat\": 51.5074,\n    \"lon\": -0.1278,\n    \"tz_id\": \"Europe/London\",\n    \"localtime_epoch\": 1748441400,\n    \"localtime\": \"2026-05-28 15:30\"\n  },\n  \"astronomy\": {\n    \"astro\": {\n      \"sunrise\": \"05:30 AM\",\n      \"sunset\": \"08:45 PM\",\n      \"moonrise\": \"10:15 PM\",\n      \"moonset\": \"06:42 AM\",\n      \"moon_phase\": \"Waxing Crescent\",\n      \"moon_illumination\": 35,\n      \"is_moon_up\": 1,\n      \"is_sun_up\": 1\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "30107777-8031-4373-8c30-d5c4e84e01e4",
+              "name": "Bad request — invalid parameter or location not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "astronomy.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "YOUR_API_KEY"
+                    },
+                    {
+                      "key": "q",
+                      "value": "London"
+                    },
+                    {
+                      "key": "dt",
+                      "value": "2026-03-20"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 1006,\n    \"message\": \"No location found matching parameter 'q'\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "43663100-f61c-4192-8c1b-578633932faa",
+              "name": "Unauthorized — API key missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "astronomy.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "YOUR_API_KEY"
+                    },
+                    {
+                      "key": "q",
+                      "value": "London"
+                    },
+                    {
+                      "key": "dt",
+                      "value": "2026-03-20"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 1006,\n    \"message\": \"No location found matching parameter 'q'\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.weatherapi.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8e1585ff-338d-4540-af38-8a1574616f98",
+    "name": "WeatherAPI.com Alerts Geo API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "WeatherAPI.com provides real-time, forecast, historical, marine, future, astronomy, air quality, pollen, sports, IP lookup, timezone, and geolocation data via a JSON/XML REST API. Trusted by 850,000+ developers worldwide. Average response time ~200ms.\n\n## Authentication\nAll endpoints require an API key passed as the `key` query parameter.\n\n## Base URL\n`https://api.weatherapi.com/v1`\n\n## Location Query (`q` parameter)\nAccepts: city name, lat/lon decimal, US zip, UK postcode, Canada postal code, METAR code (`metar:EGLL`), IATA airport code (`iata:DXB`), IP lookup (`auto:ip`), IPv4/IPv6 address, or location ID (`id:2801268`).\n\n## Plans\n- **Free**: 100K calls/month, 3-day forecast, 1-day history\n- **Starter**: $7/mo — 3M calls, 7-day forecast, 7-day history\n- **Pro+**: $25/mo — 5M calls, 300-day future, 365-day history\n- **Business**: $65/mo — 10M calls, evapotranspiration\n- **Enterprise**: Custom — 15-min interval, pollen history, wind@100m, SLA\n\nContact Support:\n Name: WeatherAPI.com Support",
+      "type": "text/plain"
+    }
+  }
+}

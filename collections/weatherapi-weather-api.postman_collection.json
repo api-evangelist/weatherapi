@@ -1,0 +1,1193 @@
+{
+  "item": [
+    {
+      "id": "15456db4-0369-4c95-99ab-1013f22958a6",
+      "name": "Weather",
+      "description": {
+        "content": "Real-time and forecast weather endpoints",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1f7872c6-642f-4135-8b80-096b4bbbc992",
+          "name": "WeatherAPI Current / Real-time Weather",
+          "request": {
+            "name": "WeatherAPI Current / Real-time Weather",
+            "description": {
+              "content": "Returns up-to-date current weather for a given location. Data is refreshed every 10–15 minutes. Optionally includes air quality (AQI) and pollen data.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "current.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "key",
+                  "value": "<string>",
+                  "description": "(Required) Your WeatherAPI.com API key."
+                },
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "(Required) Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268)."
+                },
+                {
+                  "disabled": false,
+                  "key": "aqi",
+                  "value": "no",
+                  "description": "Include Air Quality Index (AQI) data in response."
+                },
+                {
+                  "disabled": false,
+                  "key": "pollen",
+                  "value": "no",
+                  "description": "Include pollen data. Available on Pro+ and above."
+                },
+                {
+                  "disabled": false,
+                  "key": "lang",
+                  "value": "<string>",
+                  "description": "Language code for condition text. E.g.: fr, de, es, zh, ar. See full list in docs."
+                },
+                {
+                  "disabled": false,
+                  "key": "current_fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to return in the current element, e.g. temp_c,wind_mph."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "13596991-222f-4753-b79e-67f4e454e188",
+              "name": "Current weather data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "current.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "YOUR_API_KEY"
+                    },
+                    {
+                      "key": "q",
+                      "value": "London"
+                    },
+                    {
+                      "key": "aqi",
+                      "value": "no"
+                    },
+                    {
+                      "key": "pollen",
+                      "value": "no"
+                    },
+                    {
+                      "key": "lang",
+                      "value": "fr"
+                    },
+                    {
+                      "key": "current_fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"location\": {\n    \"name\": \"London\",\n    \"region\": \"City of London, Greater London\",\n    \"country\": \"United Kingdom\",\n    \"lat\": 51.52,\n    \"lon\": -0.11,\n    \"tz_id\": \"Europe/London\",\n    \"localtime_epoch\": 1613896955,\n    \"localtime\": \"2021-02-21 8:42\"\n  },\n  \"current\": {\n    \"last_updated\": \"2021-02-21 08:30\",\n    \"temp_c\": 11,\n    \"temp_f\": 51.8,\n    \"is_day\": 1,\n    \"condition\": {\n      \"text\": \"Partly cloudy\",\n      \"icon\": \"//cdn.weatherapi.com/weather/64x64/day/116.png\",\n      \"code\": 1003\n    },\n    \"wind_mph\": 3.8,\n    \"wind_kph\": 6.1,\n    \"humidity\": 82,\n    \"uv\": 1\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "59ce727a-389c-4ea6-bd2a-1dd5a263070a",
+              "name": "Bad request — invalid parameter or location not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "current.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "YOUR_API_KEY"
+                    },
+                    {
+                      "key": "q",
+                      "value": "London"
+                    },
+                    {
+                      "key": "aqi",
+                      "value": "no"
+                    },
+                    {
+                      "key": "pollen",
+                      "value": "no"
+                    },
+                    {
+                      "key": "lang",
+                      "value": "fr"
+                    },
+                    {
+                      "key": "current_fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 1006,\n    \"message\": \"No location found matching parameter 'q'\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "46cadf70-06b8-4e03-9e87-bded876f3272",
+              "name": "Unauthorized — API key missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "current.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "YOUR_API_KEY"
+                    },
+                    {
+                      "key": "q",
+                      "value": "London"
+                    },
+                    {
+                      "key": "aqi",
+                      "value": "no"
+                    },
+                    {
+                      "key": "pollen",
+                      "value": "no"
+                    },
+                    {
+                      "key": "lang",
+                      "value": "fr"
+                    },
+                    {
+                      "key": "current_fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 1006,\n    \"message\": \"No location found matching parameter 'q'\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "04ceb4ff-3df6-43fb-941f-6d67c44b5929",
+              "name": "Forbidden — API key quota exceeded, disabled, or plan does not include this resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "current.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "YOUR_API_KEY"
+                    },
+                    {
+                      "key": "q",
+                      "value": "London"
+                    },
+                    {
+                      "key": "aqi",
+                      "value": "no"
+                    },
+                    {
+                      "key": "pollen",
+                      "value": "no"
+                    },
+                    {
+                      "key": "lang",
+                      "value": "fr"
+                    },
+                    {
+                      "key": "current_fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 1006,\n    \"message\": \"No location found matching parameter 'q'\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "86c34186-dad9-4799-9d69-0b66cb0ffde5",
+          "name": "WeatherAPI Forecast Weather",
+          "request": {
+            "name": "WeatherAPI Forecast Weather",
+            "description": {
+              "content": "Returns weather forecast for up to 14 days (plan dependent). Includes hourly intervals, astronomy, air quality, pollen, and weather alerts.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "forecast.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "key",
+                  "value": "<string>",
+                  "description": "(Required) Your WeatherAPI.com API key."
+                },
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "(Required) Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268)."
+                },
+                {
+                  "disabled": false,
+                  "key": "days",
+                  "value": "<integer>",
+                  "description": "(Required) Number of forecast days (1–14)."
+                },
+                {
+                  "disabled": false,
+                  "key": "dt",
+                  "value": "<date>",
+                  "description": "Restrict date output in yyyy-MM-dd format."
+                },
+                {
+                  "disabled": false,
+                  "key": "unixdt",
+                  "value": "<integer>",
+                  "description": "Unix timestamp equivalent of `dt`. Do not pass both."
+                },
+                {
+                  "disabled": false,
+                  "key": "hour",
+                  "value": "<integer>",
+                  "description": "Restrict output to a specific hour (0–23) in 24-hour format."
+                },
+                {
+                  "disabled": false,
+                  "key": "alerts",
+                  "value": "no",
+                  "description": "Include weather alerts in Forecast API response."
+                },
+                {
+                  "disabled": false,
+                  "key": "aqi",
+                  "value": "no",
+                  "description": "Include Air Quality Index (AQI) data in response."
+                },
+                {
+                  "disabled": false,
+                  "key": "pollen",
+                  "value": "no",
+                  "description": "Include pollen data. Available on Pro+ and above."
+                },
+                {
+                  "disabled": false,
+                  "key": "tp",
+                  "value": "<integer>",
+                  "description": "Interval for data. Use tp=15 for 15-minute intervals (Enterprise only)."
+                },
+                {
+                  "disabled": false,
+                  "key": "lang",
+                  "value": "<string>",
+                  "description": "Language code for condition text. E.g.: fr, de, es, zh, ar. See full list in docs."
+                },
+                {
+                  "disabled": false,
+                  "key": "day_fields",
+                  "value": "<string>",
+                  "description": "Comma-separated fields to return in forecast/history day element."
+                },
+                {
+                  "disabled": false,
+                  "key": "hour_fields",
+                  "value": "<string>",
+                  "description": "Comma-separated fields to return in forecast/history hour element."
+                },
+                {
+                  "disabled": false,
+                  "key": "et0",
+                  "value": "<string>",
+                  "description": "Include evapotranspiration data. Business and Enterprise only."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d30b5bcb-5fde-4dbe-98c1-7e272cbbe81d",
+              "name": "Forecast weather data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "forecast.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "YOUR_API_KEY"
+                    },
+                    {
+                      "key": "q",
+                      "value": "London"
+                    },
+                    {
+                      "key": "days",
+                      "value": "3"
+                    },
+                    {
+                      "key": "dt",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "unixdt",
+                      "value": "1490227200"
+                    },
+                    {
+                      "key": "hour",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "alerts",
+                      "value": "no"
+                    },
+                    {
+                      "key": "aqi",
+                      "value": "no"
+                    },
+                    {
+                      "key": "pollen",
+                      "value": "no"
+                    },
+                    {
+                      "key": "tp",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "lang",
+                      "value": "fr"
+                    },
+                    {
+                      "key": "day_fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "hour_fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "et0",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"location\": {\n    \"name\": \"London\",\n    \"region\": \"City of London, Greater London\",\n    \"country\": \"United Kingdom\",\n    \"lat\": 51.5074,\n    \"lon\": -0.1278,\n    \"tz_id\": \"Europe/London\",\n    \"localtime_epoch\": 1748441400,\n    \"localtime\": \"2026-05-28 15:30\"\n  },\n  \"current\": {\n    \"last_updated_epoch\": 1748441400,\n    \"last_updated\": \"2026-05-28 15:30\",\n    \"temp_c\": 18.5,\n    \"temp_f\": 65.3,\n    \"is_day\": 1,\n    \"condition\": {\n      \"text\": \"Partly Cloudy\",\n      \"icon\": \"//cdn.weatherapi.com/weather/64x64/day/116.png\",\n      \"code\": 1003\n    },\n    \"wind_mph\": 12.4,\n    \"wind_kph\": 12.4,\n    \"wind_degree\": 1,\n    \"wind_dir\": \"WSW\",\n    \"pressure_mb\": 1013,\n    \"pressure_in\": 1013,\n    \"precip_mm\": 0.5,\n    \"precip_in\": 0.5,\n    \"humidity\": 65,\n    \"cloud\": 40,\n    \"feelslike_c\": 17.8,\n    \"feelslike_f\": 17.8,\n    \"windchill_c\": 12.4,\n    \"windchill_f\": 12.4,\n    \"heatindex_c\": 1,\n    \"heatindex_f\": 1,\n    \"dewpoint_c\": 1,\n    \"dewpoint_f\": 1,\n    \"vis_km\": 10,\n    \"vis_miles\": 10,\n    \"uv\": 4,\n    \"gust_mph\": 22.1,\n    \"gust_kph\": 22.1,\n    \"short_rad\": 1,\n    \"diff_rad\": 1,\n    \"air_quality\": {\n      \"co\": 1,\n      \"o3\": 1,\n      \"no2\": 1,\n      \"so2\": 1,\n      \"pm2_5\": 1,\n      \"pm10\": 1,\n      \"us-epa-index\": 1,\n      \"gb-defra-index\": 1\n    },\n    \"pollen\": {\n      \"Hazel\": 1,\n      \"Alder\": 1,\n      \"Birch\": 1,\n      \"Oak\": 1,\n      \"Grass\": 1,\n      \"Mugwort\": 1,\n      \"Ragweed\": 1\n    }\n  },\n  \"forecast\": {\n    \"forecastday\": [\n      {\n        \"date\": \"2026-05-28\",\n        \"date_epoch\": 1748441400,\n        \"hour\": []\n      }\n    ]\n  },\n  \"alerts\": {\n    \"alert\": [\n      {\n        \"headline\": \"sample value\",\n        \"msgtype\": \"sample value\",\n        \"severity\": \"sample value\",\n        \"urgency\": \"sample value\",\n        \"areas\": \"sample value\",\n        \"category\": \"sample value\",\n        \"certainty\": \"sample value\",\n        \"event\": \"Severe Thunderstorm Warning\",\n        \"note\": \"sample value\",\n        \"effective\": \"2026-05-28T13:00:00Z\",\n        \"expires\": \"2026-05-28T13:00:00Z\",\n        \"desc\": \"Severe thunderstorms with damaging winds expected in the warning area.\",\n        \"instruction\": \"sample value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d12a0373-0c28-4290-b028-617dd156dcc4",
+              "name": "Bad request — invalid parameter or location not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "forecast.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "YOUR_API_KEY"
+                    },
+                    {
+                      "key": "q",
+                      "value": "London"
+                    },
+                    {
+                      "key": "days",
+                      "value": "3"
+                    },
+                    {
+                      "key": "dt",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "unixdt",
+                      "value": "1490227200"
+                    },
+                    {
+                      "key": "hour",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "alerts",
+                      "value": "no"
+                    },
+                    {
+                      "key": "aqi",
+                      "value": "no"
+                    },
+                    {
+                      "key": "pollen",
+                      "value": "no"
+                    },
+                    {
+                      "key": "tp",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "lang",
+                      "value": "fr"
+                    },
+                    {
+                      "key": "day_fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "hour_fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "et0",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 1006,\n    \"message\": \"No location found matching parameter 'q'\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3281ae44-1ae1-423a-8e14-44cc0172c74f",
+              "name": "Unauthorized — API key missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "forecast.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "YOUR_API_KEY"
+                    },
+                    {
+                      "key": "q",
+                      "value": "London"
+                    },
+                    {
+                      "key": "days",
+                      "value": "3"
+                    },
+                    {
+                      "key": "dt",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "unixdt",
+                      "value": "1490227200"
+                    },
+                    {
+                      "key": "hour",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "alerts",
+                      "value": "no"
+                    },
+                    {
+                      "key": "aqi",
+                      "value": "no"
+                    },
+                    {
+                      "key": "pollen",
+                      "value": "no"
+                    },
+                    {
+                      "key": "tp",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "lang",
+                      "value": "fr"
+                    },
+                    {
+                      "key": "day_fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "hour_fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "et0",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 1006,\n    \"message\": \"No location found matching parameter 'q'\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7278862f-64ad-42c0-a52f-aa3364b0224d",
+              "name": "Forbidden — API key quota exceeded, disabled, or plan does not include this resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "forecast.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "YOUR_API_KEY"
+                    },
+                    {
+                      "key": "q",
+                      "value": "London"
+                    },
+                    {
+                      "key": "days",
+                      "value": "3"
+                    },
+                    {
+                      "key": "dt",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "unixdt",
+                      "value": "1490227200"
+                    },
+                    {
+                      "key": "hour",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "alerts",
+                      "value": "no"
+                    },
+                    {
+                      "key": "aqi",
+                      "value": "no"
+                    },
+                    {
+                      "key": "pollen",
+                      "value": "no"
+                    },
+                    {
+                      "key": "tp",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "lang",
+                      "value": "fr"
+                    },
+                    {
+                      "key": "day_fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "hour_fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "et0",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 1006,\n    \"message\": \"No location found matching parameter 'q'\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "366208d5-9a19-4b57-86b6-89c210d61282",
+          "name": "WeatherAPI Bulk Current Weather",
+          "request": {
+            "name": "WeatherAPI Bulk Current Weather",
+            "description": {
+              "content": "Retrieve current weather for multiple locations in a single request. Pass `q=bulk` in the query string with a JSON body containing up to 50 locations. Each location counts as 1 call. Available on Pro+, Business, and Enterprise plans.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "current.json"
+              ],
+              "hash": "bulk",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "key",
+                  "value": "<string>",
+                  "description": "(Required) Your WeatherAPI.com API key."
+                },
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "aqi",
+                  "value": "no",
+                  "description": "Include Air Quality Index (AQI) data in response."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"locations\": [\n    {\n      \"q\": \"<string>\",\n      \"custom_id\": \"<string>\"\n    },\n    {\n      \"q\": \"<string>\",\n      \"custom_id\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e4b633f0-e583-410c-8771-eae051329890",
+              "name": "Bulk weather results",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "current.json"
+                  ],
+                  "hash": "bulk",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "YOUR_API_KEY"
+                    },
+                    {
+                      "key": "q",
+                      "value": "bulk"
+                    },
+                    {
+                      "key": "aqi",
+                      "value": "no"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"locations\": [\n    {\n      \"q\": \"London\",\n      \"custom_id\": \"loc-1\"\n    },\n    {\n      \"q\": \"48.8567,2.3508\",\n      \"custom_id\": \"paris\"\n    },\n    {\n      \"q\": \"90210\",\n      \"custom_id\": \"beverly-hills\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"bulk\": [\n    {\n      \"query\": {\n        \"custom_id\": \"sample value\",\n        \"q\": \"sample value\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "110f7b10-f751-460f-ad3d-4462821634e4",
+              "name": "Bad request — invalid parameter or location not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "current.json"
+                  ],
+                  "hash": "bulk",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "YOUR_API_KEY"
+                    },
+                    {
+                      "key": "q",
+                      "value": "bulk"
+                    },
+                    {
+                      "key": "aqi",
+                      "value": "no"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"locations\": [\n    {\n      \"q\": \"London\",\n      \"custom_id\": \"loc-1\"\n    },\n    {\n      \"q\": \"48.8567,2.3508\",\n      \"custom_id\": \"paris\"\n    },\n    {\n      \"q\": \"90210\",\n      \"custom_id\": \"beverly-hills\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 1006,\n    \"message\": \"No location found matching parameter 'q'\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c7e8c50d-9aef-4e36-997a-e067ac639ce6",
+              "name": "Unauthorized — API key missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "current.json"
+                  ],
+                  "hash": "bulk",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "YOUR_API_KEY"
+                    },
+                    {
+                      "key": "q",
+                      "value": "bulk"
+                    },
+                    {
+                      "key": "aqi",
+                      "value": "no"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"locations\": [\n    {\n      \"q\": \"London\",\n      \"custom_id\": \"loc-1\"\n    },\n    {\n      \"q\": \"48.8567,2.3508\",\n      \"custom_id\": \"paris\"\n    },\n    {\n      \"q\": \"90210\",\n      \"custom_id\": \"beverly-hills\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 1006,\n    \"message\": \"No location found matching parameter 'q'\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "51fb3c90-65d0-471e-9c58-668b407bdf56",
+              "name": "Forbidden — API key quota exceeded, disabled, or plan does not include this resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "current.json"
+                  ],
+                  "hash": "bulk",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "YOUR_API_KEY"
+                    },
+                    {
+                      "key": "q",
+                      "value": "bulk"
+                    },
+                    {
+                      "key": "aqi",
+                      "value": "no"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"locations\": [\n    {\n      \"q\": \"London\",\n      \"custom_id\": \"loc-1\"\n    },\n    {\n      \"q\": \"48.8567,2.3508\",\n      \"custom_id\": \"paris\"\n    },\n    {\n      \"q\": \"90210\",\n      \"custom_id\": \"beverly-hills\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 1006,\n    \"message\": \"No location found matching parameter 'q'\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.weatherapi.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c7bf719a-fcb5-408d-a1e9-efda049fdaa5",
+    "name": "WeatherAPI.com Alerts Weather API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "WeatherAPI.com provides real-time, forecast, historical, marine, future, astronomy, air quality, pollen, sports, IP lookup, timezone, and geolocation data via a JSON/XML REST API. Trusted by 850,000+ developers worldwide. Average response time ~200ms.\n\n## Authentication\nAll endpoints require an API key passed as the `key` query parameter.\n\n## Base URL\n`https://api.weatherapi.com/v1`\n\n## Location Query (`q` parameter)\nAccepts: city name, lat/lon decimal, US zip, UK postcode, Canada postal code, METAR code (`metar:EGLL`), IATA airport code (`iata:DXB`), IP lookup (`auto:ip`), IPv4/IPv6 address, or location ID (`id:2801268`).\n\n## Plans\n- **Free**: 100K calls/month, 3-day forecast, 1-day history\n- **Starter**: $7/mo — 3M calls, 7-day forecast, 7-day history\n- **Pro+**: $25/mo — 5M calls, 300-day future, 365-day history\n- **Business**: $65/mo — 10M calls, evapotranspiration\n- **Enterprise**: Custom — 15-min interval, pollen history, wind@100m, SLA\n\nContact Support:\n Name: WeatherAPI.com Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WeatherAPI.com Alerts API",
+    "version": "1.0.2"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "key",
+      "value": "{{key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Alerts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "WeatherAPI Weather Alerts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.weatherapi.com/v1/alerts.json",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "query",
+                "description": "Your WeatherAPI.com API key."
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268)."
+              }
+            ]
+          },
+          "docs": "Returns government weather alerts and warnings (USA, UK, Europe, rest of world) for a given location, if available."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

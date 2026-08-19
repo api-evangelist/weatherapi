@@ -1,0 +1,206 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WeatherAPI.com Alerts Weather API",
+    "version": "1.0.2"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "key",
+      "value": "{{key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Weather",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "WeatherAPI Current / Real-time Weather",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.weatherapi.com/v1/current.json",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "query",
+                "description": "Your WeatherAPI.com API key."
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268)."
+              },
+              {
+                "name": "aqi",
+                "value": "",
+                "type": "query",
+                "description": "Include Air Quality Index (AQI) data in response."
+              },
+              {
+                "name": "pollen",
+                "value": "",
+                "type": "query",
+                "description": "Include pollen data. Available on Pro+ and above."
+              },
+              {
+                "name": "lang",
+                "value": "",
+                "type": "query",
+                "description": "Language code for condition text. E.g.: fr, de, es, zh, ar. See full list in docs."
+              },
+              {
+                "name": "current_fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to return in the current element, e.g. temp_c,wind_mph."
+              }
+            ]
+          },
+          "docs": "Returns up-to-date current weather for a given location. Data is refreshed every 10–15 minutes. Optionally includes air quality (AQI) and pollen data."
+        },
+        {
+          "info": {
+            "name": "WeatherAPI Forecast Weather",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.weatherapi.com/v1/forecast.json",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "query",
+                "description": "Your WeatherAPI.com API key."
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268)."
+              },
+              {
+                "name": "days",
+                "value": "3",
+                "type": "query",
+                "description": "Number of forecast days (1–14)."
+              },
+              {
+                "name": "dt",
+                "value": "",
+                "type": "query",
+                "description": "Restrict date output in yyyy-MM-dd format."
+              },
+              {
+                "name": "unixdt",
+                "value": "",
+                "type": "query",
+                "description": "Unix timestamp equivalent of `dt`. Do not pass both."
+              },
+              {
+                "name": "hour",
+                "value": "",
+                "type": "query",
+                "description": "Restrict output to a specific hour (0–23) in 24-hour format."
+              },
+              {
+                "name": "alerts",
+                "value": "",
+                "type": "query",
+                "description": "Include weather alerts in Forecast API response."
+              },
+              {
+                "name": "aqi",
+                "value": "",
+                "type": "query",
+                "description": "Include Air Quality Index (AQI) data in response."
+              },
+              {
+                "name": "pollen",
+                "value": "",
+                "type": "query",
+                "description": "Include pollen data. Available on Pro+ and above."
+              },
+              {
+                "name": "tp",
+                "value": "",
+                "type": "query",
+                "description": "Interval for data. Use tp=15 for 15-minute intervals (Enterprise only)."
+              },
+              {
+                "name": "lang",
+                "value": "",
+                "type": "query",
+                "description": "Language code for condition text. E.g.: fr, de, es, zh, ar. See full list in docs."
+              },
+              {
+                "name": "day_fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated fields to return in forecast/history day element."
+              },
+              {
+                "name": "hour_fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated fields to return in forecast/history hour element."
+              },
+              {
+                "name": "et0",
+                "value": "",
+                "type": "query",
+                "description": "Include evapotranspiration data. Business and Enterprise only."
+              }
+            ]
+          },
+          "docs": "Returns weather forecast for up to 14 days (plan dependent). Includes hourly intervals, astronomy, air quality, pollen, and weather alerts."
+        },
+        {
+          "info": {
+            "name": "WeatherAPI Bulk Current Weather",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.weatherapi.com/v1/current.json#bulk",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "query",
+                "description": "Your WeatherAPI.com API key."
+              },
+              {
+                "name": "q",
+                "value": "bulk",
+                "type": "query"
+              },
+              {
+                "name": "aqi",
+                "value": "",
+                "type": "query",
+                "description": "Include Air Quality Index (AQI) data in response."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieve current weather for multiple locations in a single request. Pass `q=bulk` in the query string with a JSON body containing up to 50 locations. Each location counts as 1 call. Available on Pro+, Business, and Enterprise plans."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

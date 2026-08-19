@@ -1,0 +1,289 @@
+{
+  "item": [
+    {
+      "id": "24d822b2-4779-4677-b2c2-ed6dc46f8c7f",
+      "name": "Alerts",
+      "description": {
+        "content": "Government weather alerts",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "aa76a7c8-4564-4c08-a5d3-d309fa5df326",
+          "name": "WeatherAPI Weather Alerts",
+          "request": {
+            "name": "WeatherAPI Weather Alerts",
+            "description": {
+              "content": "Returns government weather alerts and warnings (USA, UK, Europe, rest of world) for a given location, if available.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "alerts.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "key",
+                  "value": "<string>",
+                  "description": "(Required) Your WeatherAPI.com API key."
+                },
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "(Required) Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "74a187ed-fd8b-4a83-8aab-63e6ac20d37b",
+              "name": "Weather alerts",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "alerts.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "YOUR_API_KEY"
+                    },
+                    {
+                      "key": "q",
+                      "value": "London"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"location\": {\n    \"name\": \"London\",\n    \"region\": \"City of London, Greater London\",\n    \"country\": \"United Kingdom\",\n    \"lat\": 51.5074,\n    \"lon\": -0.1278,\n    \"tz_id\": \"Europe/London\",\n    \"localtime_epoch\": 1748441400,\n    \"localtime\": \"2026-05-28 15:30\"\n  },\n  \"alerts\": {\n    \"alert\": [\n      {\n        \"headline\": \"sample value\",\n        \"msgtype\": \"sample value\",\n        \"severity\": \"sample value\",\n        \"urgency\": \"sample value\",\n        \"areas\": \"sample value\",\n        \"category\": \"sample value\",\n        \"certainty\": \"sample value\",\n        \"event\": \"Severe Thunderstorm Warning\",\n        \"note\": \"sample value\",\n        \"effective\": \"2026-05-28T13:00:00Z\",\n        \"expires\": \"2026-05-28T13:00:00Z\",\n        \"desc\": \"Severe thunderstorms with damaging winds expected in the warning area.\",\n        \"instruction\": \"sample value\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6489c32e-9c55-4ffd-a04e-8b9791437fdc",
+              "name": "Bad request — invalid parameter or location not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "alerts.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "YOUR_API_KEY"
+                    },
+                    {
+                      "key": "q",
+                      "value": "London"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 1006,\n    \"message\": \"No location found matching parameter 'q'\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aaea81b4-bc0d-4c75-a0b2-94daee232f02",
+              "name": "Unauthorized — API key missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "alerts.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "YOUR_API_KEY"
+                    },
+                    {
+                      "key": "q",
+                      "value": "London"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 1006,\n    \"message\": \"No location found matching parameter 'q'\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "61df14c0-83bb-4ea0-9fcc-fed5cfbd198b",
+              "name": "Forbidden — API key quota exceeded, disabled, or plan does not include this resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "alerts.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "YOUR_API_KEY"
+                    },
+                    {
+                      "key": "q",
+                      "value": "London"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 1006,\n    \"message\": \"No location found matching parameter 'q'\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.weatherapi.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "aa967db6-6cd9-4062-b063-abc2b62893ce",
+    "name": "WeatherAPI.com Alerts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "WeatherAPI.com provides real-time, forecast, historical, marine, future, astronomy, air quality, pollen, sports, IP lookup, timezone, and geolocation data via a JSON/XML REST API. Trusted by 850,000+ developers worldwide. Average response time ~200ms.\n\n## Authentication\nAll endpoints require an API key passed as the `key` query parameter.\n\n## Base URL\n`https://api.weatherapi.com/v1`\n\n## Location Query (`q` parameter)\nAccepts: city name, lat/lon decimal, US zip, UK postcode, Canada postal code, METAR code (`metar:EGLL`), IATA airport code (`iata:DXB`), IP lookup (`auto:ip`), IPv4/IPv6 address, or location ID (`id:2801268`).\n\n## Plans\n- **Free**: 100K calls/month, 3-day forecast, 1-day history\n- **Starter**: $7/mo — 3M calls, 7-day forecast, 7-day history\n- **Pro+**: $25/mo — 5M calls, 300-day future, 365-day history\n- **Business**: $65/mo — 10M calls, evapotranspiration\n- **Enterprise**: Custom — 15-min interval, pollen history, wind@100m, SLA\n\nContact Support:\n Name: WeatherAPI.com Support",
+      "type": "text/plain"
+    }
+  }
+}

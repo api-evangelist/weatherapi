@@ -1,0 +1,129 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WeatherAPI.com Alerts History API",
+    "version": "1.0.2"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "key",
+      "value": "{{key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "History",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "WeatherAPI Historical Weather",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.weatherapi.com/v1/history.json",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "query",
+                "description": "Your WeatherAPI.com API key."
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268)."
+              },
+              {
+                "name": "dt",
+                "value": "2023-01-01",
+                "type": "query",
+                "description": "Date on or after 2010-01-01 in yyyy-MM-dd format."
+              },
+              {
+                "name": "unixdt",
+                "value": "",
+                "type": "query",
+                "description": "Unix timestamp equivalent of `dt`. Do not pass both."
+              },
+              {
+                "name": "end_dt",
+                "value": "2026-05-28",
+                "type": "query",
+                "description": "End date for range (Pro+ and above). Max 30 days range. yyyy-MM-dd."
+              },
+              {
+                "name": "unixend_dt",
+                "value": "",
+                "type": "query",
+                "description": "Unix timestamp equivalent of `end_dt`. Do not pass both."
+              },
+              {
+                "name": "hour",
+                "value": "",
+                "type": "query",
+                "description": "Restrict output to a specific hour (0–23) in 24-hour format."
+              },
+              {
+                "name": "aqi",
+                "value": "",
+                "type": "query",
+                "description": "Include Air Quality Index (AQI) data in response."
+              },
+              {
+                "name": "pollen",
+                "value": "",
+                "type": "query",
+                "description": "Include pollen data. Available on Pro+ and above."
+              },
+              {
+                "name": "tp",
+                "value": "",
+                "type": "query",
+                "description": "Interval for data. Use tp=15 for 15-minute intervals (Enterprise only)."
+              },
+              {
+                "name": "lang",
+                "value": "",
+                "type": "query",
+                "description": "Language code for condition text. E.g.: fr, de, es, zh, ar. See full list in docs."
+              },
+              {
+                "name": "solar",
+                "value": "",
+                "type": "query",
+                "description": "Include solar irradiance data in History API. Enterprise only."
+              },
+              {
+                "name": "et0",
+                "value": "",
+                "type": "query",
+                "description": "Include evapotranspiration data. Business and Enterprise only."
+              },
+              {
+                "name": "wind100mph",
+                "value": "",
+                "type": "query",
+                "description": "Include wind speed at 100m height in mph. Enterprise only."
+              },
+              {
+                "name": "wind100kph",
+                "value": "",
+                "type": "query",
+                "description": "Include wind speed at 100m height in kph. Enterprise only."
+              }
+            ]
+          },
+          "docs": "Returns historical weather data for a given date on or after 1 January 2010. Includes hourly breakdown. Enterprise plan unlocks solar irradiance, wind@100m, pollen history, and evapotranspiration."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

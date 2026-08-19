@@ -1,0 +1,377 @@
+{
+  "item": [
+    {
+      "id": "1317b256-b14a-429e-8f56-0ddd90ecf995",
+      "name": "Marine",
+      "description": {
+        "content": "Marine and sailing weather",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "204c7de7-7311-4e6b-9ca6-99880e19f689",
+          "name": "WeatherAPI Marine Weather",
+          "request": {
+            "name": "WeatherAPI Marine Weather",
+            "description": {
+              "content": "Returns marine and sailing weather forecast (up to 7 days depending on plan) including tide data (Pro+ and above), wave height, swell, and water temperature.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "marine.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "key",
+                  "value": "<string>",
+                  "description": "(Required) Your WeatherAPI.com API key."
+                },
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "(Required) Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268)."
+                },
+                {
+                  "disabled": false,
+                  "key": "days",
+                  "value": "<integer>",
+                  "description": "(Required) Number of forecast days (1–7 depending on plan)."
+                },
+                {
+                  "disabled": false,
+                  "key": "dt",
+                  "value": "<date>",
+                  "description": "Restrict date output in yyyy-MM-dd format."
+                },
+                {
+                  "disabled": false,
+                  "key": "hour",
+                  "value": "<integer>",
+                  "description": "Restrict output to a specific hour (0–23) in 24-hour format."
+                },
+                {
+                  "disabled": false,
+                  "key": "tides",
+                  "value": "<string>",
+                  "description": "Enable/disable tide data (Pro+ and above)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7c5116ec-9168-46b8-99e3-17a2bc29981e",
+              "name": "Marine weather data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "marine.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "YOUR_API_KEY"
+                    },
+                    {
+                      "key": "q",
+                      "value": "London"
+                    },
+                    {
+                      "key": "days",
+                      "value": "1"
+                    },
+                    {
+                      "key": "dt",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "hour",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tides",
+                      "value": "yes"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"location\": {\n    \"name\": \"London\",\n    \"region\": \"City of London, Greater London\",\n    \"country\": \"United Kingdom\",\n    \"lat\": 51.5074,\n    \"lon\": -0.1278,\n    \"tz_id\": \"Europe/London\",\n    \"localtime_epoch\": 1748441400,\n    \"localtime\": \"2026-05-28 15:30\"\n  },\n  \"forecast\": {\n    \"forecastday\": [\n      {\n        \"date\": \"2026-05-28\",\n        \"date_epoch\": 1748441400,\n        \"tides\": [],\n        \"hour\": []\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2eb1eb3e-7941-4697-b8de-c6431309a393",
+              "name": "Bad request — invalid parameter or location not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "marine.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "YOUR_API_KEY"
+                    },
+                    {
+                      "key": "q",
+                      "value": "London"
+                    },
+                    {
+                      "key": "days",
+                      "value": "1"
+                    },
+                    {
+                      "key": "dt",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "hour",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tides",
+                      "value": "yes"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 1006,\n    \"message\": \"No location found matching parameter 'q'\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3c9cccfa-2846-4dcb-be58-ba6a7bf66878",
+              "name": "Unauthorized — API key missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "marine.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "YOUR_API_KEY"
+                    },
+                    {
+                      "key": "q",
+                      "value": "London"
+                    },
+                    {
+                      "key": "days",
+                      "value": "1"
+                    },
+                    {
+                      "key": "dt",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "hour",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tides",
+                      "value": "yes"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 1006,\n    \"message\": \"No location found matching parameter 'q'\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f1011181-8e7d-4d0a-ab52-d29526260ce8",
+              "name": "Forbidden — API key quota exceeded, disabled, or plan does not include this resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "marine.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "YOUR_API_KEY"
+                    },
+                    {
+                      "key": "q",
+                      "value": "London"
+                    },
+                    {
+                      "key": "days",
+                      "value": "1"
+                    },
+                    {
+                      "key": "dt",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "hour",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tides",
+                      "value": "yes"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": 1006,\n    \"message\": \"No location found matching parameter 'q'\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.weatherapi.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "16417a7c-aee5-4024-8e48-18a47d0a1d77",
+    "name": "WeatherAPI.com Alerts Marine API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "WeatherAPI.com provides real-time, forecast, historical, marine, future, astronomy, air quality, pollen, sports, IP lookup, timezone, and geolocation data via a JSON/XML REST API. Trusted by 850,000+ developers worldwide. Average response time ~200ms.\n\n## Authentication\nAll endpoints require an API key passed as the `key` query parameter.\n\n## Base URL\n`https://api.weatherapi.com/v1`\n\n## Location Query (`q` parameter)\nAccepts: city name, lat/lon decimal, US zip, UK postcode, Canada postal code, METAR code (`metar:EGLL`), IATA airport code (`iata:DXB`), IP lookup (`auto:ip`), IPv4/IPv6 address, or location ID (`id:2801268`).\n\n## Plans\n- **Free**: 100K calls/month, 3-day forecast, 1-day history\n- **Starter**: $7/mo — 3M calls, 7-day forecast, 7-day history\n- **Pro+**: $25/mo — 5M calls, 300-day future, 365-day history\n- **Business**: $65/mo — 10M calls, evapotranspiration\n- **Enterprise**: Custom — 15-min interval, pollen history, wind@100m, SLA\n\nContact Support:\n Name: WeatherAPI.com Support",
+      "type": "text/plain"
+    }
+  }
+}
