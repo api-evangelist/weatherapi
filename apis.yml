@@ -19,7 +19,7 @@ description: >-
   pollen, sports, IP lookup, time zone, and geolocation data via a JSON/XML REST API. Trusted by
   850,000+ developers worldwide with an average ~200ms response time.
 url: https://www.weatherapi.com/
-specificationVersion: '0.20'
+specificationVersion: '0.23'
 created: '2026-05-28'
 modified: '2026-05-28'
 x-source: public-apis/public-apis
