@@ -11,8 +11,11 @@ info:
     description.
   version: 1.0.0
 sourceDescriptions:
+- name: geoApi
+  url: ../openapi/weatherapi-geo-api-openapi.yml
+  type: openapi
 - name: weatherApi
-  url: ../openapi/weatherapi-openapi-original.yml
+  url: ../openapi/weatherapi-weather-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: search-to-current

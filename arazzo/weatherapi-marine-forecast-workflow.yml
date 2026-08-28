@@ -11,8 +11,11 @@ info:
     opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: weatherApi
-  url: ../openapi/weatherapi-openapi-original.yml
+- name: geoApi
+  url: ../openapi/weatherapi-geo-api-openapi.yml
+  type: openapi
+- name: marineApi
+  url: ../openapi/weatherapi-marine-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: marine-forecast

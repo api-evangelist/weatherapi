@@ -11,8 +11,11 @@ info:
     OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: weatherApi
-  url: ../openapi/weatherapi-openapi-original.yml
+- name: futureApi
+  url: ../openapi/weatherapi-future-api-openapi.yml
+  type: openapi
+- name: geoApi
+  url: ../openapi/weatherapi-geo-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: future-weather
