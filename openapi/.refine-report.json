@@ -21,6 +21,15 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
+  "notes": [
+    "weatherapi-alerts-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "weatherapi-future-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "weatherapi-geo-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "weatherapi-history-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "weatherapi-marine-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "weatherapi-sports-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "weatherapi-weather-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
   "skipped": []
 }

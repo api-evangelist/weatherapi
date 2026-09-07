@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: WeatherAPI.com Alerts Geo API
   description: 'WeatherAPI.com provides real-time, forecast, historical, marine, future, astronomy, air quality, pollen, sports, IP lookup, timezone, and geolocation data via a JSON/XML REST API. Trusted by 850,000+ developers worldwide. Average response time ~200ms.
@@ -244,24 +244,32 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
-  parameters:
-    q:
-      name: q
-      in: query
-      required: true
-      description: 'Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268).'
-      schema:
-        type: string
-        example: London
-    key:
-      name: key
-      in: query
-      required: true
-      description: Your WeatherAPI.com API key.
-      schema:
-        type: string
-        example: YOUR_API_KEY
   schemas:
+    AstronomyResponse:
+      type: object
+      properties:
+        location:
+          $ref: '#/components/schemas/Location'
+        astronomy:
+          type: object
+          properties:
+            astro:
+              $ref: '#/components/schemas/AstroElement'
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              description: WeatherAPI error code
+            message:
+              type: string
+      example:
+        error:
+          code: 1006
+          message: No location found matching parameter 'q'
     Location:
       type: object
       description: Location metadata returned with every weather response.
@@ -325,16 +333,33 @@ components:
           type: string
           description: URL-safe location slug
           example: sample value
-    AstronomyResponse:
+    AstroElement:
       type: object
       properties:
-        location:
-          $ref: '#/components/schemas/Location'
-        astronomy:
-          type: object
-          properties:
-            astro:
-              $ref: '#/components/schemas/AstroElement'
+        sunrise:
+          type: string
+          example: 05:30 AM
+        sunset:
+          type: string
+          example: 08:45 PM
+        moonrise:
+          type: string
+          example: 10:15 PM
+        moonset:
+          type: string
+          example: 06:42 AM
+        moon_phase:
+          type: string
+          example: Waxing Crescent
+        moon_illumination:
+          type: number
+          example: 35.0
+        is_moon_up:
+          type: integer
+          example: 1
+        is_sun_up:
+          type: integer
+          example: 1
     TimezoneResponse:
       type: object
       properties:
@@ -391,48 +416,23 @@ components:
         localtime:
           type: string
           example: 2026-05-28 15:30
-    AstroElement:
-      type: object
-      properties:
-        sunrise:
-          type: string
-          example: 05:30 AM
-        sunset:
-          type: string
-          example: 08:45 PM
-        moonrise:
-          type: string
-          example: 10:15 PM
-        moonset:
-          type: string
-          example: 06:42 AM
-        moon_phase:
-          type: string
-          example: Waxing Crescent
-        moon_illumination:
-          type: number
-          example: 35.0
-        is_moon_up:
-          type: integer
-          example: 1
-        is_sun_up:
-          type: integer
-          example: 1
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              description: WeatherAPI error code
-            message:
-              type: string
-      example:
-        error:
-          code: 1006
-          message: No location found matching parameter 'q'
+  parameters:
+    q:
+      name: q
+      in: query
+      required: true
+      description: 'Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268).'
+      schema:
+        type: string
+        example: London
+    key:
+      name: key
+      in: query
+      required: true
+      description: Your WeatherAPI.com API key.
+      schema:
+        type: string
+        example: YOUR_API_KEY
   responses:
     Unauthorized:
       description: Unauthorized — API key missing or invalid.
