@@ -1,35 +1,7 @@
 openapi: 3.2.0
 info:
-  title: WeatherAPI.com Alerts Future API
-  description: 'WeatherAPI.com provides real-time, forecast, historical, marine, future, astronomy, air quality, pollen, sports, IP lookup, timezone, and geolocation data via a JSON/XML REST API. Trusted by 850,000+ developers worldwide. Average response time ~200ms.
-
-
-    ## Authentication
-
-    All endpoints require an API key passed as the `key` query parameter.
-
-
-    ## Base URL
-
-    `https://api.weatherapi.com/v1`
-
-
-    ## Location Query (`q` parameter)
-
-    Accepts: city name, lat/lon decimal, US zip, UK postcode, Canada postal code, METAR code (`metar:EGLL`), IATA airport code (`iata:DXB`), IP lookup (`auto:ip`), IPv4/IPv6 address, or location ID (`id:2801268`).
-
-
-    ## Plans
-
-    - **Free**: 100K calls/month, 3-day forecast, 1-day history
-
-    - **Starter**: $7/mo — 3M calls, 7-day forecast, 7-day history
-
-    - **Pro+**: $25/mo — 5M calls, 300-day future, 365-day history
-
-    - **Business**: $65/mo — 10M calls, evapotranspiration
-
-    - **Enterprise**: Custom — 15-min interval, pollen history, wind@100m, SLA'
+  title: WeatherAPI.com Future API
+  description: WeatherAPI.com provides real-time, forecast, historical, marine, future, astronomy, air quality, pollen, sports, IP lookup, timezone, and geolocation data via a JSON/XML REST API.
   version: 1.0.2
   contact:
     name: WeatherAPI.com Support
@@ -175,65 +147,7 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
-  parameters:
-    q:
-      name: q
-      in: query
-      required: true
-      description: 'Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268).'
-      schema:
-        type: string
-        example: London
-    key:
-      name: key
-      in: query
-      required: true
-      description: Your WeatherAPI.com API key.
-      schema:
-        type: string
-        example: YOUR_API_KEY
-    lang:
-      name: lang
-      in: query
-      required: false
-      description: 'Language code for condition text. E.g.: fr, de, es, zh, ar. See full list in docs.'
-      schema:
-        type: string
-        example: fr
   schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              description: WeatherAPI error code
-            message:
-              type: string
-      example:
-        error:
-          code: 1006
-          message: No location found matching parameter 'q'
-    ForecastDayEntry:
-      type: object
-      properties:
-        date:
-          type: string
-          format: date
-          example: '2026-05-28'
-        date_epoch:
-          type: integer
-          example: 1748441400
-        day:
-          $ref: '#/components/schemas/ForecastDay'
-        astro:
-          $ref: '#/components/schemas/AstroElement'
-        hour:
-          type: array
-          items:
-            $ref: '#/components/schemas/HourForecast'
     Location:
       type: object
       description: Location metadata returned with every weather response.
@@ -297,6 +211,24 @@ components:
         Ragweed:
           type: number
           example: 1.0
+    ForecastDayEntry:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+          example: '2026-05-28'
+        date_epoch:
+          type: integer
+          example: 1748441400
+        day:
+          $ref: '#/components/schemas/ForecastDay'
+        astro:
+          $ref: '#/components/schemas/AstroElement'
+        hour:
+          type: array
+          items:
+            $ref: '#/components/schemas/HourForecast'
     ForecastDay:
       type: object
       properties:
@@ -361,21 +293,48 @@ components:
           example: 4.0
         air_quality:
           $ref: '#/components/schemas/AirQuality'
-    Condition:
+    ErrorResponse:
       type: object
       properties:
-        text:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              description: WeatherAPI error code
+            message:
+              type: string
+      example:
+        error:
+          code: 1006
+          message: No location found matching parameter 'q'
+    AstroElement:
+      type: object
+      properties:
+        sunrise:
           type: string
-          description: Weather condition description
-          example: Partly Cloudy
-        icon:
+          example: 05:30 AM
+        sunset:
           type: string
-          description: URL to condition icon
-          example: //cdn.weatherapi.com/weather/64x64/day/116.png
-        code:
+          example: 08:45 PM
+        moonrise:
+          type: string
+          example: 10:15 PM
+        moonset:
+          type: string
+          example: 06:42 AM
+        moon_phase:
+          type: string
+          example: Waxing Crescent
+        moon_illumination:
+          type: number
+          example: 35.0
+        is_moon_up:
           type: integer
-          description: Condition code (see conditions.json)
-          example: 1003
+          example: 1
+        is_sun_up:
+          type: integer
+          example: 1
     AirQuality:
       type: object
       description: Air quality data. Returned when aqi=yes.
@@ -530,96 +489,21 @@ components:
           $ref: '#/components/schemas/AirQuality'
         pollen:
           $ref: '#/components/schemas/Pollen'
-    AstroElement:
+    Condition:
       type: object
       properties:
-        sunrise:
+        text:
           type: string
-          example: 05:30 AM
-        sunset:
+          description: Weather condition description
+          example: Partly Cloudy
+        icon:
           type: string
-          example: 08:45 PM
-        moonrise:
-          type: string
-          example: 10:15 PM
-        moonset:
-          type: string
-          example: 06:42 AM
-        moon_phase:
-          type: string
-          example: Waxing Crescent
-        moon_illumination:
-          type: number
-          example: 35.0
-        is_moon_up:
+          description: URL to condition icon
+          example: //cdn.weatherapi.com/weather/64x64/day/116.png
+        code:
           type: integer
-          example: 1
-        is_sun_up:
-          type: integer
-          example: 1
-    Alert:
-      type: object
-      properties:
-        headline:
-          type: string
-          example: sample value
-        msgtype:
-          type: string
-          example: sample value
-        severity:
-          type: string
-          example: sample value
-        urgency:
-          type: string
-          example: sample value
-        areas:
-          type: string
-          example: sample value
-        category:
-          type: string
-          example: sample value
-        certainty:
-          type: string
-          example: sample value
-        event:
-          type: string
-          example: Severe Thunderstorm Warning
-        note:
-          type: string
-          example: sample value
-        effective:
-          type: string
-          example: '2026-05-28T13:00:00Z'
-        expires:
-          type: string
-          example: '2026-05-28T13:00:00Z'
-        desc:
-          type: string
-          example: Severe thunderstorms with damaging winds expected in the warning area.
-        instruction:
-          type: string
-          example: sample value
-    ForecastWeatherResponse:
-      type: object
-      properties:
-        location:
-          $ref: '#/components/schemas/Location'
-        current:
-          $ref: '#/components/schemas/CurrentWeather'
-        forecast:
-          type: object
-          properties:
-            forecastday:
-              type: array
-              items:
-                $ref: '#/components/schemas/ForecastDayEntry'
-        alerts:
-          type: object
-          properties:
-            alert:
-              type: array
-              items:
-                $ref: '#/components/schemas/Alert'
+          description: Condition code (see conditions.json)
+          example: 1003
     CurrentWeather:
       type: object
       properties:
@@ -728,6 +612,69 @@ components:
           $ref: '#/components/schemas/AirQuality'
         pollen:
           $ref: '#/components/schemas/Pollen'
+    ForecastWeatherResponse:
+      type: object
+      properties:
+        location:
+          $ref: '#/components/schemas/Location'
+        current:
+          $ref: '#/components/schemas/CurrentWeather'
+        forecast:
+          type: object
+          properties:
+            forecastday:
+              type: array
+              items:
+                $ref: '#/components/schemas/ForecastDayEntry'
+        alerts:
+          type: object
+          properties:
+            alert:
+              type: array
+              items:
+                $ref: '#/components/schemas/Alert'
+    Alert:
+      type: object
+      properties:
+        headline:
+          type: string
+          example: sample value
+        msgtype:
+          type: string
+          example: sample value
+        severity:
+          type: string
+          example: sample value
+        urgency:
+          type: string
+          example: sample value
+        areas:
+          type: string
+          example: sample value
+        category:
+          type: string
+          example: sample value
+        certainty:
+          type: string
+          example: sample value
+        event:
+          type: string
+          example: Severe Thunderstorm Warning
+        note:
+          type: string
+          example: sample value
+        effective:
+          type: string
+          example: '2026-05-28T13:00:00Z'
+        expires:
+          type: string
+          example: '2026-05-28T13:00:00Z'
+        desc:
+          type: string
+          example: Severe thunderstorms with damaging winds expected in the warning area.
+        instruction:
+          type: string
+          example: sample value
   responses:
     Unauthorized:
       description: Unauthorized — API key missing or invalid.
@@ -747,6 +694,31 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
+  parameters:
+    lang:
+      name: lang
+      in: query
+      required: false
+      description: 'Language code for condition text. E.g.: fr, de, es, zh, ar. See full list in docs.'
+      schema:
+        type: string
+        example: fr
+    q:
+      name: q
+      in: query
+      required: true
+      description: 'Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268).'
+      schema:
+        type: string
+        example: London
+    key:
+      name: key
+      in: query
+      required: true
+      description: Your WeatherAPI.com API key.
+      schema:
+        type: string
+        example: YOUR_API_KEY
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

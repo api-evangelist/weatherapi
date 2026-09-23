@@ -1,35 +1,7 @@
 openapi: 3.2.0
 info:
-  title: WeatherAPI.com Alerts Geo API
-  description: 'WeatherAPI.com provides real-time, forecast, historical, marine, future, astronomy, air quality, pollen, sports, IP lookup, timezone, and geolocation data via a JSON/XML REST API. Trusted by 850,000+ developers worldwide. Average response time ~200ms.
-
-
-    ## Authentication
-
-    All endpoints require an API key passed as the `key` query parameter.
-
-
-    ## Base URL
-
-    `https://api.weatherapi.com/v1`
-
-
-    ## Location Query (`q` parameter)
-
-    Accepts: city name, lat/lon decimal, US zip, UK postcode, Canada postal code, METAR code (`metar:EGLL`), IATA airport code (`iata:DXB`), IP lookup (`auto:ip`), IPv4/IPv6 address, or location ID (`id:2801268`).
-
-
-    ## Plans
-
-    - **Free**: 100K calls/month, 3-day forecast, 1-day history
-
-    - **Starter**: $7/mo — 3M calls, 7-day forecast, 7-day history
-
-    - **Pro+**: $25/mo — 5M calls, 300-day future, 365-day history
-
-    - **Business**: $65/mo — 10M calls, evapotranspiration
-
-    - **Enterprise**: Custom — 15-min interval, pollen history, wind@100m, SLA'
+  title: WeatherAPI.com Geo API
+  description: WeatherAPI.com provides real-time, forecast, historical, marine, future, astronomy, air quality, pollen, sports, IP lookup, timezone, and geolocation data via a JSON/XML REST API.
   version: 1.0.2
   contact:
     name: WeatherAPI.com Support
@@ -245,31 +217,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    AstronomyResponse:
-      type: object
-      properties:
-        location:
-          $ref: '#/components/schemas/Location'
-        astronomy:
-          type: object
-          properties:
-            astro:
-              $ref: '#/components/schemas/AstroElement'
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              description: WeatherAPI error code
-            message:
-              type: string
-      example:
-        error:
-          code: 1006
-          message: No location found matching parameter 'q'
     Location:
       type: object
       description: Location metadata returned with every weather response.
@@ -308,31 +255,26 @@ components:
           type: string
           description: Local date and time string
           example: 2026-05-28 15:30
-    SearchLocation:
+    TimezoneResponse:
       type: object
       properties:
-        id:
-          type: integer
-          example: 2643743
-        name:
-          type: string
-          example: London
-        region:
-          type: string
-          example: City of London, Greater London
-        country:
-          type: string
-          example: United Kingdom
-        lat:
-          type: number
-          example: 51.5074
-        lon:
-          type: number
-          example: -0.1278
-        url:
-          type: string
-          description: URL-safe location slug
-          example: sample value
+        location:
+          $ref: '#/components/schemas/Location'
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              description: WeatherAPI error code
+            message:
+              type: string
+      example:
+        error:
+          code: 1006
+          message: No location found matching parameter 'q'
     AstroElement:
       type: object
       properties:
@@ -360,11 +302,41 @@ components:
         is_sun_up:
           type: integer
           example: 1
-    TimezoneResponse:
+    AstronomyResponse:
       type: object
       properties:
         location:
           $ref: '#/components/schemas/Location'
+        astronomy:
+          type: object
+          properties:
+            astro:
+              $ref: '#/components/schemas/AstroElement'
+    SearchLocation:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2643743
+        name:
+          type: string
+          example: London
+        region:
+          type: string
+          example: City of London, Greater London
+        country:
+          type: string
+          example: United Kingdom
+        lat:
+          type: number
+          example: 51.5074
+        lon:
+          type: number
+          example: -0.1278
+        url:
+          type: string
+          description: URL-safe location slug
+          example: sample value
     IpLookupResponse:
       type: object
       properties:
@@ -416,6 +388,19 @@ components:
         localtime:
           type: string
           example: 2026-05-28 15:30
+  responses:
+    Unauthorized:
+      description: Unauthorized — API key missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Bad request — invalid parameter or location not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   parameters:
     q:
       name: q
@@ -433,19 +418,6 @@ components:
       schema:
         type: string
         example: YOUR_API_KEY
-  responses:
-    Unauthorized:
-      description: Unauthorized — API key missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    BadRequest:
-      description: Bad request — invalid parameter or location not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

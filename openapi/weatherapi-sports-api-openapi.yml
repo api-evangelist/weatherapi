@@ -1,35 +1,7 @@
 openapi: 3.2.0
 info:
-  title: WeatherAPI.com Alerts Sports API
-  description: 'WeatherAPI.com provides real-time, forecast, historical, marine, future, astronomy, air quality, pollen, sports, IP lookup, timezone, and geolocation data via a JSON/XML REST API. Trusted by 850,000+ developers worldwide. Average response time ~200ms.
-
-
-    ## Authentication
-
-    All endpoints require an API key passed as the `key` query parameter.
-
-
-    ## Base URL
-
-    `https://api.weatherapi.com/v1`
-
-
-    ## Location Query (`q` parameter)
-
-    Accepts: city name, lat/lon decimal, US zip, UK postcode, Canada postal code, METAR code (`metar:EGLL`), IATA airport code (`iata:DXB`), IP lookup (`auto:ip`), IPv4/IPv6 address, or location ID (`id:2801268`).
-
-
-    ## Plans
-
-    - **Free**: 100K calls/month, 3-day forecast, 1-day history
-
-    - **Starter**: $7/mo — 3M calls, 7-day forecast, 7-day history
-
-    - **Pro+**: $25/mo — 5M calls, 300-day future, 365-day history
-
-    - **Business**: $65/mo — 10M calls, evapotranspiration
-
-    - **Enterprise**: Custom — 15-min interval, pollen history, wind@100m, SLA'
+  title: WeatherAPI.com Sports API
+  description: WeatherAPI.com provides real-time, forecast, historical, marine, future, astronomy, air quality, pollen, sports, IP lookup, timezone, and geolocation data via a JSON/XML REST API.
   version: 1.0.2
   contact:
     name: WeatherAPI.com Support
@@ -105,23 +77,25 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
-  parameters:
-    q:
-      name: q
-      in: query
-      required: true
-      description: 'Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268).'
-      schema:
-        type: string
-        example: London
-    key:
-      name: key
-      in: query
-      required: true
-      description: Your WeatherAPI.com API key.
-      schema:
-        type: string
-        example: YOUR_API_KEY
+  responses:
+    Unauthorized:
+      description: Unauthorized — API key missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Bad request — invalid parameter or location not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: Forbidden — API key quota exceeded, disabled, or plan does not include this resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   schemas:
     ErrorResponse:
       type: object
@@ -175,25 +149,23 @@ components:
         match:
           type: string
           example: Manchester United vs Liverpool
-  responses:
-    Unauthorized:
-      description: Unauthorized — API key missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    BadRequest:
-      description: Bad request — invalid parameter or location not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    Forbidden:
-      description: Forbidden — API key quota exceeded, disabled, or plan does not include this resource.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
+  parameters:
+    q:
+      name: q
+      in: query
+      required: true
+      description: 'Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268).'
+      schema:
+        type: string
+        example: London
+    key:
+      name: key
+      in: query
+      required: true
+      description: Your WeatherAPI.com API key.
+      schema:
+        type: string
+        example: YOUR_API_KEY
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

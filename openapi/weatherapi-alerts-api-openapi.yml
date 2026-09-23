@@ -1,35 +1,7 @@
 openapi: 3.2.0
 info:
   title: WeatherAPI.com Alerts API
-  description: 'WeatherAPI.com provides real-time, forecast, historical, marine, future, astronomy, air quality, pollen, sports, IP lookup, timezone, and geolocation data via a JSON/XML REST API. Trusted by 850,000+ developers worldwide. Average response time ~200ms.
-
-
-    ## Authentication
-
-    All endpoints require an API key passed as the `key` query parameter.
-
-
-    ## Base URL
-
-    `https://api.weatherapi.com/v1`
-
-
-    ## Location Query (`q` parameter)
-
-    Accepts: city name, lat/lon decimal, US zip, UK postcode, Canada postal code, METAR code (`metar:EGLL`), IATA airport code (`iata:DXB`), IP lookup (`auto:ip`), IPv4/IPv6 address, or location ID (`id:2801268`).
-
-
-    ## Plans
-
-    - **Free**: 100K calls/month, 3-day forecast, 1-day history
-
-    - **Starter**: $7/mo — 3M calls, 7-day forecast, 7-day history
-
-    - **Pro+**: $25/mo — 5M calls, 300-day future, 365-day history
-
-    - **Business**: $65/mo — 10M calls, evapotranspiration
-
-    - **Enterprise**: Custom — 15-min interval, pollen history, wind@100m, SLA'
+  description: WeatherAPI.com provides real-time, forecast, historical, marine, future, astronomy, air quality, pollen, sports, IP lookup, timezone, and geolocation data via a JSON/XML REST API.
   version: 1.0.2
   contact:
     name: WeatherAPI.com Support
@@ -108,51 +80,7 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
-  parameters:
-    q:
-      name: q
-      in: query
-      required: true
-      description: 'Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268).'
-      schema:
-        type: string
-        example: London
-    key:
-      name: key
-      in: query
-      required: true
-      description: Your WeatherAPI.com API key.
-      schema:
-        type: string
-        example: YOUR_API_KEY
   schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              description: WeatherAPI error code
-            message:
-              type: string
-      example:
-        error:
-          code: 1006
-          message: No location found matching parameter 'q'
-    AlertsResponse:
-      type: object
-      properties:
-        location:
-          $ref: '#/components/schemas/Location'
-        alerts:
-          type: object
-          properties:
-            alert:
-              type: array
-              items:
-                $ref: '#/components/schemas/Alert'
     Location:
       type: object
       description: Location metadata returned with every weather response.
@@ -191,6 +119,21 @@ components:
           type: string
           description: Local date and time string
           example: 2026-05-28 15:30
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              description: WeatherAPI error code
+            message:
+              type: string
+      example:
+        error:
+          code: 1006
+          message: No location found matching parameter 'q'
     Alert:
       type: object
       properties:
@@ -233,6 +176,18 @@ components:
         instruction:
           type: string
           example: sample value
+    AlertsResponse:
+      type: object
+      properties:
+        location:
+          $ref: '#/components/schemas/Location'
+        alerts:
+          type: object
+          properties:
+            alert:
+              type: array
+              items:
+                $ref: '#/components/schemas/Alert'
   responses:
     Unauthorized:
       description: Unauthorized — API key missing or invalid.
@@ -252,6 +207,23 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
+  parameters:
+    q:
+      name: q
+      in: query
+      required: true
+      description: 'Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268).'
+      schema:
+        type: string
+        example: London
+    key:
+      name: key
+      in: query
+      required: true
+      description: Your WeatherAPI.com API key.
+      schema:
+        type: string
+        example: YOUR_API_KEY
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

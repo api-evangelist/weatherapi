@@ -1,13 +1,7 @@
 {
   "provider": "weatherapi",
   "sources": [
-    "weatherapi-alerts-api-openapi.yml",
-    "weatherapi-future-api-openapi.yml",
-    "weatherapi-geo-api-openapi.yml",
-    "weatherapi-history-api-openapi.yml",
-    "weatherapi-marine-api-openapi.yml",
-    "weatherapi-sports-api-openapi.yml",
-    "weatherapi-weather-api-openapi.yml"
+    "_original/weatherapi-openapi-original.yml"
   ],
   "outputs": [
     "weatherapi-alerts-api-openapi.yml",
@@ -22,14 +16,17 @@
   "errors": [],
   "warnings": [],
   "notes": [
-    "weatherapi-alerts-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "weatherapi-future-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "weatherapi-geo-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "weatherapi-history-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "weatherapi-marine-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "weatherapi-sports-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "weatherapi-weather-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "weatherapi-openapi-original.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "weatherapi-alerts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "weatherapi-future-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "weatherapi-geo-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "weatherapi-history-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "weatherapi-marine-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "weatherapi-sports-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "weatherapi-weather-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

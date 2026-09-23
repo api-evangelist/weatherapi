@@ -1,35 +1,7 @@
 openapi: 3.2.0
 info:
-  title: WeatherAPI.com Alerts Marine API
-  description: 'WeatherAPI.com provides real-time, forecast, historical, marine, future, astronomy, air quality, pollen, sports, IP lookup, timezone, and geolocation data via a JSON/XML REST API. Trusted by 850,000+ developers worldwide. Average response time ~200ms.
-
-
-    ## Authentication
-
-    All endpoints require an API key passed as the `key` query parameter.
-
-
-    ## Base URL
-
-    `https://api.weatherapi.com/v1`
-
-
-    ## Location Query (`q` parameter)
-
-    Accepts: city name, lat/lon decimal, US zip, UK postcode, Canada postal code, METAR code (`metar:EGLL`), IATA airport code (`iata:DXB`), IP lookup (`auto:ip`), IPv4/IPv6 address, or location ID (`id:2801268`).
-
-
-    ## Plans
-
-    - **Free**: 100K calls/month, 3-day forecast, 1-day history
-
-    - **Starter**: $7/mo — 3M calls, 7-day forecast, 7-day history
-
-    - **Pro+**: $25/mo — 5M calls, 300-day future, 365-day history
-
-    - **Business**: $65/mo — 10M calls, evapotranspiration
-
-    - **Enterprise**: Custom — 15-min interval, pollen history, wind@100m, SLA'
+  title: WeatherAPI.com Marine API
+  description: WeatherAPI.com provides real-time, forecast, historical, marine, future, astronomy, air quality, pollen, sports, IP lookup, timezone, and geolocation data via a JSON/XML REST API.
   version: 1.0.2
   contact:
     name: WeatherAPI.com Support
@@ -120,96 +92,70 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
-  parameters:
-    dt:
-      name: dt
-      in: query
-      required: false
-      description: Restrict date output in yyyy-MM-dd format.
-      schema:
-        type: string
-        format: date
-    hour:
-      name: hour
-      in: query
-      required: false
-      description: Restrict output to a specific hour (0–23) in 24-hour format.
-      schema:
-        type: integer
-        minimum: 0
-        maximum: 23
-    q:
-      name: q
-      in: query
-      required: true
-      description: 'Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268).'
-      schema:
-        type: string
-        example: London
-    key:
-      name: key
-      in: query
-      required: true
-      description: Your WeatherAPI.com API key.
-      schema:
-        type: string
-        example: YOUR_API_KEY
-  responses:
-    Forbidden:
-      description: Forbidden — API key quota exceeded, disabled, or plan does not include this resource.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    Unauthorized:
-      description: Unauthorized — API key missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    BadRequest:
-      description: Bad request — invalid parameter or location not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   schemas:
-    AirQuality:
+    Location:
       type: object
-      description: Air quality data. Returned when aqi=yes.
+      description: Location metadata returned with every weather response.
       properties:
-        co:
+        name:
+          type: string
+          description: Location name
+          example: London
+        region:
+          type: string
+          description: Region or state
+          example: City of London, Greater London
+        country:
+          type: string
+          description: Country name
+          example: United Kingdom
+        lat:
           type: number
-          description: Carbon monoxide µg/m³
-          example: 1.0
-        o3:
+          format: float
+          description: Latitude
+          example: 51.5074
+        lon:
           type: number
-          description: Ozone µg/m³
-          example: 1.0
-        no2:
-          type: number
-          description: Nitrogen dioxide µg/m³
-          example: 1.0
-        so2:
-          type: number
-          description: Sulphur dioxide µg/m³
-          example: 1.0
-        pm2_5:
-          type: number
-          description: PM2.5 µg/m³
-          example: 1.0
-        pm10:
-          type: number
-          description: PM10 µg/m³
-          example: 1.0
-        us-epa-index:
+          format: float
+          description: Longitude
+          example: -0.1278
+        tz_id:
+          type: string
+          description: IANA timezone ID, e.g. Europe/London
+          example: Europe/London
+        localtime_epoch:
           type: integer
-          description: US EPA index 1–6 (1=Good, 6=Hazardous)
-          example: 1
-        gb-defra-index:
-          type: integer
-          description: UK DEFRA index 1–10
-          example: 1
+          description: Local time as Unix epoch
+          example: 1748441400
+        localtime:
+          type: string
+          description: Local date and time string
+          example: 2026-05-28 15:30
+    Pollen:
+      type: object
+      description: Pollen data in grains/m³. Returned when pollen=yes (Pro+ and above).
+      properties:
+        Hazel:
+          type: number
+          example: 1.0
+        Alder:
+          type: number
+          example: 1.0
+        Birch:
+          type: number
+          example: 1.0
+        Oak:
+          type: number
+          example: 1.0
+        Grass:
+          type: number
+          example: 1.0
+        Mugwort:
+          type: number
+          example: 1.0
+        Ragweed:
+          type: number
+          example: 1.0
     HourForecast:
       type: object
       properties:
@@ -328,101 +274,69 @@ components:
           $ref: '#/components/schemas/AirQuality'
         pollen:
           $ref: '#/components/schemas/Pollen'
-    ErrorResponse:
+    Condition:
       type: object
       properties:
-        error:
+        text:
+          type: string
+          description: Weather condition description
+          example: Partly Cloudy
+        icon:
+          type: string
+          description: URL to condition icon
+          example: //cdn.weatherapi.com/weather/64x64/day/116.png
+        code:
+          type: integer
+          description: Condition code (see conditions.json)
+          example: 1003
+    MarineWeatherResponse:
+      type: object
+      properties:
+        location:
+          $ref: '#/components/schemas/Location'
+        forecast:
           type: object
           properties:
-            code:
-              type: integer
-              description: WeatherAPI error code
-            message:
-              type: string
-      example:
-        error:
-          code: 1006
-          message: No location found matching parameter 'q'
-    MarineForecastDay:
+            forecastday:
+              type: array
+              items:
+                $ref: '#/components/schemas/MarineForecastDay'
+    AirQuality:
       type: object
+      description: Air quality data. Returned when aqi=yes.
       properties:
-        date:
-          type: string
-          format: date
-          example: '2026-05-28'
-        date_epoch:
-          type: integer
-          example: 1748441400
-        day:
-          $ref: '#/components/schemas/ForecastDay'
-        astro:
-          $ref: '#/components/schemas/AstroElement'
-        tides:
-          type: array
-          items:
-            type: object
-            properties:
-              tide:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Tide'
-        hour:
-          type: array
-          items:
-            $ref: '#/components/schemas/MarineHour'
-    Location:
-      type: object
-      description: Location metadata returned with every weather response.
-      properties:
-        name:
-          type: string
-          description: Location name
-          example: London
-        region:
-          type: string
-          description: Region or state
-          example: City of London, Greater London
-        country:
-          type: string
-          description: Country name
-          example: United Kingdom
-        lat:
+        co:
           type: number
-          format: float
-          description: Latitude
-          example: 51.5074
-        lon:
-          type: number
-          format: float
-          description: Longitude
-          example: -0.1278
-        tz_id:
-          type: string
-          description: IANA timezone ID, e.g. Europe/London
-          example: Europe/London
-        localtime_epoch:
-          type: integer
-          description: Local time as Unix epoch
-          example: 1748441400
-        localtime:
-          type: string
-          description: Local date and time string
-          example: 2026-05-28 15:30
-    Tide:
-      type: object
-      properties:
-        tide_time:
-          type: string
-          example: 2026-05-28 04:30
-        tide_height_mt:
-          type: number
+          description: Carbon monoxide µg/m³
           example: 1.0
-        tide_type:
-          type: string
-          enum:
-          - High
-          - Low
-          example: High
+        o3:
+          type: number
+          description: Ozone µg/m³
+          example: 1.0
+        no2:
+          type: number
+          description: Nitrogen dioxide µg/m³
+          example: 1.0
+        so2:
+          type: number
+          description: Sulphur dioxide µg/m³
+          example: 1.0
+        pm2_5:
+          type: number
+          description: PM2.5 µg/m³
+          example: 1.0
+        pm10:
+          type: number
+          description: PM10 µg/m³
+          example: 1.0
+        us-epa-index:
+          type: integer
+          description: US EPA index 1–6 (1=Good, 6=Hazardous)
+          example: 1
+        gb-defra-index:
+          type: integer
+          description: UK DEFRA index 1–10
+          example: 1
     MarineHour:
       type: object
       allOf:
@@ -454,6 +368,21 @@ components:
         water_temp_f:
           type: number
           example: 65.3
+    Tide:
+      type: object
+      properties:
+        tide_time:
+          type: string
+          example: 2026-05-28 04:30
+        tide_height_mt:
+          type: number
+          example: 1.0
+        tide_type:
+          type: string
+          enum:
+          - High
+          - Low
+          example: High
     ForecastDay:
       type: object
       properties:
@@ -518,6 +447,21 @@ components:
           example: 4.0
         air_quality:
           $ref: '#/components/schemas/AirQuality'
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              description: WeatherAPI error code
+            message:
+              type: string
+      example:
+        error:
+          code: 1006
+          message: No location found matching parameter 'q'
     AstroElement:
       type: object
       properties:
@@ -545,58 +489,86 @@ components:
         is_sun_up:
           type: integer
           example: 1
-    MarineWeatherResponse:
+    MarineForecastDay:
       type: object
       properties:
-        location:
-          $ref: '#/components/schemas/Location'
-        forecast:
-          type: object
-          properties:
-            forecastday:
-              type: array
-              items:
-                $ref: '#/components/schemas/MarineForecastDay'
-    Pollen:
-      type: object
-      description: Pollen data in grains/m³. Returned when pollen=yes (Pro+ and above).
-      properties:
-        Hazel:
-          type: number
-          example: 1.0
-        Alder:
-          type: number
-          example: 1.0
-        Birch:
-          type: number
-          example: 1.0
-        Oak:
-          type: number
-          example: 1.0
-        Grass:
-          type: number
-          example: 1.0
-        Mugwort:
-          type: number
-          example: 1.0
-        Ragweed:
-          type: number
-          example: 1.0
-    Condition:
-      type: object
-      properties:
-        text:
+        date:
           type: string
-          description: Weather condition description
-          example: Partly Cloudy
-        icon:
-          type: string
-          description: URL to condition icon
-          example: //cdn.weatherapi.com/weather/64x64/day/116.png
-        code:
+          format: date
+          example: '2026-05-28'
+        date_epoch:
           type: integer
-          description: Condition code (see conditions.json)
-          example: 1003
+          example: 1748441400
+        day:
+          $ref: '#/components/schemas/ForecastDay'
+        astro:
+          $ref: '#/components/schemas/AstroElement'
+        tides:
+          type: array
+          items:
+            type: object
+            properties:
+              tide:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tide'
+        hour:
+          type: array
+          items:
+            $ref: '#/components/schemas/MarineHour'
+  responses:
+    BadRequest:
+      description: Bad request — invalid parameter or location not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Unauthorized — API key missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: Forbidden — API key quota exceeded, disabled, or plan does not include this resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  parameters:
+    hour:
+      name: hour
+      in: query
+      required: false
+      description: Restrict output to a specific hour (0–23) in 24-hour format.
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 23
+    key:
+      name: key
+      in: query
+      required: true
+      description: Your WeatherAPI.com API key.
+      schema:
+        type: string
+        example: YOUR_API_KEY
+    q:
+      name: q
+      in: query
+      required: true
+      description: 'Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268).'
+      schema:
+        type: string
+        example: London
+    dt:
+      name: dt
+      in: query
+      required: false
+      description: Restrict date output in yyyy-MM-dd format.
+      schema:
+        type: string
+        format: date
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
