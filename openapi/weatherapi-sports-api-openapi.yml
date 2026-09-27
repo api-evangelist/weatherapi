@@ -77,26 +77,29 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
-  responses:
-    Unauthorized:
-      description: Unauthorized — API key missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    BadRequest:
-      description: Bad request — invalid parameter or location not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    Forbidden:
-      description: Forbidden — API key quota exceeded, disabled, or plan does not include this resource.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   schemas:
+    SportEvent:
+      type: object
+      properties:
+        stadium:
+          type: string
+          example: Wembley Stadium
+        country:
+          type: string
+          example: United Kingdom
+        region:
+          type: string
+          example: City of London, Greater London
+        tournament:
+          type: string
+          example: Premier League
+        start:
+          type: string
+          description: Local start datetime yyyy-MM-dd HH:mm
+          example: sample value
+        match:
+          type: string
+          example: Manchester United vs Liverpool
     ErrorResponse:
       type: object
       properties:
@@ -127,28 +130,25 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SportEvent'
-    SportEvent:
-      type: object
-      properties:
-        stadium:
-          type: string
-          example: Wembley Stadium
-        country:
-          type: string
-          example: United Kingdom
-        region:
-          type: string
-          example: City of London, Greater London
-        tournament:
-          type: string
-          example: Premier League
-        start:
-          type: string
-          description: Local start datetime yyyy-MM-dd HH:mm
-          example: sample value
-        match:
-          type: string
-          example: Manchester United vs Liverpool
+  responses:
+    BadRequest:
+      description: Bad request — invalid parameter or location not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Unauthorized — API key missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: Forbidden — API key quota exceeded, disabled, or plan does not include this resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   parameters:
     q:
       name: q

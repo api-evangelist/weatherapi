@@ -81,6 +81,18 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    AlertsResponse:
+      type: object
+      properties:
+        location:
+          $ref: '#/components/schemas/Location'
+        alerts:
+          type: object
+          properties:
+            alert:
+              type: array
+              items:
+                $ref: '#/components/schemas/Alert'
     Location:
       type: object
       description: Location metadata returned with every weather response.
@@ -176,27 +188,15 @@ components:
         instruction:
           type: string
           example: sample value
-    AlertsResponse:
-      type: object
-      properties:
-        location:
-          $ref: '#/components/schemas/Location'
-        alerts:
-          type: object
-          properties:
-            alert:
-              type: array
-              items:
-                $ref: '#/components/schemas/Alert'
   responses:
-    Unauthorized:
-      description: Unauthorized — API key missing or invalid.
+    BadRequest:
+      description: Bad request — invalid parameter or location not found.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    BadRequest:
-      description: Bad request — invalid parameter or location not found.
+    Unauthorized:
+      description: Unauthorized — API key missing or invalid.
       content:
         application/json:
           schema:
