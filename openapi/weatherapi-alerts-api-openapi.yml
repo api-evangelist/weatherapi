@@ -81,71 +81,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    AlertsResponse:
-      type: object
-      properties:
-        location:
-          $ref: '#/components/schemas/Location'
-        alerts:
-          type: object
-          properties:
-            alert:
-              type: array
-              items:
-                $ref: '#/components/schemas/Alert'
-    Location:
-      type: object
-      description: Location metadata returned with every weather response.
-      properties:
-        name:
-          type: string
-          description: Location name
-          example: London
-        region:
-          type: string
-          description: Region or state
-          example: City of London, Greater London
-        country:
-          type: string
-          description: Country name
-          example: United Kingdom
-        lat:
-          type: number
-          format: float
-          description: Latitude
-          example: 51.5074
-        lon:
-          type: number
-          format: float
-          description: Longitude
-          example: -0.1278
-        tz_id:
-          type: string
-          description: IANA timezone ID, e.g. Europe/London
-          example: Europe/London
-        localtime_epoch:
-          type: integer
-          description: Local time as Unix epoch
-          example: 1748441400
-        localtime:
-          type: string
-          description: Local date and time string
-          example: 2026-05-28 15:30
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-              description: WeatherAPI error code
-            message:
-              type: string
-      example:
-        error:
-          code: 1006
-          message: No location found matching parameter 'q'
     Alert:
       type: object
       properties:
@@ -188,7 +123,78 @@ components:
         instruction:
           type: string
           example: sample value
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              description: WeatherAPI error code
+            message:
+              type: string
+      example:
+        error:
+          code: 1006
+          message: No location found matching parameter 'q'
+    Location:
+      type: object
+      description: Location metadata returned with every weather response.
+      properties:
+        name:
+          type: string
+          description: Location name
+          example: London
+        region:
+          type: string
+          description: Region or state
+          example: City of London, Greater London
+        country:
+          type: string
+          description: Country name
+          example: United Kingdom
+        lat:
+          type: number
+          format: float
+          description: Latitude
+          example: 51.5074
+        lon:
+          type: number
+          format: float
+          description: Longitude
+          example: -0.1278
+        tz_id:
+          type: string
+          description: IANA timezone ID, e.g. Europe/London
+          example: Europe/London
+        localtime_epoch:
+          type: integer
+          description: Local time as Unix epoch
+          example: 1748441400
+        localtime:
+          type: string
+          description: Local date and time string
+          example: 2026-05-28 15:30
+    AlertsResponse:
+      type: object
+      properties:
+        location:
+          $ref: '#/components/schemas/Location'
+        alerts:
+          type: object
+          properties:
+            alert:
+              type: array
+              items:
+                $ref: '#/components/schemas/Alert'
   responses:
+    Forbidden:
+      description: Forbidden — API key quota exceeded, disabled, or plan does not include this resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
     BadRequest:
       description: Bad request — invalid parameter or location not found.
       content:
@@ -201,21 +207,7 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    Forbidden:
-      description: Forbidden — API key quota exceeded, disabled, or plan does not include this resource.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   parameters:
-    q:
-      name: q
-      in: query
-      required: true
-      description: 'Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268).'
-      schema:
-        type: string
-        example: London
     key:
       name: key
       in: query
@@ -224,6 +216,14 @@ components:
       schema:
         type: string
         example: YOUR_API_KEY
+    q:
+      name: q
+      in: query
+      required: true
+      description: 'Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268).'
+      schema:
+        type: string
+        example: London
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

@@ -165,26 +165,49 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
-  responses:
-    BadRequest:
-      description: Bad request — invalid parameter or location not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    Forbidden:
-      description: Forbidden — API key quota exceeded, disabled, or plan does not include this resource.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    Unauthorized:
-      description: Unauthorized — API key missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   schemas:
+    Alert:
+      type: object
+      properties:
+        headline:
+          type: string
+          example: sample value
+        msgtype:
+          type: string
+          example: sample value
+        severity:
+          type: string
+          example: sample value
+        urgency:
+          type: string
+          example: sample value
+        areas:
+          type: string
+          example: sample value
+        category:
+          type: string
+          example: sample value
+        certainty:
+          type: string
+          example: sample value
+        event:
+          type: string
+          example: Severe Thunderstorm Warning
+        note:
+          type: string
+          example: sample value
+        effective:
+          type: string
+          example: '2026-05-28T13:00:00Z'
+        expires:
+          type: string
+          example: '2026-05-28T13:00:00Z'
+        desc:
+          type: string
+          example: Severe thunderstorms with damaging winds expected in the warning area.
+        instruction:
+          type: string
+          example: sample value
     HourForecast:
       type: object
       properties:
@@ -303,46 +326,70 @@ components:
           $ref: '#/components/schemas/AirQuality'
         pollen:
           $ref: '#/components/schemas/Pollen'
-    Condition:
+    ForecastDay:
       type: object
       properties:
-        text:
-          type: string
-          description: Weather condition description
-          example: Partly Cloudy
-        icon:
-          type: string
-          description: URL to condition icon
-          example: //cdn.weatherapi.com/weather/64x64/day/116.png
-        code:
+        maxtemp_c:
+          type: number
+          example: 18.5
+        maxtemp_f:
+          type: number
+          example: 65.3
+        mintemp_c:
+          type: number
+          example: 18.5
+        mintemp_f:
+          type: number
+          example: 65.3
+        avgtemp_c:
+          type: number
+          example: 18.5
+        avgtemp_f:
+          type: number
+          example: 65.3
+        maxwind_mph:
+          type: number
+          example: 12.4
+        maxwind_kph:
+          type: number
+          example: 12.4
+        totalprecip_mm:
+          type: number
+          example: 0.5
+        totalprecip_in:
+          type: number
+          example: 0.5
+        totalsnow_cm:
+          type: number
+          example: 1.0
+        avgvis_km:
+          type: number
+          example: 10.0
+        avgvis_miles:
+          type: number
+          example: 10.0
+        avghumidity:
           type: integer
-          description: Condition code (see conditions.json)
-          example: 1003
-    Pollen:
-      type: object
-      description: Pollen data in grains/m³. Returned when pollen=yes (Pro+ and above).
-      properties:
-        Hazel:
+          example: 65
+        daily_will_it_rain:
+          type: integer
+          example: 1
+        daily_chance_of_rain:
+          type: integer
+          example: 1
+        daily_will_it_snow:
+          type: integer
+          example: 1
+        daily_chance_of_snow:
+          type: integer
+          example: 1
+        condition:
+          $ref: '#/components/schemas/Condition'
+        uv:
           type: number
-          example: 1.0
-        Alder:
-          type: number
-          example: 1.0
-        Birch:
-          type: number
-          example: 1.0
-        Oak:
-          type: number
-          example: 1.0
-        Grass:
-          type: number
-          example: 1.0
-        Mugwort:
-          type: number
-          example: 1.0
-        Ragweed:
-          type: number
-          example: 1.0
+          example: 4.0
+        air_quality:
+          $ref: '#/components/schemas/AirQuality'
     CurrentWeather:
       type: object
       properties:
@@ -451,108 +498,6 @@ components:
           $ref: '#/components/schemas/AirQuality'
         pollen:
           $ref: '#/components/schemas/Pollen'
-    Location:
-      type: object
-      description: Location metadata returned with every weather response.
-      properties:
-        name:
-          type: string
-          description: Location name
-          example: London
-        region:
-          type: string
-          description: Region or state
-          example: City of London, Greater London
-        country:
-          type: string
-          description: Country name
-          example: United Kingdom
-        lat:
-          type: number
-          format: float
-          description: Latitude
-          example: 51.5074
-        lon:
-          type: number
-          format: float
-          description: Longitude
-          example: -0.1278
-        tz_id:
-          type: string
-          description: IANA timezone ID, e.g. Europe/London
-          example: Europe/London
-        localtime_epoch:
-          type: integer
-          description: Local time as Unix epoch
-          example: 1748441400
-        localtime:
-          type: string
-          description: Local date and time string
-          example: 2026-05-28 15:30
-    ForecastDay:
-      type: object
-      properties:
-        maxtemp_c:
-          type: number
-          example: 18.5
-        maxtemp_f:
-          type: number
-          example: 65.3
-        mintemp_c:
-          type: number
-          example: 18.5
-        mintemp_f:
-          type: number
-          example: 65.3
-        avgtemp_c:
-          type: number
-          example: 18.5
-        avgtemp_f:
-          type: number
-          example: 65.3
-        maxwind_mph:
-          type: number
-          example: 12.4
-        maxwind_kph:
-          type: number
-          example: 12.4
-        totalprecip_mm:
-          type: number
-          example: 0.5
-        totalprecip_in:
-          type: number
-          example: 0.5
-        totalsnow_cm:
-          type: number
-          example: 1.0
-        avgvis_km:
-          type: number
-          example: 10.0
-        avgvis_miles:
-          type: number
-          example: 10.0
-        avghumidity:
-          type: integer
-          example: 65
-        daily_will_it_rain:
-          type: integer
-          example: 1
-        daily_chance_of_rain:
-          type: integer
-          example: 1
-        daily_will_it_snow:
-          type: integer
-          example: 1
-        daily_chance_of_snow:
-          type: integer
-          example: 1
-        condition:
-          $ref: '#/components/schemas/Condition'
-        uv:
-          type: number
-          example: 4.0
-        air_quality:
-          $ref: '#/components/schemas/AirQuality'
     AstroElement:
       type: object
       properties:
@@ -637,6 +582,44 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/Alert'
+    Location:
+      type: object
+      description: Location metadata returned with every weather response.
+      properties:
+        name:
+          type: string
+          description: Location name
+          example: London
+        region:
+          type: string
+          description: Region or state
+          example: City of London, Greater London
+        country:
+          type: string
+          description: Country name
+          example: United Kingdom
+        lat:
+          type: number
+          format: float
+          description: Latitude
+          example: 51.5074
+        lon:
+          type: number
+          format: float
+          description: Longitude
+          example: -0.1278
+        tz_id:
+          type: string
+          description: IANA timezone ID, e.g. Europe/London
+          example: Europe/London
+        localtime_epoch:
+          type: integer
+          description: Local time as Unix epoch
+          example: 1748441400
+        localtime:
+          type: string
+          description: Local date and time string
+          example: 2026-05-28 15:30
     ForecastDayEntry:
       type: object
       properties:
@@ -670,93 +653,47 @@ components:
         error:
           code: 1006
           message: No location found matching parameter 'q'
-    Alert:
+    Condition:
       type: object
       properties:
-        headline:
+        text:
           type: string
-          example: sample value
-        msgtype:
+          description: Weather condition description
+          example: Partly Cloudy
+        icon:
           type: string
-          example: sample value
-        severity:
-          type: string
-          example: sample value
-        urgency:
-          type: string
-          example: sample value
-        areas:
-          type: string
-          example: sample value
-        category:
-          type: string
-          example: sample value
-        certainty:
-          type: string
-          example: sample value
-        event:
-          type: string
-          example: Severe Thunderstorm Warning
-        note:
-          type: string
-          example: sample value
-        effective:
-          type: string
-          example: '2026-05-28T13:00:00Z'
-        expires:
-          type: string
-          example: '2026-05-28T13:00:00Z'
-        desc:
-          type: string
-          example: Severe thunderstorms with damaging winds expected in the warning area.
-        instruction:
-          type: string
-          example: sample value
+          description: URL to condition icon
+          example: //cdn.weatherapi.com/weather/64x64/day/116.png
+        code:
+          type: integer
+          description: Condition code (see conditions.json)
+          example: 1003
+    Pollen:
+      type: object
+      description: Pollen data in grains/m³. Returned when pollen=yes (Pro+ and above).
+      properties:
+        Hazel:
+          type: number
+          example: 1.0
+        Alder:
+          type: number
+          example: 1.0
+        Birch:
+          type: number
+          example: 1.0
+        Oak:
+          type: number
+          example: 1.0
+        Grass:
+          type: number
+          example: 1.0
+        Mugwort:
+          type: number
+          example: 1.0
+        Ragweed:
+          type: number
+          example: 1.0
   parameters:
-    wind100mph:
-      name: wind100mph
-      in: query
-      required: false
-      description: Include wind speed at 100m height in mph. Enterprise only.
-      schema:
-        type: string
-        enum:
-        - 'yes'
-        - 'no'
-    unixdt:
-      name: unixdt
-      in: query
-      required: false
-      description: Unix timestamp equivalent of `dt`. Do not pass both.
-      schema:
-        type: integer
-        example: 1490227200
-    hour:
-      name: hour
-      in: query
-      required: false
-      description: Restrict output to a specific hour (0–23) in 24-hour format.
-      schema:
-        type: integer
-        minimum: 0
-        maximum: 23
-    q:
-      name: q
-      in: query
-      required: true
-      description: 'Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268).'
-      schema:
-        type: string
-        example: London
-    tp:
-      name: tp
-      in: query
-      required: false
-      description: Interval for data. Use tp=15 for 15-minute intervals (Enterprise only).
-      schema:
-        type: integer
-        enum:
-        - 15
     solar:
       name: solar
       in: query
@@ -767,32 +704,63 @@ components:
         enum:
         - 'yes'
         - 'no'
-    wind100kph:
-      name: wind100kph
+    q:
+      name: q
+      in: query
+      required: true
+      description: 'Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268).'
+      schema:
+        type: string
+        example: London
+    unixdt:
+      name: unixdt
       in: query
       required: false
-      description: Include wind speed at 100m height in kph. Enterprise only.
+      description: Unix timestamp equivalent of `dt`. Do not pass both.
+      schema:
+        type: integer
+        example: 1490227200
+    et0:
+      name: et0
+      in: query
+      required: false
+      description: Include evapotranspiration data. Business and Enterprise only.
       schema:
         type: string
         enum:
         - 'yes'
         - 'no'
+    tp:
+      name: tp
+      in: query
+      required: false
+      description: Interval for data. Use tp=15 for 15-minute intervals (Enterprise only).
+      schema:
+        type: integer
+        enum:
+        - 15
+    hour:
+      name: hour
+      in: query
+      required: false
+      description: Restrict output to a specific hour (0–23) in 24-hour format.
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 23
+    lang:
+      name: lang
+      in: query
+      required: false
+      description: 'Language code for condition text. E.g.: fr, de, es, zh, ar. See full list in docs.'
+      schema:
+        type: string
+        example: fr
     pollen:
       name: pollen
       in: query
       required: false
       description: Include pollen data. Available on Pro+ and above.
-      schema:
-        type: string
-        enum:
-        - 'yes'
-        - 'no'
-        default: 'no'
-    aqi:
-      name: aqi
-      in: query
-      required: false
-      description: Include Air Quality Index (AQI) data in response.
       schema:
         type: string
         enum:
@@ -807,24 +775,27 @@ components:
       schema:
         type: string
         example: YOUR_API_KEY
-    et0:
-      name: et0
+    wind100mph:
+      name: wind100mph
       in: query
       required: false
-      description: Include evapotranspiration data. Business and Enterprise only.
+      description: Include wind speed at 100m height in mph. Enterprise only.
       schema:
         type: string
         enum:
         - 'yes'
         - 'no'
-    lang:
-      name: lang
+    aqi:
+      name: aqi
       in: query
       required: false
-      description: 'Language code for condition text. E.g.: fr, de, es, zh, ar. See full list in docs.'
+      description: Include Air Quality Index (AQI) data in response.
       schema:
         type: string
-        example: fr
+        enum:
+        - 'yes'
+        - 'no'
+        default: 'no'
     unixend_dt:
       name: unixend_dt
       in: query
@@ -832,6 +803,35 @@ components:
       description: Unix timestamp equivalent of `end_dt`. Do not pass both.
       schema:
         type: integer
+    wind100kph:
+      name: wind100kph
+      in: query
+      required: false
+      description: Include wind speed at 100m height in kph. Enterprise only.
+      schema:
+        type: string
+        enum:
+        - 'yes'
+        - 'no'
+  responses:
+    BadRequest:
+      description: Bad request — invalid parameter or location not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Unauthorized — API key missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: Forbidden — API key quota exceeded, disabled, or plan does not include this resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
