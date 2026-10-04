@@ -217,36 +217,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    TimezoneResponse:
-      type: object
-      properties:
-        location:
-          $ref: '#/components/schemas/Location'
-    SearchLocation:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 2643743
-        name:
-          type: string
-          example: London
-        region:
-          type: string
-          example: City of London, Greater London
-        country:
-          type: string
-          example: United Kingdom
-        lat:
-          type: number
-          example: 51.5074
-        lon:
-          type: number
-          example: -0.1278
-        url:
-          type: string
-          description: URL-safe location slug
-          example: sample value
     ErrorResponse:
       type: object
       properties:
@@ -262,81 +232,6 @@ components:
         error:
           code: 1006
           message: No location found matching parameter 'q'
-    AstronomyResponse:
-      type: object
-      properties:
-        location:
-          $ref: '#/components/schemas/Location'
-        astronomy:
-          type: object
-          properties:
-            astro:
-              $ref: '#/components/schemas/AstroElement'
-    Location:
-      type: object
-      description: Location metadata returned with every weather response.
-      properties:
-        name:
-          type: string
-          description: Location name
-          example: London
-        region:
-          type: string
-          description: Region or state
-          example: City of London, Greater London
-        country:
-          type: string
-          description: Country name
-          example: United Kingdom
-        lat:
-          type: number
-          format: float
-          description: Latitude
-          example: 51.5074
-        lon:
-          type: number
-          format: float
-          description: Longitude
-          example: -0.1278
-        tz_id:
-          type: string
-          description: IANA timezone ID, e.g. Europe/London
-          example: Europe/London
-        localtime_epoch:
-          type: integer
-          description: Local time as Unix epoch
-          example: 1748441400
-        localtime:
-          type: string
-          description: Local date and time string
-          example: 2026-05-28 15:30
-    AstroElement:
-      type: object
-      properties:
-        sunrise:
-          type: string
-          example: 05:30 AM
-        sunset:
-          type: string
-          example: 08:45 PM
-        moonrise:
-          type: string
-          example: 10:15 PM
-        moonset:
-          type: string
-          example: 06:42 AM
-        moon_phase:
-          type: string
-          example: Waxing Crescent
-        moon_illumination:
-          type: number
-          example: 35.0
-        is_moon_up:
-          type: integer
-          example: 1
-        is_sun_up:
-          type: integer
-          example: 1
     IpLookupResponse:
       type: object
       properties:
@@ -388,6 +283,128 @@ components:
         localtime:
           type: string
           example: 2026-05-28 15:30
+    AstroElement:
+      type: object
+      properties:
+        sunrise:
+          type: string
+          example: 05:30 AM
+        sunset:
+          type: string
+          example: 08:45 PM
+        moonrise:
+          type: string
+          example: 10:15 PM
+        moonset:
+          type: string
+          example: 06:42 AM
+        moon_phase:
+          type: string
+          example: Waxing Crescent
+        moon_illumination:
+          type: number
+          example: 35.0
+        is_moon_up:
+          type: integer
+          example: 1
+        is_sun_up:
+          type: integer
+          example: 1
+    AstronomyResponse:
+      type: object
+      properties:
+        location:
+          $ref: '#/components/schemas/Location'
+        astronomy:
+          type: object
+          properties:
+            astro:
+              $ref: '#/components/schemas/AstroElement'
+    SearchLocation:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2643743
+        name:
+          type: string
+          example: London
+        region:
+          type: string
+          example: City of London, Greater London
+        country:
+          type: string
+          example: United Kingdom
+        lat:
+          type: number
+          example: 51.5074
+        lon:
+          type: number
+          example: -0.1278
+        url:
+          type: string
+          description: URL-safe location slug
+          example: sample value
+    Location:
+      type: object
+      description: Location metadata returned with every weather response.
+      properties:
+        name:
+          type: string
+          description: Location name
+          example: London
+        region:
+          type: string
+          description: Region or state
+          example: City of London, Greater London
+        country:
+          type: string
+          description: Country name
+          example: United Kingdom
+        lat:
+          type: number
+          format: float
+          description: Latitude
+          example: 51.5074
+        lon:
+          type: number
+          format: float
+          description: Longitude
+          example: -0.1278
+        tz_id:
+          type: string
+          description: IANA timezone ID, e.g. Europe/London
+          example: Europe/London
+        localtime_epoch:
+          type: integer
+          description: Local time as Unix epoch
+          example: 1748441400
+        localtime:
+          type: string
+          description: Local date and time string
+          example: 2026-05-28 15:30
+    TimezoneResponse:
+      type: object
+      properties:
+        location:
+          $ref: '#/components/schemas/Location'
+  parameters:
+    q:
+      name: q
+      in: query
+      required: true
+      description: 'Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268).'
+      schema:
+        type: string
+        example: London
+    key:
+      name: key
+      in: query
+      required: true
+      description: Your WeatherAPI.com API key.
+      schema:
+        type: string
+        example: YOUR_API_KEY
   responses:
     BadRequest:
       description: Bad request — invalid parameter or location not found.
@@ -401,23 +418,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-  parameters:
-    key:
-      name: key
-      in: query
-      required: true
-      description: Your WeatherAPI.com API key.
-      schema:
-        type: string
-        example: YOUR_API_KEY
-    q:
-      name: q
-      in: query
-      required: true
-      description: 'Location query. Accepts: city name, lat/lon, US zip, UK postcode, Canada postal code, METAR code (metar:EGLL), IATA (iata:DXB), auto:ip, IPv4/IPv6, or location ID (id:2801268).'
-      schema:
-        type: string
-        example: London
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
