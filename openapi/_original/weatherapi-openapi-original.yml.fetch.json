@@ -1,0 +1,12 @@
+{
+ "url": "https://www.weatherapi.com/openapi.json",
+ "requested_url": "https://www.weatherapi.com/openapi.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 75432,
+ "sha256": "de9b5839de7d111605a521e19c13448d7555f9ab55242fe3bdaf29dbd3f3c8f7",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 0.923), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
